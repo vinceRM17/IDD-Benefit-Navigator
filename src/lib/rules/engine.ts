@@ -58,8 +58,16 @@ export class EligibilityEngine {
     // Validate required facts
     this.validateFacts(facts);
 
+    // Normalize facts by providing defaults for optional fields
+    const normalizedFacts = {
+      ...facts,
+      receivesSSI: facts.receivesSSI ?? false,
+      receivesSNAP: facts.receivesSNAP ?? false,
+      insuranceType: facts.insuranceType ?? 'none',
+    };
+
     // Run the rules engine
-    const { events } = await this.engine.run(facts);
+    const { events } = await this.engine.run(normalizedFacts);
 
     // Get programs that matched (eligible)
     const eligiblePrograms = new Set(
