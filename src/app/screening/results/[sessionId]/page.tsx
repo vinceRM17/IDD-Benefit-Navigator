@@ -14,6 +14,8 @@ import {
   BenefitInteractions,
   DocumentChecklist,
 } from '@/components/results';
+import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
+import { ResourceDirectory } from '@/components/results/ResourceDirectory';
 import { useEffect, useState } from 'react';
 
 export default function ResultsPage() {
@@ -45,6 +47,11 @@ export default function ResultsPage() {
   const likelyPrograms = results.programs.filter((p) => p.confidence === 'likely');
   const possiblePrograms = results.programs.filter((p) => p.confidence === 'possible');
   const unlikelyPrograms = results.programs.filter((p) => p.confidence === 'unlikely');
+
+  // Get eligible program IDs for resource filtering
+  const eligibleProgramIds = results.programs
+    .filter((p) => p.eligible && (p.confidence === 'likely' || p.confidence === 'possible'))
+    .map((p) => p.programId);
 
   // Generate overall action plan
   const actionSteps = results.programs
@@ -177,6 +184,9 @@ export default function ResultsPage() {
           </section>
         )}
 
+        {/* Resource Directory */}
+        <ResourceDirectory eligibleProgramIds={eligibleProgramIds} />
+
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8">
           <button
@@ -185,12 +195,10 @@ export default function ResultsPage() {
           >
             Start Over
           </button>
-          <button
-            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors opacity-50 cursor-not-allowed"
-            disabled
-          >
-            Download PDF (Coming Soon)
-          </button>
+          <DownloadPDFButton
+            results={results.programs}
+            interactions={results.benefitInteractions}
+          />
         </div>
 
         {/* Footer note */}
