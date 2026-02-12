@@ -40,6 +40,12 @@ export default async function DashboardLayout({
                   History
                 </Link>
                 <Link
+                  href="/dashboard/referrals"
+                  className="text-gray-600 hover:text-gray-900 text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100"
+                >
+                  Referrals
+                </Link>
+                <Link
                   href="/dashboard/settings"
                   className="text-gray-600 hover:text-gray-900 text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100"
                 >
@@ -74,6 +80,12 @@ export default async function DashboardLayout({
               className="text-gray-600 hover:text-gray-900 text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100"
             >
               History
+            </Link>
+            <Link
+              href="/dashboard/referrals"
+              className="text-gray-600 hover:text-gray-900 text-sm font-medium px-3 py-2 rounded-md hover:bg-gray-100"
+            >
+              Referrals
             </Link>
             <Link
               href="/dashboard/settings"
