@@ -13,6 +13,7 @@ import {
   ActionPlan,
   BenefitInteractions,
   DocumentChecklist,
+  AIExplanation,
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
@@ -20,7 +21,7 @@ import { useEffect, useState } from 'react';
 
 export default function ResultsPage() {
   const router = useRouter();
-  const { results, reset } = useScreeningStore();
+  const { results, formData, reset } = useScreeningStore();
   const [mounted, setMounted] = useState(false);
 
   // Handle client-side mounting to avoid hydration mismatch
@@ -57,6 +58,19 @@ export default function ResultsPage() {
   const actionSteps = results.programs
     .filter((p) => p.confidence === 'likely' || p.confidence === 'possible')
     .flatMap((p) => p.content.nextSteps);
+
+  // Build family context for AI personalization from form data
+  const familyContext = {
+    householdSize: formData.householdSize || 1,
+    monthlyIncome: formData.monthlyIncome || 0,
+    hasDisabilityDiagnosis: formData.hasDisabilityDiagnosis || false,
+    age: formData.age || 0,
+    hasInsurance: formData.hasInsurance || false,
+    insuranceType: formData.insuranceType,
+    receivesSSI: formData.receivesSSI,
+    receivesSNAP: formData.receivesSNAP,
+    state: formData.state || results.state || 'KY',
+  };
 
   const handleStartOver = () => {
     reset();
@@ -102,6 +116,15 @@ export default function ResultsPage() {
                 <div key={result.programId}>
                   <ProgramCard result={result} />
 
+                  {/* AI personalized explanation - shown below expert content */}
+                  <AIExplanation
+                    programName={result.content.name}
+                    expertDescription={result.content.description}
+                    expertNextSteps={result.content.nextSteps}
+                    whatItCovers={result.content.whatItCovers}
+                    familyContext={familyContext}
+                  />
+
                   {/* Action steps for this program */}
                   {result.content.nextSteps.length > 0 && (
                     <div className="mt-4">
@@ -137,6 +160,15 @@ export default function ResultsPage() {
               {possiblePrograms.map((result) => (
                 <div key={result.programId}>
                   <ProgramCard result={result} />
+
+                  {/* AI personalized explanation - shown below expert content */}
+                  <AIExplanation
+                    programName={result.content.name}
+                    expertDescription={result.content.description}
+                    expertNextSteps={result.content.nextSteps}
+                    whatItCovers={result.content.whatItCovers}
+                    familyContext={familyContext}
+                  />
 
                   {/* Action steps for this program */}
                   {result.content.nextSteps.length > 0 && (

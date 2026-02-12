@@ -6,3 +6,4 @@ export { ProgramCard } from './ProgramCard';
 export { ActionPlan } from './ActionPlan';
 export { DocumentChecklist } from './DocumentChecklist';
 export { BenefitInteractions } from './BenefitInteractions';
+export { AIExplanation } from './AIExplanation';
