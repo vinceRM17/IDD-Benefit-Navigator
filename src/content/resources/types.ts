@@ -38,6 +38,12 @@ export interface PartnerOrganization {
 
   /** Specific service categories offered */
   servicesOffered?: string[];
+
+  /** Extended description for detail page (2-3 paragraphs) */
+  extendedDescription?: string;
+
+  /** Hours of operation */
+  hours?: string;
 }
 
 export interface ApplicationPortal {
