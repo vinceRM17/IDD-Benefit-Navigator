@@ -11,12 +11,12 @@ export const ssdiContent: ProgramContent = {
     'Benefits for eligible family members',
   ],
   nextSteps: [
-    'Call Social Security at 1-800-772-1213',
-    'Or apply online at ssa.gov',
-    'Gather your work papers and medical papers',
+    'Call 1-800-772-1213',
+    'Or go to ssa.gov online',
+    'Get your work and medical papers ready',
     'Send them in',
-    'Wait for them to decide (3-5 months)',
-    'You can appeal if denied',
+    'They will decide in 3-5 months',
+    'You can appeal if they say no',
   ],
   requiredDocuments: [
     'Medical records showing your disability',
