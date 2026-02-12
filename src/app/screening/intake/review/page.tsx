@@ -59,6 +59,18 @@ export default function ReviewPage() {
       // Store results in Zustand
       setResults(screeningResults);
 
+      // Auto-save for authenticated users (fire-and-forget, don't block navigation)
+      fetch('/api/screenings/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          screeningData: formData,
+          results: screeningResults,
+        }),
+      }).catch(() => {
+        // Save failure is non-blocking — anonymous users get 401 (expected)
+      });
+
       // Generate session ID and navigate to results page
       const sessionId = generateSessionId();
       router.push(`/screening/results/${sessionId}`);
