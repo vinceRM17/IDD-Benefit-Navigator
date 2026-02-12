@@ -1,6 +1,6 @@
 /**
  * Results Page - Dynamic route
- * Displays personalized benefit recommendations with action plans and document checklists
+ * Displays personalized benefit recommendations organized in tabs
  * Reads results from Zustand store (stored after API call on review page)
  */
 
@@ -15,16 +15,20 @@ import {
   DocumentChecklist,
   AIExplanation,
   AccountPrompt,
+  TabNav,
+  ProgramSummaryCard,
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
+import type { Tab } from '@/components/results/TabNav';
 
 export default function ResultsPage() {
   const router = useRouter();
   const { results, formData, reset } = useScreeningStore();
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
 
   // Handle client-side mounting and check auth status
   useEffect(() => {
@@ -42,6 +46,9 @@ export default function ResultsPage() {
     }
   }, [mounted, results, router]);
 
+  // Switch to Programs tab (used by summary card "View details" links)
+  const goToPrograms = useCallback(() => setActiveTab('programs'), []);
+
   if (!mounted || !results) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -54,6 +61,7 @@ export default function ResultsPage() {
   const likelyPrograms = results.programs.filter((p) => p.confidence === 'likely');
   const possiblePrograms = results.programs.filter((p) => p.confidence === 'possible');
   const unlikelyPrograms = results.programs.filter((p) => p.confidence === 'unlikely');
+  const eligiblePrograms = [...likelyPrograms, ...possiblePrograms];
 
   // Get eligible program IDs for resource filtering
   const eligibleProgramIds = results.programs
@@ -83,155 +91,198 @@ export default function ResultsPage() {
     router.push('/screening');
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Your Benefit Recommendations
-          </h1>
-          <p className="text-lg text-gray-600">
-            Based on what you shared about your family, here are the programs
-            that may help.
-          </p>
-        </header>
+  // Helper to render full program details (used in Programs tab)
+  const renderProgramDetails = (programList: typeof likelyPrograms) =>
+    programList.map((result) => (
+      <div key={result.programId}>
+        <ProgramCard result={result} />
 
-        {/* Overall Action Plan */}
-        {actionSteps.length > 0 && (
-          <div className="mb-8">
-            <ActionPlan steps={actionSteps} title="Your Action Plan" />
-          </div>
-        )}
-
-        {/* Benefit Interactions */}
-        {results.benefitInteractions.length > 0 && (
-          <div className="mb-8">
-            <BenefitInteractions interactions={results.benefitInteractions} />
-          </div>
-        )}
-
-        {/* Likely Eligible Programs */}
-        {likelyPrograms.length > 0 && (
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Programs You Likely Qualify For
-            </h2>
-            <div className="space-y-6">
-              {likelyPrograms.map((result) => (
-                <div key={result.programId}>
-                  <ProgramCard result={result} />
-
-                  {/* AI personalized explanation - shown below expert content */}
-                  <AIExplanation
-                    programName={result.content.name}
-                    expertDescription={result.content.description}
-                    expertNextSteps={result.content.nextSteps}
-                    whatItCovers={result.content.whatItCovers}
-                    familyContext={familyContext}
-                  />
-
-                  {/* Action steps for this program */}
-                  {result.content.nextSteps.length > 0 && (
-                    <div className="mt-4">
-                      <ActionPlan
-                        steps={result.content.nextSteps}
-                        title={`How to apply for ${result.content.name}`}
-                      />
-                    </div>
-                  )}
-
-                  {/* Document checklist for this program */}
-                  {result.content.requiredDocuments.length > 0 && (
-                    <div className="mt-4">
-                      <DocumentChecklist
-                        documents={result.content.requiredDocuments}
-                        programName={result.content.name}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Possibly Eligible Programs */}
-        {possiblePrograms.length > 0 && (
-          <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              Programs You May Qualify For
-            </h2>
-            <div className="space-y-6">
-              {possiblePrograms.map((result) => (
-                <div key={result.programId}>
-                  <ProgramCard result={result} />
-
-                  {/* AI personalized explanation - shown below expert content */}
-                  <AIExplanation
-                    programName={result.content.name}
-                    expertDescription={result.content.description}
-                    expertNextSteps={result.content.nextSteps}
-                    whatItCovers={result.content.whatItCovers}
-                    familyContext={familyContext}
-                  />
-
-                  {/* Action steps for this program */}
-                  {result.content.nextSteps.length > 0 && (
-                    <div className="mt-4">
-                      <ActionPlan
-                        steps={result.content.nextSteps}
-                        title={`How to apply for ${result.content.name}`}
-                      />
-                    </div>
-                  )}
-
-                  {/* Document checklist for this program */}
-                  {result.content.requiredDocuments.length > 0 && (
-                    <div className="mt-4">
-                      <DocumentChecklist
-                        documents={result.content.requiredDocuments}
-                        programName={result.content.name}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Unlikely Programs (collapsed by default) */}
-        {unlikelyPrograms.length > 0 && (
-          <section className="mb-8">
-            <details className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-              <summary className="text-lg font-semibold text-gray-900 cursor-pointer">
-                Other Programs (based on your answers, these may not apply)
-              </summary>
-              <p className="text-sm text-gray-600 mt-2 mb-4">
-                Your situation may change, or you might have additional needs
-                that qualify you for these programs. Click a program to learn
-                more.
-              </p>
-              <div className="space-y-4 mt-4">
-                {unlikelyPrograms.map((result) => (
-                  <ProgramCard key={result.programId} result={result} />
-                ))}
-              </div>
-            </details>
-          </section>
-        )}
-
-        {/* Account Prompt for anonymous users */}
-        {!isAuthenticated && <AccountPrompt />}
-
-        {/* Resource Directory */}
-        <ResourceDirectory
-          eligibleProgramIds={eligibleProgramIds}
+        <AIExplanation
+          programName={result.content.name}
+          expertDescription={result.content.description}
+          expertNextSteps={result.content.nextSteps}
+          whatItCovers={result.content.whatItCovers}
           familyContext={familyContext}
         />
 
-        {/* Actions */}
+        {result.content.nextSteps.length > 0 && (
+          <div className="mt-4">
+            <ActionPlan
+              steps={result.content.nextSteps}
+              title={`How to apply for ${result.content.name}`}
+            />
+          </div>
+        )}
+
+        {result.content.requiredDocuments.length > 0 && (
+          <div className="mt-4">
+            <DocumentChecklist
+              documents={result.content.requiredDocuments}
+              programName={result.content.name}
+            />
+          </div>
+        )}
+      </div>
+    ));
+
+  // --- Tab content ---
+
+  const overviewContent = (
+    <div>
+      {/* Header */}
+      <header className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Your Benefit Recommendations
+        </h2>
+        <p className="text-lg text-gray-600">
+          Based on what you shared about your family, here are the programs
+          that may help.
+        </p>
+      </header>
+
+      {/* Overall Action Plan */}
+      {actionSteps.length > 0 && (
+        <div className="mb-8">
+          <ActionPlan steps={actionSteps} title="Your Action Plan" />
+        </div>
+      )}
+
+      {/* Benefit Interactions */}
+      {results.benefitInteractions.length > 0 && (
+        <div className="mb-8">
+          <BenefitInteractions interactions={results.benefitInteractions} />
+        </div>
+      )}
+
+      {/* Summary cards */}
+      {eligiblePrograms.length > 0 && (
+        <section>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+            Programs You May Qualify For
+          </h3>
+          <div className="space-y-3">
+            {eligiblePrograms.map((result) => (
+              <ProgramSummaryCard
+                key={result.programId}
+                result={result}
+                onViewDetails={goToPrograms}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+
+  const programsContent = (
+    <div>
+      {/* Likely Eligible Programs */}
+      {likelyPrograms.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            Programs You Likely Qualify For
+          </h2>
+          <div className="space-y-6">{renderProgramDetails(likelyPrograms)}</div>
+        </section>
+      )}
+
+      {/* Possibly Eligible Programs */}
+      {possiblePrograms.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            Programs You May Qualify For
+          </h2>
+          <div className="space-y-6">{renderProgramDetails(possiblePrograms)}</div>
+        </section>
+      )}
+
+      {/* Unlikely Programs (collapsed by default) */}
+      {unlikelyPrograms.length > 0 && (
+        <section className="mb-8">
+          <details className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+            <summary className="text-lg font-semibold text-gray-900 cursor-pointer">
+              Other Programs (based on your answers, these may not apply)
+            </summary>
+            <p className="text-sm text-gray-600 mt-2 mb-4">
+              Your situation may change, or you might have additional needs
+              that qualify you for these programs. Click a program to learn
+              more.
+            </p>
+            <div className="space-y-4 mt-4">
+              {unlikelyPrograms.map((result) => (
+                <ProgramCard key={result.programId} result={result} />
+              ))}
+            </div>
+          </details>
+        </section>
+      )}
+    </div>
+  );
+
+  const documentsContent = (
+    <div>
+      <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        Documents You&apos;ll Need
+      </h2>
+      <p className="text-gray-600 mb-6">
+        Gather these documents to speed up your applications.
+      </p>
+
+      {eligiblePrograms.length > 0 ? (
+        <div className="space-y-6">
+          {eligiblePrograms
+            .filter((r) => r.content.requiredDocuments.length > 0)
+            .map((result) => (
+              <DocumentChecklist
+                key={result.programId}
+                documents={result.content.requiredDocuments}
+                programName={result.content.name}
+              />
+            ))}
+        </div>
+      ) : (
+        <p className="text-gray-600">No document checklists available.</p>
+      )}
+    </div>
+  );
+
+  const resourcesContent = (
+    <div>
+      <ResourceDirectory
+        eligibleProgramIds={eligibleProgramIds}
+        familyContext={familyContext}
+      />
+      {!isAuthenticated && (
+        <div className="mt-8">
+          <AccountPrompt />
+        </div>
+      )}
+    </div>
+  );
+
+  const tabs: Tab[] = [
+    { id: 'overview', label: 'Overview', content: overviewContent },
+    { id: 'programs', label: 'Programs', content: programsContent },
+    { id: 'documents', label: 'Documents', content: documentsContent },
+    { id: 'resources', label: 'Resources', content: resourcesContent },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Page title */}
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          Your Results
+        </h1>
+
+        {/* Tabbed content */}
+        <TabNav
+          tabs={tabs}
+          defaultTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+
+        {/* Actions — always visible outside tabs */}
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8">
           <button
             onClick={handleStartOver}

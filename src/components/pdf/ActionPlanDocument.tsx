@@ -62,7 +62,7 @@ export function ActionPlanDocument({
           <View>
             <Text style={styles.sectionTitle}>How These Programs Work Together</Text>
             {interactions.map((interaction, index) => (
-              <View key={index} style={styles.interactionBox}>
+              <View key={index} style={styles.interactionBox} wrap={false}>
                 <Text style={styles.interactionTitle}>
                   {interaction.programs.map(id =>
                     results.find(r => r.programId === id)?.content.name || id
@@ -76,10 +76,12 @@ export function ActionPlanDocument({
         )}
 
         {/* Per-Program Details */}
-        {includedPrograms.map((result) => (
-          <View key={result.programId} style={styles.programSection}>
-            <Text style={styles.programName}>{result.content.name}</Text>
-            <View style={result.confidence === 'likely' ? styles.badgeLikely : styles.badgePossible}>
+        {includedPrograms.map((result, index) => (
+          <View key={result.programId} style={styles.programSection} break={index > 0}>
+            <Text style={styles.programName} minPresenceAhead={100}>
+              {result.content.name}
+            </Text>
+            <View style={result.confidence === 'likely' ? styles.badgeLikely : styles.badgePossible} wrap={false}>
               <Text>{result.confidence === 'likely' ? 'Likely Eligible' : 'May Be Eligible'}</Text>
             </View>
 
@@ -87,27 +89,27 @@ export function ActionPlanDocument({
             <Text style={styles.bodyText}>{result.content.description}</Text>
 
             {/* What It Covers */}
-            <Text style={styles.sectionTitle}>What It Covers</Text>
-            {result.content.whatItCovers.map((item, index) => (
-              <Text key={index} style={styles.listItem}>• {item}</Text>
+            <Text style={styles.sectionTitle} minPresenceAhead={100}>What It Covers</Text>
+            {result.content.whatItCovers.map((item, idx) => (
+              <Text key={idx} style={styles.listItem}>• {item}</Text>
             ))}
 
             {/* Next Steps */}
-            <Text style={styles.sectionTitle}>Your Next Steps</Text>
-            {result.content.nextSteps.map((step, index) => (
-              <Text key={index} style={styles.listItem}>
-                <Text style={styles.stepNumber}>{index + 1}.</Text> {step}
+            <Text style={styles.sectionTitle} minPresenceAhead={100}>Your Next Steps</Text>
+            {result.content.nextSteps.map((step, idx) => (
+              <Text key={idx} style={styles.listItem}>
+                <Text style={styles.stepNumber}>{idx + 1}.</Text> {step}
               </Text>
             ))}
 
             {/* Required Documents */}
-            <Text style={styles.sectionTitle}>Documents You'll Need</Text>
-            {result.content.requiredDocuments.map((doc, index) => (
-              <Text key={index} style={styles.documentItem}>☐ {doc}</Text>
+            <Text style={styles.sectionTitle} minPresenceAhead={100}>Documents You'll Need</Text>
+            {result.content.requiredDocuments.map((doc, idx) => (
+              <Text key={idx} style={styles.documentItem}>☐ {doc}</Text>
             ))}
 
             {/* Application Info */}
-            <View style={{ marginTop: 8 }}>
+            <View style={{ marginTop: 8 }} wrap={false}>
               <Text style={styles.bodyText}>
                 Apply online: <Link src={result.content.applicationUrl} style={styles.link}>
                   {result.content.applicationUrl}
@@ -122,7 +124,7 @@ export function ActionPlanDocument({
 
             {/* Waitlist Info (if applicable) */}
             {result.content.waitlistInfo && (
-              <View style={{ marginTop: 6, backgroundColor: '#fef3c7', padding: 8, borderRadius: 4 }}>
+              <View style={{ marginTop: 6, backgroundColor: '#fef3c7', padding: 8, borderRadius: 4 }} wrap={false}>
                 <Text style={{ fontSize: 10, color: '#92400e', fontWeight: 'bold' }}>
                   Important:
                 </Text>
@@ -134,11 +136,11 @@ export function ActionPlanDocument({
 
             {/* Insurance Coordination (if applicable) */}
             {result.content.insuranceCoordination && (
-              <View style={{ marginTop: 6, backgroundColor: '#eff6ff', padding: 8, borderRadius: 4 }}>
-                <Text style={{ fontSize: 10, color: '#1e40af', fontWeight: 'bold' }}>
+              <View style={{ marginTop: 6, backgroundColor: '#eff6ff', padding: 8, borderRadius: 4 }} wrap={false}>
+                <Text style={{ fontSize: 10, color: '#1a5d55', fontWeight: 'bold' }}>
                   If you have private insurance:
                 </Text>
-                <Text style={{ fontSize: 10, color: '#1e40af' }}>
+                <Text style={{ fontSize: 10, color: '#1a5d55' }}>
                   {result.content.insuranceCoordination}
                 </Text>
               </View>

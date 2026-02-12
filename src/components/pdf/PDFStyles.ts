@@ -3,6 +3,7 @@ import { StyleSheet } from '@react-pdf/renderer';
 export const styles = StyleSheet.create({
   page: {
     padding: 40,
+    paddingBottom: 80,
     fontFamily: 'Helvetica',
     fontSize: 12,
   },
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#1e3a8a',
+    color: '#1a5d55',
   },
   subtitle: {
     fontSize: 14,
@@ -22,7 +23,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
     marginTop: 16,
-    color: '#1e40af',
+    color: '#1a5d55',
   },
   bodyText: {
     fontSize: 11,
@@ -91,11 +92,11 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 6,
-    color: '#1e3a8a',
+    color: '#1a5d55',
   },
   stepNumber: {
     fontWeight: 'bold',
-    color: '#1e40af',
+    color: '#1a5d55',
   },
   documentItem: {
     marginLeft: 15,
@@ -116,10 +117,10 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     marginBottom: 6,
-    color: '#1e40af',
+    color: '#1a5d55',
   },
   link: {
-    color: '#2563eb',
+    color: '#1f7268',
     textDecoration: 'underline',
   },
   excludedNote: {
