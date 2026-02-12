@@ -4,7 +4,7 @@ export const michellePWaiverContent: ProgramContent = {
   programId: 'ky-michelle-p-waiver',
   name: 'Michelle P Waiver',
   description:
-    'This waiver helps young people under age 21 with disabilities get services at home. It adds extra help on top of Medicaid. You need Medicaid first to use this waiver.',
+    'This waiver helps people with disabilities get services at home. It adds extra help on top of Medicaid. You need Medicaid first to use this waiver.',
   whatItCovers: [
     'Respite care (breaks for caregivers)',
     'Personal care services',
@@ -24,14 +24,13 @@ export const michellePWaiverContent: ProgramContent = {
   requiredDocuments: [
     'Proof of Medicaid eligibility',
     'Diagnosis of intellectual or developmental disability',
-    'Proof of age (birth certificate)',
     'Kentucky residency verification',
   ],
   applicationUrl: 'https://chfs.ky.gov/agencies/dms/dca/Pages/default.aspx',
   applicationPhone: '1-800-635-2570',
   interactsWith: ['ky-medicaid'],
   interactionNotes:
-    'You need Medicaid to use the Michelle P Waiver. The waiver adds extra services on top of what Medicaid covers for children with disabilities. Apply for Medicaid first, then apply for the waiver.',
+    'You need Medicaid to use the Michelle P Waiver. The waiver adds extra services on top of what Medicaid covers for people with disabilities. Apply for Medicaid first, then apply for the waiver.',
   waitlistInfo:
     'This program has a waitlist. Getting on the list as early as possible is important. Once your name comes up, services can start quickly.',
 };

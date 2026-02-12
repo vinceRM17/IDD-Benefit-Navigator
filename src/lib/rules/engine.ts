@@ -176,9 +176,17 @@ export class EligibilityEngine {
       nextSteps.push('Apply through Social Security Administration');
       requiredDocuments.push('Medical records', 'Proof of income', 'Work history');
     } else if (program.programName === 'Michelle P Waiver') {
-      reasons.push('IDD diagnosis and age under 21');
+      reasons.push('IDD diagnosis qualifies for waiver services');
       nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
       requiredDocuments.push('IDD diagnosis documentation', 'Proof of Kentucky residency');
+    } else if (program.programName === 'HCB Waiver') {
+      reasons.push('IDD diagnosis and age 18+ qualifies for HCB waiver');
+      nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
+      requiredDocuments.push('Documentation of disability or medical condition', 'Proof of Medicaid eligibility', 'Proof of age (must be 18 or older)');
+    } else if (program.programName === 'SCL Waiver') {
+      reasons.push('IDD diagnosis and age 3+ qualifies for SCL waiver');
+      nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
+      requiredDocuments.push('IDD diagnosis documentation', 'Proof of Medicaid eligibility', 'Proof of Kentucky residency');
     } else {
       // Generic for TEST state or other programs
       reasons.push(`Meets eligibility criteria for ${program.programName}`);
@@ -221,8 +229,18 @@ export class EligibilityEngine {
     } else if (program.programName === 'Michelle P Waiver') {
       if (!facts.hasDisabilityDiagnosis) {
         reasons.push('No IDD diagnosis documented');
-      } else if (facts.age >= 21) {
-        reasons.push('Age exceeds program limit (must be under 21)');
+      }
+    } else if (program.programName === 'HCB Waiver') {
+      if (!facts.hasDisabilityDiagnosis) {
+        reasons.push('No IDD diagnosis documented');
+      } else if (facts.age < 18) {
+        reasons.push('Must be 18 or older for HCB Waiver');
+      }
+    } else if (program.programName === 'SCL Waiver') {
+      if (!facts.hasDisabilityDiagnosis) {
+        reasons.push('No IDD diagnosis documented');
+      } else if (facts.age < 3) {
+        reasons.push('Must be 3 or older for SCL Waiver');
       }
     } else {
       reasons.push(`Does not meet eligibility criteria for ${program.programName}`);

@@ -84,11 +84,6 @@
             "fact": "hasDisabilityDiagnosis",
             "operator": "equal",
             "value": true
-          },
-          {
-            "fact": "age",
-            "operator": "lessThan",
-            "value": 21
           }
         ]
       },
@@ -99,36 +94,86 @@
           "confidence": "possible"
         }
       }
+    },
+    {
+      "programId": "ky-hcb-waiver",
+      "programName": "HCB Waiver",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          },
+          {
+            "fact": "age",
+            "operator": "greaterThanInclusive",
+            "value": 18
+          }
+        ]
+      },
+      "event": {
+        "type": "hcb-waiver-eligible",
+        "params": {
+          "program": "HCB Waiver",
+          "confidence": "possible"
+        }
+      }
+    },
+    {
+      "programId": "ky-scl-waiver",
+      "programName": "SCL Waiver",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          },
+          {
+            "fact": "age",
+            "operator": "greaterThanInclusive",
+            "value": 3
+          }
+        ]
+      },
+      "event": {
+        "type": "scl-waiver-eligible",
+        "params": {
+          "program": "SCL Waiver",
+          "confidence": "possible"
+        }
+      }
     }
   ],
   "incomeLimits": {
     "medicaid": {
-      "1": 1677,
-      "2": 2268,
-      "3": 2859,
-      "4": 3450,
-      "5": 4041,
-      "6": 4632,
-      "7": 5223,
-      "8": 5814
+      "1": 1800,
+      "2": 2434,
+      "3": 3067,
+      "4": 3700,
+      "5": 4334,
+      "6": 4967,
+      "7": 5600,
+      "8": 6234
     },
     "snap": {
-      "1": 1580,
-      "2": 2137,
-      "3": 2694,
-      "4": 3250,
-      "5": 3807,
-      "6": 4364,
-      "7": 4921,
-      "8": 5478
+      "1": 2610,
+      "2": 3526,
+      "3": 4442,
+      "4": 5360,
+      "5": 6276,
+      "6": 7192,
+      "7": 8110,
+      "8": 9026
     },
     "ssi": {
-      "1": 943
+      "1": 994
     }
   },
   "metadata": {
-    "lastUpdated": "2024-01-01",
+    "lastUpdated": "2025-01-01",
     "source": "Kentucky Cabinet for Health and Family Services",
-    "effectiveDate": "2024-01-01"
+    "effectiveDate": "2025-01-01"
   }
 }

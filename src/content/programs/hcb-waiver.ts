@@ -4,7 +4,7 @@ export const hcbWaiverContent: ProgramContent = {
   programId: 'ky-hcb-waiver',
   name: 'HCB Waiver (Home and Community Based)',
   description:
-    'This waiver helps adults with disabilities get help at home. It adds more services on top of Medicaid. You need Medicaid first.',
+    'This waiver helps adults with disabilities stay at home. It adds more services on top of Medicaid. You need Medicaid first.',
   whatItCovers: [
     'Personal care services',
     'Respite care for caregivers',
@@ -23,7 +23,7 @@ export const hcbWaiverContent: ProgramContent = {
   ],
   requiredDocuments: [
     'Proof of Medicaid eligibility',
-    'Diagnosis of intellectual disability',
+    'Documentation of disability or medical condition',
     'Level of care assessment showing need for services',
     'Proof of age (must be 18 or older)',
   ],
