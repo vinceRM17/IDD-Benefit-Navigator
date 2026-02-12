@@ -24,7 +24,6 @@ export default function Step3Page() {
   const { formData, setStepData } = useScreeningStore();
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     watch,
@@ -84,7 +83,7 @@ export default function Step3Page() {
           helpText="Enter their current age in years"
           value={ageValue?.toString() || ''}
           onChange={(value) => {
-            register('age').onChange({ target: { value } });
+            setValue('age', value === '' ? undefined as any : Number(value), { shouldValidate: true });
           }}
           error={errors.age?.message}
           placeholder="e.g., 12"
@@ -121,9 +120,7 @@ export default function Step3Page() {
             required
             value={insuranceTypeValue || ''}
             onChange={(value) => {
-              register('insuranceType').onChange({
-                target: { value: value as 'employer' | 'marketplace' | 'none' },
-              });
+              setValue('insuranceType', value as 'employer' | 'marketplace' | 'none', { shouldValidate: true });
             }}
             error={errors.insuranceType?.message}
             placeholder="Select insurance type"

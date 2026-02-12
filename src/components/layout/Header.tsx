@@ -15,13 +15,13 @@ export async function Header({ currentPath = '/' }: HeaderProps) {
   ];
 
   return (
-    <header role="banner" className="bg-white shadow-sm border-b border-gray-200">
+    <header role="banner" className="bg-gradient-to-r from-blue-700 to-blue-800 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 gap-4">
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="text-xl font-semibold text-gray-900 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+              className="text-xl font-semibold text-white hover:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white rounded"
             >
               IDD Benefits Navigator
             </Link>
@@ -34,7 +34,7 @@ export async function Header({ currentPath = '/' }: HeaderProps) {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-gray-700 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1 inline-block"
+                      className="text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-white rounded px-2 py-1 inline-block"
                       aria-current={currentPath === link.href ? 'page' : undefined}
                     >
                       {link.label}

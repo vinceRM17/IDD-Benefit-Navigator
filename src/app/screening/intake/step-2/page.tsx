@@ -18,7 +18,6 @@ export default function Step2Page() {
   const { formData, setStepData } = useScreeningStore();
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     watch,
@@ -59,7 +58,7 @@ export default function Step2Page() {
           helpText="Your total household income before taxes, per month"
           value={monthlyIncomeValue?.toString() || ''}
           onChange={(value) => {
-            register('monthlyIncome').onChange({ target: { value } });
+            setValue('monthlyIncome', value === '' ? undefined as any : Number(value), { shouldValidate: true });
           }}
           error={errors.monthlyIncome?.message}
           placeholder="e.g., 2500"

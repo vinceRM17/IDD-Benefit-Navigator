@@ -27,7 +27,7 @@ export function AuthControls({ email }: AuthControlsProps) {
     return (
       <Link
         href="/auth/login"
-        className="text-blue-700 hover:text-blue-800 font-medium text-sm px-3 py-2 rounded-md hover:bg-blue-50"
+        className="text-white hover:text-blue-100 font-medium text-sm px-3 py-2 rounded-md hover:bg-white/10"
       >
         Sign In
       </Link>
@@ -36,17 +36,17 @@ export function AuthControls({ email }: AuthControlsProps) {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-600 hidden sm:inline">{email}</span>
+      <span className="text-sm text-blue-100 hidden sm:inline">{email}</span>
       <Link
         href="/dashboard"
-        className="text-gray-700 hover:text-blue-700 text-sm font-medium px-2 py-1"
+        className="text-white hover:text-blue-100 text-sm font-medium px-2 py-1"
       >
         Dashboard
       </Link>
       <button
         onClick={handleSignOut}
         disabled={signingOut}
-        className="text-sm text-gray-600 hover:text-gray-800 px-2 py-1"
+        className="text-sm text-blue-200 hover:text-white px-2 py-1"
       >
         {signingOut ? 'Signing out...' : 'Sign Out'}
       </button>

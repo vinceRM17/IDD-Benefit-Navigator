@@ -12,13 +12,11 @@ import { ScreeningResults } from '@/lib/results/types';
 interface ScreeningState {
   currentStep: number;
   formData: Partial<FullScreeningData>;
-  isHydrated: boolean;
   results: ScreeningResults | null;
   setStepData: (data: Partial<FullScreeningData>) => void;
   nextStep: () => void;
   prevStep: () => void;
   reset: () => void;
-  setHydrated: (hydrated: boolean) => void;
   setResults: (results: ScreeningResults) => void;
 }
 
@@ -27,7 +25,6 @@ export const useScreeningStore = create<ScreeningState>()(
     (set, get) => ({
       currentStep: 1,
       formData: {},
-      isHydrated: false,
       results: null,
 
       setStepData: (data) => {
@@ -56,10 +53,6 @@ export const useScreeningStore = create<ScreeningState>()(
         });
       },
 
-      setHydrated: (hydrated) => {
-        set({ isHydrated: hydrated });
-      },
-
       setResults: (results) => {
         set({ results });
       },
@@ -71,11 +64,7 @@ export const useScreeningStore = create<ScreeningState>()(
       partialize: (state) => ({
         currentStep: state.currentStep,
         formData: state.formData,
-        isHydrated: state.isHydrated,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHydrated(true);
-      },
     }
   )
 );

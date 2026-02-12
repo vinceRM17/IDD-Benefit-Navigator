@@ -15,13 +15,14 @@ import { AccessibleInput, AccessibleSelect } from '@/components/forms';
  */
 export default function Step1Page() {
   const router = useRouter();
-  const { formData, setStepData } = useScreeningStore();
+  const formData = useScreeningStore((s) => s.formData);
+  const setStepData = useScreeningStore((s) => s.setStepData);
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -51,7 +52,7 @@ export default function Step1Page() {
           required
           value={stateValue || ''}
           onChange={(value) => {
-            register('state').onChange({ target: { value } });
+            setValue('state', value as 'KY', { shouldValidate: true });
           }}
           error={errors.state?.message}
           placeholder="Select your state"
@@ -65,7 +66,7 @@ export default function Step1Page() {
           helpText="Include everyone living in your home"
           value={householdSizeValue?.toString() || ''}
           onChange={(value) => {
-            register('householdSize').onChange({ target: { value } });
+            setValue('householdSize', value === '' ? undefined as any : Number(value), { shouldValidate: true });
           }}
           error={errors.householdSize?.message}
           placeholder="e.g., 4"
