@@ -1,14 +1,19 @@
+/**
+ * Placeholder results page
+ * TODO: Replace with actual eligibility results in plan 02-03
+ */
 export default function ResultsPendingPage() {
   return (
-    <div className="flex flex-col items-center justify-center py-12 px-4">
-      <div className="max-w-2xl text-center">
-        <h1 className="text-3xl font-bold mb-4 text-gray-900">
-          Results Coming Soon
-        </h1>
-        <p className="text-lg text-gray-700">
-          This is a placeholder page. The results engine will be implemented in plan 02-03.
-        </p>
-      </div>
+    <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+      <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        Results Coming Soon
+      </h1>
+      <p className="text-lg text-gray-600">
+        This page will show your personalized benefit eligibility results.
+      </p>
+      <p className="text-sm text-gray-500 mt-4">
+        Implementation planned for phase 02, plan 03.
+      </p>
     </div>
   );
 }
