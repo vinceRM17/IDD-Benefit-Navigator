@@ -1,0 +1,132 @@
+import { StyleSheet } from '@react-pdf/renderer';
+
+export const styles = StyleSheet.create({
+  page: {
+    padding: 40,
+    fontFamily: 'Helvetica',
+    fontSize: 12,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#1e3a8a',
+  },
+  subtitle: {
+    fontSize: 14,
+    marginBottom: 8,
+    color: '#64748b',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    marginTop: 16,
+    color: '#1e40af',
+  },
+  bodyText: {
+    fontSize: 11,
+    lineHeight: 1.5,
+    color: '#374151',
+    marginBottom: 8,
+  },
+  listItem: {
+    marginLeft: 15,
+    marginBottom: 4,
+    fontSize: 11,
+    color: '#374151',
+    lineHeight: 1.4,
+  },
+  badgeLikely: {
+    backgroundColor: '#dcfce7',
+    color: '#166534',
+    padding: 4,
+    borderRadius: 4,
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    maxWidth: 120,
+  },
+  badgePossible: {
+    backgroundColor: '#fef3c7',
+    color: '#92400e',
+    padding: 4,
+    borderRadius: 4,
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    maxWidth: 120,
+  },
+  divider: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+    marginVertical: 10,
+  },
+  header: {
+    marginBottom: 20,
+  },
+  generatedDate: {
+    fontSize: 10,
+    color: '#6b7280',
+    marginBottom: 12,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 30,
+    left: 40,
+    right: 40,
+    fontSize: 9,
+    color: '#6b7280',
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+    paddingTop: 10,
+  },
+  programSection: {
+    marginBottom: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  programName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#1e3a8a',
+  },
+  stepNumber: {
+    fontWeight: 'bold',
+    color: '#1e40af',
+  },
+  documentItem: {
+    marginLeft: 15,
+    marginBottom: 3,
+    fontSize: 11,
+    color: '#374151',
+  },
+  quickList: {
+    marginBottom: 16,
+  },
+  interactionBox: {
+    backgroundColor: '#eff6ff',
+    padding: 12,
+    borderRadius: 4,
+    marginBottom: 16,
+  },
+  interactionTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#1e40af',
+  },
+  link: {
+    color: '#2563eb',
+    textDecoration: 'underline',
+  },
+  excludedNote: {
+    fontSize: 10,
+    color: '#6b7280',
+    fontStyle: 'italic',
+    marginTop: 12,
+    marginBottom: 16,
+  },
+});
