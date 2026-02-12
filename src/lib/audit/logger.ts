@@ -38,27 +38,31 @@ const auditFormat = winston.format.combine(
 );
 
 /**
- * Daily rotating file transport for audit logs
- * Retains logs for 90 days to meet HIPAA retention requirements
+ * Detect serverless environment where filesystem is read-only
  */
-const auditFileTransport = new DailyRotateFile({
-  filename: path.join(logDir, 'audit-%DATE%.log'),
-  datePattern: 'YYYY-MM-DD',
-  maxFiles: '90d', // 90-day retention
-  format: auditFormat,
-  level: 'info',
-});
+const isServerless = !!process.env.VERCEL || !!process.env.AWS_LAMBDA_FUNCTION_NAME;
 
 /**
- * Daily rotating file transport for error logs
+ * Daily rotating file transports (only used when filesystem is writable)
  */
-const errorFileTransport = new DailyRotateFile({
-  filename: path.join(logDir, 'error-%DATE%.log'),
-  datePattern: 'YYYY-MM-DD',
-  maxFiles: '90d',
-  format: auditFormat,
-  level: 'error',
-});
+const fileTransports = isServerless
+  ? []
+  : [
+      new DailyRotateFile({
+        filename: path.join(logDir, 'audit-%DATE%.log'),
+        datePattern: 'YYYY-MM-DD',
+        maxFiles: '90d',
+        format: auditFormat,
+        level: 'info',
+      }),
+      new DailyRotateFile({
+        filename: path.join(logDir, 'error-%DATE%.log'),
+        datePattern: 'YYYY-MM-DD',
+        maxFiles: '90d',
+        format: auditFormat,
+        level: 'error',
+      }),
+    ];
 
 /**
  * Console transport for development
@@ -81,10 +85,11 @@ export const auditLogger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: auditFormat,
   transports: [
-    auditFileTransport,
-    errorFileTransport,
-    // Only use console in development
-    ...(process.env.NODE_ENV === 'development' ? [consoleTransport] : []),
+    ...fileTransports,
+    // Use console in development or serverless (where file writes are unavailable)
+    ...(process.env.NODE_ENV === 'development' || isServerless
+      ? [consoleTransport]
+      : []),
   ],
   // Don't exit on handled exceptions
   exitOnError: false,
