@@ -8,6 +8,24 @@ import type { HouseholdFacts, EligibilityResult, StateConfig, ProgramRule } from
 
 /**
  * Eligibility evaluation engine
+ *
+ * Wraps json-rules-engine to evaluate household facts against state-specific
+ * benefit program rules. The engine is state-agnostic - program rules are
+ * loaded from JSON configuration files, not hardcoded.
+ *
+ * @example
+ * ```typescript
+ * const config = await loadStateConfig('KY');
+ * const engine = new EligibilityEngine(config);
+ * const results = await engine.evaluate({
+ *   state: 'KY',
+ *   householdSize: 4,
+ *   monthlyIncome: 2000,
+ *   hasDisabilityDiagnosis: true,
+ *   age: 8,
+ *   hasInsurance: false,
+ * });
+ * ```
  */
 export class EligibilityEngine {
   private engine: Engine;
@@ -27,14 +45,14 @@ export class EligibilityEngine {
 
     // Add custom fact for income limits based on household size and program
     this.engine.addFact('incomeLimitMedicaid', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size: number) => {
-        return this.config.incomeLimits.medicaid?.[size] || 0;
+      return almanac.factValue('householdSize').then((size) => {
+        return this.config.incomeLimits.medicaid?.[size as number] || 0;
       });
     });
 
     this.engine.addFact('incomeLimitSNAP', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size: number) => {
-        return this.config.incomeLimits.snap?.[size] || 0;
+      return almanac.factValue('householdSize').then((size) => {
+        return this.config.incomeLimits.snap?.[size as number] || 0;
       });
     });
 
@@ -221,9 +239,30 @@ export class EligibilityEngine {
 
 /**
  * Convenience function to evaluate eligibility for a state
- * @param stateCode - State abbreviation (e.g., "KY")
+ *
+ * Loads the state configuration, creates an engine, and evaluates
+ * household facts in one call.
+ *
+ * @param stateCode - State abbreviation (e.g., "KY", "TEST")
  * @param facts - Household information
- * @returns Array of eligibility results
+ * @returns Array of eligibility results for all state programs
+ * @throws Error if state configuration not found or facts are invalid
+ *
+ * @example
+ * ```typescript
+ * const results = await evaluateEligibility('KY', {
+ *   state: 'KY',
+ *   householdSize: 2,
+ *   monthlyIncome: 1500,
+ *   hasDisabilityDiagnosis: true,
+ *   age: 25,
+ *   hasInsurance: false,
+ * });
+ *
+ * results.forEach(r => {
+ *   console.log(`${r.program}: ${r.eligible ? 'eligible' : 'not eligible'}`);
+ * });
+ * ```
  */
 export async function evaluateEligibility(
   stateCode: string,

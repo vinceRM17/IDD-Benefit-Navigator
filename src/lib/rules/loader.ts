@@ -12,9 +12,21 @@ const configDir = path.join(process.cwd(), 'src/lib/rules/config');
 
 /**
  * Load and validate state configuration
+ *
+ * Searches for state configuration directory by reading stateCode from
+ * each config file. Validates the configuration against the JSON schema
+ * before returning.
+ *
  * @param stateCode - State abbreviation (e.g., "KY", "TEST")
- * @returns Validated state configuration
+ * @returns Validated state configuration with programs and income limits
  * @throws Error if state not found or validation fails
+ *
+ * @example
+ * ```typescript
+ * const config = await loadStateConfig('KY');
+ * console.log(config.programs); // Array of program rules
+ * console.log(config.incomeLimits.medicaid[4]); // HH4 Medicaid limit
+ * ```
  */
 export async function loadStateConfig(stateCode: string): Promise<StateConfig> {
   // Find the directory for this state code
@@ -66,7 +78,17 @@ export async function loadStateConfig(stateCode: string): Promise<StateConfig> {
 
 /**
  * Get list of available state codes
+ *
+ * Scans the config directory and reads the stateCode from each
+ * state's programs.json file.
+ *
  * @returns Array of state codes (e.g., ["KY", "TEST"])
+ *
+ * @example
+ * ```typescript
+ * const states = await getAvailableStates();
+ * console.log(states); // ["KY", "TEST"]
+ * ```
  */
 export async function getAvailableStates(): Promise<string[]> {
   try {
