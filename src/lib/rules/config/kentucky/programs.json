@@ -1,0 +1,134 @@
+{
+  "stateCode": "KY",
+  "stateName": "Kentucky",
+  "programs": [
+    {
+      "programId": "ky-medicaid",
+      "programName": "Medicaid",
+      "conditions": {
+        "any": [
+          {
+            "all": [
+              {
+                "fact": "monthlyIncome",
+                "operator": "lessThanInclusive",
+                "value": {
+                  "fact": "incomeLimitMedicaid"
+                }
+              }
+            ]
+          },
+          {
+            "fact": "receivesSSI",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "medicaid-eligible",
+        "params": {
+          "program": "Medicaid",
+          "confidence": "likely"
+        }
+      }
+    },
+    {
+      "programId": "ky-snap",
+      "programName": "SNAP",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": {
+              "fact": "incomeLimitSNAP"
+            }
+          }
+        ]
+      },
+      "event": {
+        "type": "snap-eligible",
+        "params": {
+          "program": "SNAP",
+          "confidence": "likely"
+        }
+      }
+    },
+    {
+      "programId": "ky-ssi",
+      "programName": "SSI",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "ssi-eligible",
+        "params": {
+          "program": "SSI",
+          "confidence": "possible"
+        }
+      }
+    },
+    {
+      "programId": "ky-michelle-p-waiver",
+      "programName": "Michelle P Waiver",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          },
+          {
+            "fact": "age",
+            "operator": "lessThan",
+            "value": 21
+          }
+        ]
+      },
+      "event": {
+        "type": "waiver-eligible",
+        "params": {
+          "program": "Michelle P Waiver",
+          "confidence": "possible"
+        }
+      }
+    }
+  ],
+  "incomeLimits": {
+    "medicaid": {
+      "1": 1677,
+      "2": 2268,
+      "3": 2859,
+      "4": 3450,
+      "5": 4041,
+      "6": 4632,
+      "7": 5223,
+      "8": 5814
+    },
+    "snap": {
+      "1": 1580,
+      "2": 2137,
+      "3": 2694,
+      "4": 3250,
+      "5": 3807,
+      "6": 4364,
+      "7": 4921,
+      "8": 5478
+    },
+    "ssi": {
+      "1": 943
+    }
+  },
+  "metadata": {
+    "lastUpdated": "2024-01-01",
+    "source": "Kentucky Cabinet for Health and Family Services",
+    "effectiveDate": "2024-01-01"
+  }
+}

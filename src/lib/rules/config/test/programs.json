@@ -1,0 +1,61 @@
+{
+  "stateCode": "TEST",
+  "stateName": "Test State",
+  "programs": [
+    {
+      "programId": "test-benefit-a",
+      "programName": "Test Benefit A",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": {
+              "fact": "incomeLimitTestBenefitA"
+            }
+          }
+        ]
+      },
+      "event": {
+        "type": "test-benefit-a-eligible",
+        "params": {
+          "program": "Test Benefit A",
+          "confidence": "likely"
+        }
+      }
+    },
+    {
+      "programId": "test-benefit-b",
+      "programName": "Test Benefit B",
+      "conditions": {
+        "all": [
+          {
+            "fact": "age",
+            "operator": "lessThan",
+            "value": 18
+          }
+        ]
+      },
+      "event": {
+        "type": "test-benefit-b-eligible",
+        "params": {
+          "program": "Test Benefit B",
+          "confidence": "likely"
+        }
+      }
+    }
+  ],
+  "incomeLimits": {
+    "test-benefit-a": {
+      "1": 2000,
+      "2": 3000,
+      "3": 4000,
+      "4": 5000
+    }
+  },
+  "metadata": {
+    "lastUpdated": "2024-01-01",
+    "source": "Test Configuration",
+    "effectiveDate": "2024-01-01"
+  }
+}
