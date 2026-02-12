@@ -25,6 +25,17 @@ const config: Config = {
       moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
       },
+      transformIgnorePatterns: [
+        'node_modules/(?!(text-readability|syllable)/)',
+      ],
+      transform: {
+        '^.+\\.ts$': ['ts-jest', {
+          useESM: false,
+        }],
+        '^.+\\.js$': ['ts-jest', {
+          useESM: false,
+        }],
+      },
     },
     {
       displayName: 'jsdom',
