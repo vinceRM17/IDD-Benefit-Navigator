@@ -10,6 +10,7 @@
     "test": "jest --verbose"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
     "ajv": "^8.17.1",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -20,9 +21,13 @@
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.71.1",
+    "text-readability": "^1.1.1",
     "uuid": "^13.0.0",
     "winston": "^3.19.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "zod": "^3.25.76",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@axe-core/react": "^4.11.1",
