@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { partnerOrganizations } from '@/content/resources/partners';
 import { applicationPortals } from '@/content/resources/portals';
 
@@ -113,9 +114,12 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext }: Resourc
                 className="border border-gray-200 rounded-lg p-6 bg-white shadow-sm"
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <h4 className="text-lg font-semibold text-gray-900">
+                  <Link
+                    href={`/resources/${org.id}`}
+                    className="text-lg font-semibold text-blue-700 hover:underline"
+                  >
                     {org.name}
-                  </h4>
+                  </Link>
                   {org.isRecommended && (
                     <span className="flex-shrink-0 text-xs bg-green-50 text-green-700 border border-green-200 px-2 py-1 rounded-full font-medium">
                       Recommended for you
@@ -147,39 +151,62 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext }: Resourc
                 </div>
 
                 {/* Contact Info */}
-                <div className="flex flex-wrap gap-4 text-sm">
-                  <div>
-                    <span className="font-medium text-gray-900">Phone: </span>
-                    <a
-                      href={`tel:${org.phone}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {org.phone}
-                    </a>
-                  </div>
-                  {org.email && (
+                <div className="space-y-3">
+                  <div className="flex flex-wrap gap-4 text-sm">
                     <div>
-                      <span className="font-medium text-gray-900">Email: </span>
+                      <span className="font-medium text-gray-900">Phone: </span>
                       <a
-                        href={`mailto:${org.email}`}
+                        href={`tel:${org.phone}`}
                         className="text-blue-600 hover:underline"
                       >
-                        {org.email}
+                        {org.phone}
                       </a>
                     </div>
-                  )}
-                  <div>
-                    <span className="font-medium text-gray-900">Website: </span>
-                    <a
-                      href={org.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      {org.website.replace(/^https?:\/\//, '')}
-                      <span className="sr-only"> (opens in new window)</span>
-                    </a>
+                    {org.email && (
+                      <div>
+                        <span className="font-medium text-gray-900">Email: </span>
+                        <a
+                          href={`mailto:${org.email}`}
+                          className="text-blue-600 hover:underline"
+                        >
+                          {org.email}
+                        </a>
+                      </div>
+                    )}
+                    <div>
+                      <span className="font-medium text-gray-900">Website: </span>
+                      <a
+                        href={org.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {org.website.replace(/^https?:\/\//, '')}
+                        <span className="sr-only"> (opens in new window)</span>
+                      </a>
+                    </div>
                   </div>
+
+                  {/* Refer Me button or Contact Directly message */}
+                  {org.email ? (
+                    <Link
+                      href={`/referral?partner=${org.id}`}
+                      className="inline-block bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      Refer Me
+                    </Link>
+                  ) : (
+                    <p className="text-sm text-gray-600">
+                      <span className="font-medium">Contact directly:</span> Call{' '}
+                      <a
+                        href={`tel:${org.phone}`}
+                        className="text-blue-600 hover:underline"
+                      >
+                        {org.phone}
+                      </a>{' '}
+                      for assistance
+                    </p>
+                  )}
                 </div>
 
                 {/* Service Area */}

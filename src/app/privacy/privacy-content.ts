@@ -47,6 +47,12 @@ export const privacyPolicy: PolicySection[] = [
       'For security and compliance purposes, we log access events such as:\n\n• Who accessed what information (user ID or "anonymous")\n• When the access occurred\n• IP address of the request\n• Success or failure of the action\n\nThese audit logs do NOT contain your screening answers or eligibility results - only metadata about system access. Logs are retained for 90 days for security analysis and then permanently deleted.',
   },
   {
+    id: 'referrals',
+    title: 'Referrals',
+    content:
+      'When you submit a referral, we share your name, email, phone number (if provided), and a summary of programs you may be eligible for with the selected partner organization(s).\n\nWe do not share raw income figures, diagnosis details, or other sensitive screening data with partner organizations. The referral includes only high-level eligibility information to help partners understand how they can assist you.\n\nEach partner organization has their own privacy practices. We recommend reviewing their policies directly before submitting a referral.\n\nReferral emails are sent via Postmark, our email service provider. We track whether the partner organization has opened the email to provide you with status updates (shown as "Sent" or "Viewed" in your dashboard).\n\nFor authenticated users, referral history is stored in your account and deleted when you delete your account. For anonymous users, referral records are stored temporarily and are not linked to any persistent account.',
+  },
+  {
     id: 'your-rights',
     title: 'Your Rights',
     content:
@@ -60,4 +66,4 @@ export const privacyPolicy: PolicySection[] = [
   },
 ];
 
-export const lastUpdated = '2026-02-11';
+export const lastUpdated = '2026-02-12';
