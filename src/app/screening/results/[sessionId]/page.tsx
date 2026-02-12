@@ -217,7 +217,10 @@ export default function ResultsPage() {
         )}
 
         {/* Resource Directory */}
-        <ResourceDirectory eligibleProgramIds={eligibleProgramIds} />
+        <ResourceDirectory
+          eligibleProgramIds={eligibleProgramIds}
+          familyContext={familyContext}
+        />
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8">

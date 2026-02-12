@@ -31,6 +31,7 @@ export const partnerOrganizations: PartnerOrganization[] = [
       'ky-ssdi',
       'ky-snap',
     ],
+    servicesOffered: ['benefits-navigation', 'advocacy', 'family-support', 'education'],
   },
   {
     id: 'southwest-cil',
@@ -56,6 +57,7 @@ export const partnerOrganizations: PartnerOrganization[] = [
       'ky-ssdi',
       'ky-snap',
     ],
+    servicesOffered: ['independent-living', 'advocacy', 'assistive-technology'],
   },
   {
     id: 'mattingly-edge',
@@ -74,6 +76,7 @@ export const partnerOrganizations: PartnerOrganization[] = [
     address: '3941 Dutchmans Lane, Louisville, KY 40207',
     servesArea: 'Louisville Metro and surrounding counties',
     relevantPrograms: ['ky-michelle-p-waiver', 'ky-hcb-waiver', 'ky-scl-waiver', 'ky-medicaid'],
+    servicesOffered: ['employment', 'community-integration', 'job-training'],
   },
   {
     id: 'best-buddies-ky',
@@ -91,6 +94,7 @@ export const partnerOrganizations: PartnerOrganization[] = [
     website: 'https://www.bestbuddies.org/kentucky',
     servesArea: 'Statewide',
     relevantPrograms: ['ky-michelle-p-waiver', 'ky-hcb-waiver', 'ky-scl-waiver'],
+    servicesOffered: ['social-inclusion', 'peer-support', 'community-events'],
   },
   {
     id: 'ky-dcbs',
@@ -107,6 +111,7 @@ export const partnerOrganizations: PartnerOrganization[] = [
     website: 'https://chfs.ky.gov/agencies/dcbs',
     servesArea: 'Statewide',
     relevantPrograms: ['ky-medicaid', 'ky-snap', 'ky-michelle-p-waiver', 'ky-hcb-waiver', 'ky-scl-waiver'],
+    servicesOffered: ['application-assistance', 'case-management'],
   },
   {
     id: 'ssa-kentucky',
@@ -123,5 +128,6 @@ export const partnerOrganizations: PartnerOrganization[] = [
     website: 'https://www.ssa.gov',
     servesArea: 'Statewide',
     relevantPrograms: ['ky-ssi', 'ky-ssdi'],
+    servicesOffered: ['application-assistance', 'disability-determination'],
   },
 ];

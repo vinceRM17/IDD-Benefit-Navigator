@@ -35,6 +35,9 @@ export interface PartnerOrganization {
 
   /** Program IDs they can help with */
   relevantPrograms: string[];
+
+  /** Specific service categories offered */
+  servicesOffered?: string[];
 }
 
 export interface ApplicationPortal {
