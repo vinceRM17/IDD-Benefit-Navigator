@@ -26,7 +26,7 @@ const config: Config = {
         '^@/(.*)$': '<rootDir>/src/$1',
       },
       transformIgnorePatterns: [
-        'node_modules/(?!(text-readability|syllable)/)',
+        'node_modules/(?!(text-readability|syllable|jose)/)',
       ],
       transform: {
         '^.+\\.ts$': ['ts-jest', {

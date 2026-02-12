@@ -26,13 +26,21 @@ function getClientIp(request: NextRequest): string {
 }
 
 /**
- * Extract user ID from request (session, JWT, etc.)
- * Returns 'anonymous' if no user session exists
+ * Extract user ID from request cookie
+ * Returns 'anonymous' if no valid session exists
  */
 function getUserId(request: NextRequest): string {
-  // TODO: Extract from session/JWT when auth is implemented
-  // For now, return anonymous
-  return 'anonymous';
+  const cookie = request.cookies.get('idd_auth_session');
+  if (!cookie?.value) {
+    return 'anonymous';
+  }
+  // JWT payload is base64url in the second segment — decode for userId
+  try {
+    const payload = JSON.parse(atob(cookie.value.split('.')[1]));
+    return payload.userId ? String(payload.userId) : 'anonymous';
+  } catch {
+    return 'anonymous';
+  }
 }
 
 /**
