@@ -7,7 +7,7 @@ interface MainLayoutProps {
   currentPath?: string;
 }
 
-export function MainLayout({ children, currentPath }: MainLayoutProps) {
+export async function MainLayout({ children, currentPath }: MainLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <SkipLink />

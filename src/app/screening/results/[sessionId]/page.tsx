@@ -14,6 +14,7 @@ import {
   BenefitInteractions,
   DocumentChecklist,
   AIExplanation,
+  AccountPrompt,
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
@@ -23,10 +24,15 @@ export default function ResultsPage() {
   const router = useRouter();
   const { results, formData, reset } = useScreeningStore();
   const [mounted, setMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Handle client-side mounting to avoid hydration mismatch
+  // Handle client-side mounting and check auth status
   useEffect(() => {
     setMounted(true);
+    // Lightweight auth check — 401 means anonymous
+    fetch('/api/screenings')
+      .then((res) => setIsAuthenticated(res.ok))
+      .catch(() => setIsAuthenticated(false));
   }, []);
 
   // If no results, redirect to screening start
@@ -215,6 +221,9 @@ export default function ResultsPage() {
             </details>
           </section>
         )}
+
+        {/* Account Prompt for anonymous users */}
+        {!isAuthenticated && <AccountPrompt />}
 
         {/* Resource Directory */}
         <ResourceDirectory
