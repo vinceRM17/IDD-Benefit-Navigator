@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useScreeningStore } from '@/lib/screening/store';
 import { fullSchema } from '@/lib/screening/schema';
 import { QuestionCard } from '@/components/screening/QuestionCard';
+import { formDataToHouseholdFacts, generateSessionId } from '@/lib/screening/utils';
 
 /**
  * Review page - displays all collected form data
@@ -13,10 +14,15 @@ import { QuestionCard } from '@/components/screening/QuestionCard';
  */
 export default function ReviewPage() {
   const router = useRouter();
-  const { formData } = useScreeningStore();
+  const { formData, setResults } = useScreeningStore();
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleGetResults = () => {
+  const handleGetResults = async () => {
+    setValidationErrors([]);
+    setError(null);
+
     // Validate complete form data
     const result = fullSchema.safeParse(formData);
 
@@ -29,8 +35,41 @@ export default function ReviewPage() {
       return;
     }
 
-    // Navigate to results page (placeholder until 02-03)
-    router.push('/screening/results/pending');
+    try {
+      setIsLoading(true);
+
+      // Convert form data to HouseholdFacts format
+      const householdFacts = formDataToHouseholdFacts(result.data);
+
+      // Call evaluation API
+      const response = await fetch('/api/screening/evaluate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(householdFacts),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to evaluate eligibility');
+      }
+
+      const screeningResults = await response.json();
+
+      // Store results in Zustand
+      setResults(screeningResults);
+
+      // Generate session ID and navigate to results page
+      const sessionId = generateSessionId();
+      router.push(`/screening/results/${sessionId}`);
+    } catch (err) {
+      console.error('Error evaluating screening:', err);
+      setError(
+        'Something went wrong while finding benefits for your family. Please try again or contact us for help.'
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePrevious = () => {
@@ -154,6 +193,30 @@ export default function ReviewPage() {
           </dl>
         </div>
 
+        {/* Loading state */}
+        {isLoading && (
+          <div
+            className="bg-blue-50 border border-blue-200 rounded-lg p-4"
+            role="status"
+            aria-live="polite"
+          >
+            <p className="text-blue-900 font-medium">
+              Finding benefits for your family...
+            </p>
+          </div>
+        )}
+
+        {/* API Error */}
+        {error && (
+          <div
+            className="bg-red-50 border border-red-200 rounded-lg p-4"
+            role="alert"
+            aria-live="assertive"
+          >
+            <p className="text-red-900">{error}</p>
+          </div>
+        )}
+
         {/* Validation Errors */}
         {validationErrors.length > 0 && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -180,9 +243,10 @@ export default function ReviewPage() {
           <button
             type="button"
             onClick={handleGetResults}
-            className="bg-blue-600 text-white font-semibold px-8 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px]"
+            disabled={isLoading}
+            className="bg-blue-600 text-white font-semibold px-8 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Get My Results
+            {isLoading ? 'Finding benefits...' : 'Get My Results'}
           </button>
         </div>
       </div>

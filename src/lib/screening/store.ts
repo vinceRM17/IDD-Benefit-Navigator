@@ -1,21 +1,25 @@
 /**
  * Zustand store with persist middleware for screening form state
  * Persists to localStorage so families don't lose progress on browser refresh
+ * Results are NOT persisted (sensitive data)
  */
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { FullScreeningData } from './schema';
+import { ScreeningResults } from '@/lib/results/types';
 
 interface ScreeningState {
   currentStep: number;
   formData: Partial<FullScreeningData>;
   isHydrated: boolean;
+  results: ScreeningResults | null;
   setStepData: (data: Partial<FullScreeningData>) => void;
   nextStep: () => void;
   prevStep: () => void;
   reset: () => void;
   setHydrated: (hydrated: boolean) => void;
+  setResults: (results: ScreeningResults) => void;
 }
 
 export const useScreeningStore = create<ScreeningState>()(
@@ -24,6 +28,7 @@ export const useScreeningStore = create<ScreeningState>()(
       currentStep: 1,
       formData: {},
       isHydrated: false,
+      results: null,
 
       setStepData: (data) => {
         set((state) => ({
@@ -47,16 +52,27 @@ export const useScreeningStore = create<ScreeningState>()(
         set({
           currentStep: 1,
           formData: {},
+          results: null,
         });
       },
 
       setHydrated: (hydrated) => {
         set({ isHydrated: hydrated });
       },
+
+      setResults: (results) => {
+        set({ results });
+      },
     }),
     {
       name: 'idd-screening-storage',
       storage: createJSONStorage(() => localStorage),
+      // Only persist form data and currentStep, NOT results (sensitive data)
+      partialize: (state) => ({
+        currentStep: state.currentStep,
+        formData: state.formData,
+        isHydrated: state.isHydrated,
+      }),
       onRehydrateStorage: () => (state) => {
         state?.setHydrated(true);
       },
