@@ -11,12 +11,11 @@ export const ssiContent: ProgramContent = {
     'Automatic Medicaid eligibility in Kentucky',
   ],
   nextSteps: [
-    'Gather the papers listed below',
-    'Call 1-800-772-1213 to set up a meeting',
-    'Or apply online at ssa.gov/apply/ssi',
-    'Bring your papers or upload them',
-    'Share medical records',
-    'This can take 3-5 months',
+    'Call 1-800-772-1213',
+    'Or go to ssa.gov online',
+    'Get your papers ready',
+    'Send them in',
+    'They will decide in 3-5 months',
   ],
   requiredDocuments: [
     'Medical records and disability diagnosis',

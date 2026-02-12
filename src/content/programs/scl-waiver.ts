@@ -22,13 +22,12 @@ export const sclWaiverContent: ProgramContent = {
   ],
 
   nextSteps: [
-    'Make sure you have Medicaid first',
-    'Get a disability diagnosis',
-    'Call 1-800-635-2570 to ask for a form',
-    'Fill out the form',
-    'Do a needs check',
-    'Join the waitlist if needed',
-    'Once approved, work with your helper',
+    'Get Medicaid first',
+    'Call 1-800-635-2570 for the waiver form',
+    'Fill it out with help if you need it',
+    'Do the needs check they ask for',
+    'Get on the waitlist',
+    'Wait for your turn',
   ],
 
   requiredDocuments: [

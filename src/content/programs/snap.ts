@@ -16,7 +16,7 @@ export const snapContent: ProgramContent = {
     'Go to kynect.ky.gov or call 1-855-459-6328',
     'Fill out the form',
     'Send in your papers',
-    'Do a phone interview (required)',
+    'Do a phone call',
     'You should hear back in 30 days',
   ],
   requiredDocuments: [
