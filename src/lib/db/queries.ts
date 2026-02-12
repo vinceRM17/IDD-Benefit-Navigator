@@ -1,7 +1,7 @@
 import { eq, and, isNull, isNotNull, desc, lte, sql } from 'drizzle-orm';
 import { db } from './client';
-import { users, screenings, reminderPreferences, emailLog } from './schema';
-import type { NewUser, NewScreening, NewReminderPreference, NewEmailLog } from './schema';
+import { users, screenings, reminderPreferences, emailLog, referrals } from './schema';
+import type { NewUser, NewScreening, NewReminderPreference, NewEmailLog, NewReferral, Referral } from './schema';
 
 /**
  * User CRUD Operations
@@ -249,4 +249,46 @@ export async function getUserEmailLog(userId: number) {
     .from(emailLog)
     .where(eq(emailLog.userId, userId))
     .orderBy(desc(emailLog.sentAt));
+}
+
+/**
+ * Referral Operations
+ */
+
+/**
+ * Create a new referral record
+ */
+export async function createReferral(data: NewReferral): Promise<Referral> {
+  const result = await db.insert(referrals).values(data).returning();
+  return result[0];
+}
+
+/**
+ * Get all referrals for a user ordered by most recent first
+ */
+export async function getUserReferrals(userId: number): Promise<Referral[]> {
+  return await db
+    .select()
+    .from(referrals)
+    .where(eq(referrals.userId, userId))
+    .orderBy(desc(referrals.sentAt));
+}
+
+/**
+ * Mark referral as viewed (called by webhook on email open)
+ * Only updates if current status is 'sent' to prevent overwriting
+ */
+export async function markReferralViewed(referralId: number, viewedAt: Date): Promise<void> {
+  await db
+    .update(referrals)
+    .set({
+      status: 'viewed',
+      viewedAt
+    })
+    .where(
+      and(
+        eq(referrals.id, referralId),
+        eq(referrals.status, 'sent')
+      )
+    );
 }

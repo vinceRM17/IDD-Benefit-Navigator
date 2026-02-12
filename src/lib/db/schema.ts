@@ -1,4 +1,10 @@
-import { pgTable, serial, text, timestamp, integer, jsonb, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp, integer, jsonb, boolean, pgEnum } from 'drizzle-orm/pg-core';
+
+/**
+ * Referral Status Enum
+ * Tracks lifecycle of referrals sent to partner organizations
+ */
+export const referralStatus = pgEnum('referral_status', ['sent', 'viewed']);
 
 /**
  * Users table
@@ -59,6 +65,26 @@ export const emailLog = pgTable('email_log', {
   programId: text('program_id').notNull(),
 });
 
+/**
+ * Referrals table
+ * Tracks referrals sent to partner organizations with open tracking
+ */
+export const referrals = pgTable('referrals', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').references(() => users.id, { onDelete: 'cascade' }), // nullable for anonymous
+  partnerOrgId: text('partner_org_id').notNull(),
+  partnerEmail: text('partner_email').notNull(),
+  familyName: text('family_name').notNull(),
+  familyEmail: text('family_email').notNull(),
+  familyPhone: text('family_phone'),
+  eligiblePrograms: jsonb('eligible_programs').$type<string[]>().notNull(),
+  familyNote: text('family_note'),
+  status: referralStatus('status').notNull().default('sent'),
+  sentAt: timestamp('sent_at').notNull().defaultNow(),
+  viewedAt: timestamp('viewed_at'),
+  postmarkMessageId: text('postmark_message_id'),
+});
+
 // Export types for use in application code
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -71,3 +97,6 @@ export type NewReminderPreference = typeof reminderPreferences.$inferInsert;
 
 export type EmailLog = typeof emailLog.$inferSelect;
 export type NewEmailLog = typeof emailLog.$inferInsert;
+
+export type Referral = typeof referrals.$inferSelect;
+export type NewReferral = typeof referrals.$inferInsert;
