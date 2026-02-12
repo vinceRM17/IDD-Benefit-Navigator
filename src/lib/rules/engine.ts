@@ -61,8 +61,8 @@ export class EligibilityEngine {
     });
 
     this.engine.addFact('incomeLimitTestBenefitA', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size: number) => {
-        return this.config.incomeLimits['test-benefit-a']?.[size] || 0;
+      return almanac.factValue('householdSize').then((size) => {
+        return this.config.incomeLimits['test-benefit-a']?.[size as number] || 0;
       });
     });
   }
@@ -99,7 +99,7 @@ export class EligibilityEngine {
       const isEligible = eligiblePrograms.has(program.programName);
       const event = events.find((e: any) => e.params.program === program.programName);
 
-      if (isEligible && event) {
+      if (isEligible && event && event.params) {
         // Program is eligible
         results.push(
           this.buildEligibleResult(program, facts, event.params.confidence)
