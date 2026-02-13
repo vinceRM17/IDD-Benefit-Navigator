@@ -6,6 +6,13 @@
 import { FullScreeningData } from './schema';
 
 /**
+ * Determines if age field should be shown (only when disability diagnosis is yes)
+ */
+export function shouldShowAge(hasDisabilityDiagnosis: boolean): boolean {
+  return hasDisabilityDiagnosis === true;
+}
+
+/**
  * Determines if insurance type field should be shown
  */
 export function shouldShowInsuranceType(hasInsurance: boolean): boolean {

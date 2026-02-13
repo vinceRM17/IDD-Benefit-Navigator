@@ -20,7 +20,7 @@ export function formDataToHouseholdFacts(
     householdSize: formData.householdSize,
     monthlyIncome: formData.monthlyIncome,
     hasDisabilityDiagnosis: formData.hasDisabilityDiagnosis,
-    age: formData.age,
+    age: formData.age ?? 0,
     hasInsurance: formData.hasInsurance,
     receivesSSI: formData.receivesSSI ?? false,
     receivesSNAP: formData.receivesSNAP ?? false,

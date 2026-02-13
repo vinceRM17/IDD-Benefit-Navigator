@@ -50,7 +50,8 @@ const step3BaseSchema = z.object({
     })
     .int('Please enter a whole number')
     .min(0, 'Age cannot be negative')
-    .max(150, 'Please enter a valid age'),
+    .max(150, 'Please enter a valid age')
+    .optional(),
   hasInsurance: z.boolean(),
   insuranceType: z
     .enum(['employer', 'marketplace', 'none'])
@@ -60,19 +61,33 @@ const step3BaseSchema = z.object({
 /**
  * Step 3 with refinement validation
  */
-export const step3Schema = step3BaseSchema.refine(
-  (data) => {
-    // If hasInsurance is true, insuranceType must be provided
-    if (data.hasInsurance && !data.insuranceType) {
-      return false;
+export const step3Schema = step3BaseSchema
+  .refine(
+    (data) => {
+      // If hasDisabilityDiagnosis is true, age must be provided
+      if (data.hasDisabilityDiagnosis && (data.age === undefined || data.age === null)) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'Please enter the age of your family member with a disability',
+      path: ['age'],
     }
-    return true;
-  },
-  {
-    message: 'Please select your insurance type',
-    path: ['insuranceType'],
-  }
-);
+  )
+  .refine(
+    (data) => {
+      // If hasInsurance is true, insuranceType must be provided
+      if (data.hasInsurance && !data.insuranceType) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'Please select your insurance type',
+      path: ['insuranceType'],
+    }
+  );
 
 export type Step3Data = z.infer<typeof step3BaseSchema>;
 
@@ -82,18 +97,30 @@ export type Step3Data = z.infer<typeof step3BaseSchema>;
  */
 const fullBaseSchema = step1Schema.merge(step2Schema).merge(step3BaseSchema);
 
-export const fullSchema = fullBaseSchema.refine(
-  (data) => {
-    // If hasInsurance is true, insuranceType must be provided
-    if (data.hasInsurance && !data.insuranceType) {
-      return false;
+export const fullSchema = fullBaseSchema
+  .refine(
+    (data) => {
+      if (data.hasDisabilityDiagnosis && (data.age === undefined || data.age === null)) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'Please enter the age of your family member with a disability',
+      path: ['age'],
     }
-    return true;
-  },
-  {
-    message: 'Please select your insurance type',
-    path: ['insuranceType'],
-  }
-);
+  )
+  .refine(
+    (data) => {
+      if (data.hasInsurance && !data.insuranceType) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: 'Please select your insurance type',
+      path: ['insuranceType'],
+    }
+  );
 
 export type FullScreeningData = z.infer<typeof fullBaseSchema>;

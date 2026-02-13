@@ -12,7 +12,7 @@ import {
   AccessibleRadioGroup,
   AccessibleSelect,
 } from '@/components/forms';
-import { shouldShowInsuranceType } from '@/lib/screening/conditional-logic';
+import { shouldShowAge, shouldShowInsuranceType } from '@/lib/screening/conditional-logic';
 
 /**
  * Step 3: Diagnosis & Insurance
@@ -43,6 +43,7 @@ export default function Step3Page() {
   const hasInsuranceValue = watch('hasInsurance');
   const insuranceTypeValue = watch('insuranceType');
 
+  const showAge = shouldShowAge(hasDisabilityDiagnosisValue);
   const showInsuranceType = shouldShowInsuranceType(hasInsuranceValue);
 
   const onSubmit = (data: Step3Data) => {
@@ -71,23 +72,29 @@ export default function Step3Page() {
           value={hasDisabilityDiagnosisValue?.toString() || 'false'}
           onChange={(value) => {
             setValue('hasDisabilityDiagnosis', value === 'true');
+            // Clear age if changing to no diagnosis
+            if (value === 'false') {
+              setValue('age', undefined);
+            }
           }}
           error={errors.hasDisabilityDiagnosis?.message}
         />
 
-        <AccessibleInput
-          id="age"
-          label="How old is your family member with a disability?"
-          type="number"
-          required
-          helpText="Enter their current age in years"
-          value={ageValue?.toString() || ''}
-          onChange={(value) => {
-            setValue('age', value === '' ? undefined as any : Number(value), { shouldValidate: true });
-          }}
-          error={errors.age?.message}
-          placeholder="e.g., 12"
-        />
+        {showAge && (
+          <AccessibleInput
+            id="age"
+            label="How old is your family member with a disability?"
+            type="number"
+            required
+            helpText="Enter their current age in years"
+            value={ageValue?.toString() || ''}
+            onChange={(value) => {
+              setValue('age', value === '' ? undefined as any : Number(value), { shouldValidate: true });
+            }}
+            error={errors.age?.message}
+            placeholder="e.g., 12"
+          />
+        )}
 
         <AccessibleRadioGroup
           name="hasInsurance"
