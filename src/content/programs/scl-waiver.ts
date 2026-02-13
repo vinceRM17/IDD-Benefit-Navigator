@@ -48,4 +48,19 @@ export const sclWaiverContent: ProgramContent = {
 
   waitlistInfo:
     'This program has a waitlist. Getting on the list as early as possible is important. The wait can be several years, but being on the list means you are in line for services.',
+
+  encouragement:
+    'Getting on this list early matters, even if it feels far away. Many families plan ahead for the future while using other supports today. You are not alone in this.',
+
+  whileYouWait: [
+    'If you have the Michelle P waiver, use it — it can help with care and respite now',
+    'Try local programs like sports, day groups, or social clubs in your area',
+    'Start planning for adult services early — a case manager can help you get ready',
+    'You can be on both the SCL and HCB lists at the same time',
+  ],
+
+  commonMisconceptions: [
+    'SCL is not just more of Michelle P. SCL has housing support that Michelle P does not.',
+    'Michelle P can have more hours for some services. One is not always better than the other.',
+  ],
 };

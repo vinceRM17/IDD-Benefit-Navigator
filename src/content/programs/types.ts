@@ -39,4 +39,13 @@ export interface ProgramContent {
 
   /** Information about waitlists for waiver programs */
   waitlistInfo?: string;
+
+  /** Common misconceptions families have about this program (from therapist input) */
+  commonMisconceptions?: string[];
+
+  /** What families can do while waiting for this program (waitlist guidance) */
+  whileYouWait?: string[];
+
+  /** Supportive message validating the difficulty of navigating this program */
+  encouragement?: string;
 }

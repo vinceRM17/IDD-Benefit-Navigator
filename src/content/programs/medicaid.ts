@@ -35,4 +35,13 @@ export const medicaidContent: ProgramContent = {
     'If you also qualify for Supplemental Security Income (SSI), you may automatically qualify for Medicaid. Medicaid can also work alongside waiver programs to cover more services for people with disabilities.',
   insuranceCoordination:
     'If your family member has private insurance AND qualifies for Medicaid, both can work together. Your private insurance pays first (it is the "primary" plan). Then Medicaid helps cover what is left over — like copays, deductibles, or services private insurance does not cover. This is called "coordination of benefits." You do not have to choose one or the other. Having both means less out-of-pocket cost for your family.',
+
+  encouragement:
+    'Medicaid is a big system and it can be hard to figure out — that is not your fault. Many families feel lost in the process. You are not the only one, and you do not have to do it alone.',
+
+  commonMisconceptions: [
+    'A denial is not the end. If you were told no due to income, that can help you get waiver services for people with disabilities.',
+    'You can have both private insurance and Medicaid. You do not have to pick one.',
+    'It takes work to apply. But you can call for help and they will walk you through it.',
+  ],
 };

@@ -63,6 +63,13 @@ export function ProgramCard({ result }: ProgramCardProps) {
         </div>
       )}
 
+      {/* Encouragement callout */}
+      {content.encouragement && (
+        <div className="mb-4 p-4 bg-teal-50 border border-teal-200 rounded-lg">
+          <p className="text-sm text-teal-900">{content.encouragement}</p>
+        </div>
+      )}
+
       {/* Program description */}
       <p className="text-gray-700 mb-4">{content.description}</p>
 
@@ -75,6 +82,37 @@ export function ProgramCard({ result }: ProgramCardProps) {
           ))}
         </ul>
       </div>
+
+      {/* While You Wait (for programs with waitlists) */}
+      {content.whileYouWait && content.whileYouWait.length > 0 && (
+        <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+          <h4 className="font-semibold text-purple-900 mb-2">
+            While you wait:
+          </h4>
+          <ul className="list-disc list-inside space-y-1 text-sm text-purple-900">
+            {content.whileYouWait.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Common Misconceptions */}
+      {content.commonMisconceptions && content.commonMisconceptions.length > 0 && (
+        <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+          <h4 className="font-semibold text-gray-900 mb-2">
+            Things families often wonder:
+          </h4>
+          <ul className="space-y-2">
+            {content.commonMisconceptions.map((item, index) => (
+              <li key={index} className="text-sm text-gray-700 flex gap-2">
+                <span className="text-gray-400 shrink-0" aria-hidden="true">&bull;</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Application info */}
       <div className="pt-4 border-t border-gray-200">

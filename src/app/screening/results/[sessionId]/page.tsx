@@ -138,6 +138,12 @@ export default function ResultsPage() {
           Based on what you shared about your family, here are the programs
           that may help.
         </p>
+        <p className="text-base text-gray-600 mt-3">
+          Navigating these programs is hard — you are not the only family
+          working through this. You do not have to figure everything out
+          today, and you do not have to do it alone. Start with what feels
+          most important to your family right now.
+        </p>
       </header>
 
       {/* Overall Action Plan */}

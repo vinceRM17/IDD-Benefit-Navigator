@@ -34,4 +34,18 @@ export const hcbWaiverContent: ProgramContent = {
     'You need Medicaid to use the HCB Waiver. The waiver provides services in your home and community instead of a facility for adults with disabilities. You can be on waitlists for both HCB and SCL waivers at the same time.',
   waitlistInfo:
     'This program often has a long waitlist. Apply as early as possible. You can be on more than one waiver waitlist at a time.',
+
+  encouragement:
+    'This waiver can help right away while you wait for other programs. Many families start here — you are not alone in working through this process.',
+
+  whileYouWait: [
+    'The HCB wait is often shorter than other waivers, so hang in there',
+    'A case manager can help you track your other lists and forms',
+    'Try local groups like sports, clubs, or respite care in your area',
+  ],
+
+  commonMisconceptions: [
+    'You do not have to find helpers on your own. The agency can find them for you. Or you can pick your own with help from a broker.',
+    'You can be on this list and other waiver lists at the same time. You do not have to pick just one.',
+  ],
 };

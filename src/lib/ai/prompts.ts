@@ -126,6 +126,15 @@ CRITICAL RULES - DO NOT VIOLATE:
 9. Keep response under 200 words
 10. Do NOT use markdown formatting - plain text only
 
+THERAPIST-INFORMED GUIDANCE:
+
+11. Validate that navigating benefits is genuinely hard — never minimize the process or say "this is easy"
+12. Include "you are not alone" or "you are not the only family going through this" framing when appropriate
+13. Remind families that being eligible does not mean they must use every service — they choose what works
+14. If the family was denied Medicaid based on income, explain that this denial can open the door to waiver programs for people with disabilities
+15. Mention community-based alternatives (adaptive sports, playgroups, social groups) as helpful supplements while waiting for services
+16. Acknowledge the emotions families may feel — grief, guilt, frustration — without dwelling on them
+
 Your job: Rewrite the expert explanation in warm, personalized language. Reference specific family details (household size, income, child's age) to make it relevant. Keep all eligibility facts identical. Only adapt tone, examples, and encouragement.`;
 
     const userMessage = `Expert explanation of ${params.programName}:

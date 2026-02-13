@@ -73,6 +73,9 @@ describe('Program Content Readability', () => {
           ...content.whatItCovers,
           ...content.nextSteps,
           content.interactionNotes,
+          ...(content.commonMisconceptions || []),
+          ...(content.whileYouWait || []),
+          content.encouragement || '',
         ].join(' ').toLowerCase();
 
         // Check for person-first patterns
@@ -81,6 +84,33 @@ describe('Program Content Readability', () => {
         // Avoid disability-first language
         expect(fullText).not.toMatch(/disabled people|disabled children|disabled adults/);
       });
+    });
+  });
+
+  describe('Encouragement and misconceptions readability (6th grade level)', () => {
+    programs.forEach(({ name, content }) => {
+      if (content.encouragement) {
+        test(`${name} encouragement meets 6th grade reading level`, () => {
+          const grade = fleschKincaidGrade(content.encouragement!);
+          expect(grade).toBeLessThanOrEqual(MAX_DESCRIPTION_GRADE);
+        });
+      }
+
+      if (content.commonMisconceptions && content.commonMisconceptions.length > 0) {
+        test(`${name} misconceptions meet 6th grade reading level`, () => {
+          const combinedText = content.commonMisconceptions!.join(' ');
+          const grade = fleschKincaidGrade(combinedText);
+          expect(grade).toBeLessThanOrEqual(MAX_DESCRIPTION_GRADE);
+        });
+      }
+
+      if (content.whileYouWait && content.whileYouWait.length > 0) {
+        test(`${name} while-you-wait content meets 8th grade reading level`, () => {
+          const combinedText = content.whileYouWait!.join(' ');
+          const grade = colemanLiauIndex(combinedText);
+          expect(grade).toBeLessThanOrEqual(MAX_NEXT_STEPS_GRADE);
+        });
+      }
     });
   });
 
