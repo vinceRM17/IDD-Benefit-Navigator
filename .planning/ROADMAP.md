@@ -43,11 +43,11 @@
   2. A custom font, color palette, and CSS variable theme are applied globally — no generic Inter/Arial/system defaults visible
   3. Page transitions and at least one micro-interaction (e.g., button hover, focus ring) animate using the Motion library
   4. The same component looks correct and proportional on mobile, tablet, and desktop without manual per-page fixes
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Install and configure shadcn/ui with custom theme (FOUN-01, FOUN-02)
-- [ ] 05-02: Animation system and responsive token setup (FOUN-03, FOUN-04)
+- [ ] 05-01-PLAN.md — Install shadcn/ui with custom Nunito typography, warm teal/amber CSS variable theme, and 5 core UI components (FOUN-01, FOUN-02)
+- [ ] 05-02-PLAN.md — Motion animation system with shared presets, PageTransition wrapper, responsive spacing tokens, and CSS keyframes (FOUN-03, FOUN-04)
 
 ---
 
