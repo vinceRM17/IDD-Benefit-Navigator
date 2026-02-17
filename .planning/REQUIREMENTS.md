@@ -83,34 +83,34 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUN-01 | — | Pending |
-| FOUN-02 | — | Pending |
-| FOUN-03 | — | Pending |
-| FOUN-04 | — | Pending |
-| LAYO-01 | — | Pending |
-| LAYO-02 | — | Pending |
-| LAYO-03 | — | Pending |
-| HOME-01 | — | Pending |
-| HOME-02 | — | Pending |
-| SCRN-01 | — | Pending |
-| SCRN-02 | — | Pending |
-| SCRN-03 | — | Pending |
-| SCRN-04 | — | Pending |
-| RSLT-01 | — | Pending |
-| RSLT-02 | — | Pending |
-| RSLT-03 | — | Pending |
-| RSLT-04 | — | Pending |
-| ACCT-01 | — | Pending |
-| ACCT-02 | — | Pending |
-| ACCT-03 | — | Pending |
-| PAGE-01 | — | Pending |
-| PAGE-02 | — | Pending |
+| FOUN-01 | Phase 5 | Pending |
+| FOUN-02 | Phase 5 | Pending |
+| FOUN-03 | Phase 5 | Pending |
+| FOUN-04 | Phase 5 | Pending |
+| LAYO-01 | Phase 6 | Pending |
+| LAYO-02 | Phase 6 | Pending |
+| LAYO-03 | Phase 6 | Pending |
+| HOME-01 | Phase 6 | Pending |
+| HOME-02 | Phase 6 | Pending |
+| SCRN-01 | Phase 7 | Pending |
+| SCRN-02 | Phase 7 | Pending |
+| SCRN-03 | Phase 7 | Pending |
+| SCRN-04 | Phase 7 | Pending |
+| RSLT-01 | Phase 8 | Pending |
+| RSLT-02 | Phase 8 | Pending |
+| RSLT-03 | Phase 8 | Pending |
+| RSLT-04 | Phase 8 | Pending |
+| ACCT-01 | Phase 9 | Pending |
+| ACCT-02 | Phase 9 | Pending |
+| ACCT-03 | Phase 9 | Pending |
+| PAGE-01 | Phase 9 | Pending |
+| PAGE-02 | Phase 9 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 22 total
-- Mapped to phases: 0
-- Unmapped: 22
+- Mapped to phases: 22
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-16*
-*Last updated: 2026-02-16 after initial definition*
+*Last updated: 2026-02-16 — traceability mapped to Phases 5-9*
