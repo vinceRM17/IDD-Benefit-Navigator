@@ -6,7 +6,7 @@
 
 'use client';
 
-import { useState, useRef, useCallback, type ReactNode, type KeyboardEvent } from 'react';
+import { useState, useRef, useCallback, useEffect, type ReactNode, type KeyboardEvent } from 'react';
 
 export interface Tab {
   id: string;
@@ -72,38 +72,64 @@ export function TabNav({ tabs, defaultTab, onTabChange, ariaLabel }: TabNavProps
   );
 
   const activePanel = tabs.find((t) => t.id === activeTab);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftFade, setShowLeftFade] = useState(false);
+  const [showRightFade, setShowRightFade] = useState(false);
+
+  const updateScrollFades = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setShowLeftFade(el.scrollLeft > 4);
+    setShowRightFade(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateScrollFades();
+    window.addEventListener('resize', updateScrollFades);
+    return () => window.removeEventListener('resize', updateScrollFades);
+  }, [updateScrollFades]);
 
   return (
     <div>
       {/* Tab list */}
-      <div
-        role="tablist"
-        aria-label={ariaLabel || "Results sections"}
-        className="flex gap-1 border-b border-border mb-6 overflow-x-auto"
-      >
-        {tabs.map((tab) => {
-          const isActive = tab.id === activeTab;
-          return (
-            <button
-              key={tab.id}
-              ref={(el) => setTabRef(tab.id, el)}
-              role="tab"
-              id={`tab-${tab.id}`}
-              aria-selected={isActive}
-              aria-controls={`panel-${tab.id}`}
-              tabIndex={isActive ? 0 : -1}
-              onClick={() => selectTab(tab.id)}
-              onKeyDown={handleKeyDown}
-              className={`px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-md ${
-                isActive
-                  ? 'text-primary border-b-2 border-primary bg-primary/5'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-              }`}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
+      <div className="relative">
+        {showLeftFade && (
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+        )}
+        {showRightFade && (
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        )}
+        <div
+          ref={scrollRef}
+          role="tablist"
+          aria-label={ariaLabel || "Results sections"}
+          className="flex gap-1 border-b border-border mb-6 overflow-x-auto scrollbar-none"
+          onScroll={updateScrollFades}
+        >
+          {tabs.map((tab) => {
+            const isActive = tab.id === activeTab;
+            return (
+              <button
+                key={tab.id}
+                ref={(el) => setTabRef(tab.id, el)}
+                role="tab"
+                id={`tab-${tab.id}`}
+                aria-selected={isActive}
+                aria-controls={`panel-${tab.id}`}
+                tabIndex={isActive ? 0 : -1}
+                onClick={() => selectTab(tab.id)}
+                onKeyDown={handleKeyDown}
+                className={`px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-md ${
+                  isActive
+                    ? 'text-primary border-b-2 border-primary bg-primary/5'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Tab panel */}

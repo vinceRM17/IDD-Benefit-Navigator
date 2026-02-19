@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-const navLinks = [
+export const navLinks = [
   { href: '/', labelKey: 'home' },
   { href: '/screening', labelKey: 'startScreening' },
   { href: '/resources/glossary', labelKey: 'glossary' },
