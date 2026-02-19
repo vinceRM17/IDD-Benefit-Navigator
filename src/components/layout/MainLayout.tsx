@@ -5,14 +5,13 @@ import { PageTransition } from '@/components/ui/page-transition';
 
 interface MainLayoutProps {
   children: React.ReactNode;
-  currentPath?: string;
 }
 
-export async function MainLayout({ children, currentPath }: MainLayoutProps) {
+export async function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <SkipLink />
-      <Header currentPath={currentPath} />
+      <Header />
       <main
         id="main-content"
         tabIndex={-1}

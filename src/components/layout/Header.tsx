@@ -2,23 +2,12 @@ import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth/session';
 import { AuthControls } from './AuthControls';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { NavLinks } from './NavLinks';
 import { Heart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
-interface HeaderProps {
-  currentPath?: string;
-}
-
-export async function Header({ currentPath = '/' }: HeaderProps) {
+export async function Header() {
   const user = await getCurrentUser();
-
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/screening', label: 'Start Screening' },
-    { href: '/resources/glossary', label: 'Glossary' },
-    { href: '/resources/faq', label: 'FAQ' },
-    { href: '/privacy', label: 'Privacy' },
-  ];
 
   return (
     <header role="banner" className="bg-primary shadow-sm">
@@ -35,25 +24,7 @@ export async function Header({ currentPath = '/' }: HeaderProps) {
           </Link>
 
           <div className="flex items-center gap-2">
-            <nav aria-label="Main navigation" className="hidden md:block">
-              <ul className="flex items-center gap-1">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className={`text-sm font-medium px-3 py-2 rounded-md transition-colors ${
-                        currentPath === link.href
-                          ? 'bg-white/15 text-white'
-                          : 'text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10'
-                      }`}
-                      aria-current={currentPath === link.href ? 'page' : undefined}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <NavLinks />
 
             <Separator orientation="vertical" className="h-6 bg-white/20 hidden md:block mx-1" />
 
