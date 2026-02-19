@@ -15,10 +15,12 @@ import {
 import { shouldShowAge, shouldShowInsuranceType } from '@/lib/screening/conditional-logic';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function Step3Page() {
   const router = useRouter();
   const { formData, setStepData } = useScreeningStore();
+  const t = useTranslations('screening');
 
   const {
     handleSubmit,
@@ -43,6 +45,11 @@ export default function Step3Page() {
   const showAge = shouldShowAge(hasDisabilityDiagnosisValue);
   const showInsuranceType = shouldShowInsuranceType(hasInsuranceValue);
 
+  const yesNo = [
+    { value: 'true', label: t('review.yes') },
+    { value: 'false', label: t('review.no') },
+  ];
+
   const onSubmit = (data: Step3Data) => {
     setStepData(data);
     router.push('/screening/intake/step-4');
@@ -54,17 +61,14 @@ export default function Step3Page() {
 
   return (
     <QuestionCard
-      title="Diagnosis and insurance"
-      description="This information helps us understand your family member's needs and current coverage."
+      title={t('step3.title')}
+      description={t('step3.description')}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <AccessibleRadioGroup
           name="hasDisabilityDiagnosis"
-          legend="Has your family member been diagnosed with an intellectual or developmental disability?"
-          options={[
-            { value: 'true', label: 'Yes' },
-            { value: 'false', label: 'No' },
-          ]}
+          legend={t('step3.hasDisabilityLabel')}
+          options={yesNo}
           required
           value={hasDisabilityDiagnosisValue?.toString() || 'false'}
           onChange={(value) => {
@@ -79,26 +83,23 @@ export default function Step3Page() {
         {showAge && (
           <AccessibleInput
             id="age"
-            label="How old is your family member with a disability?"
+            label={t('step3.ageLabel')}
             type="number"
             required
-            helpText="Enter their current age in years"
+            helpText={t('step3.ageHelp')}
             value={ageValue?.toString() || ''}
             onChange={(value) => {
               setValue('age', value === '' ? undefined as any : Number(value), { shouldValidate: true });
             }}
             error={errors.age?.message}
-            placeholder="e.g., 12"
+            placeholder={t('step3.agePlaceholder')}
           />
         )}
 
         <AccessibleRadioGroup
           name="hasInsurance"
-          legend="Does your family member have private health insurance?"
-          options={[
-            { value: 'true', label: 'Yes' },
-            { value: 'false', label: 'No' },
-          ]}
+          legend={t('step3.hasInsuranceLabel')}
+          options={yesNo}
           required
           value={hasInsuranceValue?.toString() || 'false'}
           onChange={(value) => {
@@ -113,11 +114,11 @@ export default function Step3Page() {
         {showInsuranceType && (
           <AccessibleSelect
             id="insuranceType"
-            label="What type of insurance?"
+            label={t('step3.insuranceTypeLabel')}
             options={[
-              { value: 'employer', label: 'Employer-provided insurance' },
-              { value: 'marketplace', label: 'Marketplace/ACA insurance' },
-              { value: 'none', label: 'Other' },
+              { value: 'employer', label: t('step3.insuranceEmployer') },
+              { value: 'marketplace', label: t('step3.insuranceMarketplace') },
+              { value: 'none', label: t('step3.insuranceOther') },
             ]}
             required
             value={insuranceTypeValue || ''}
@@ -125,17 +126,17 @@ export default function Step3Page() {
               setValue('insuranceType', value as 'employer' | 'marketplace' | 'none', { shouldValidate: true });
             }}
             error={errors.insuranceType?.message}
-            placeholder="Select insurance type"
+            placeholder={t('step3.insuranceTypePlaceholder')}
           />
         )}
 
         <div className="flex justify-between mt-8">
           <Button type="button" variant="secondary" onClick={handlePrevious}>
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Previous
+            {t('common.previous')}
           </Button>
           <Button type="submit">
-            Next
+            {t('common.next')}
             <ArrowRight className="h-4 w-4 ml-1" />
           </Button>
         </div>

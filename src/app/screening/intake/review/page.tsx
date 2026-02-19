@@ -10,6 +10,7 @@ import { formDataToHouseholdFacts, generateSessionId } from '@/lib/screening/uti
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Sparkles, Pencil, AlertCircle, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function ReviewPage() {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('screening');
 
   const handleGetResults = async () => {
     setValidationErrors([]);
@@ -63,9 +65,7 @@ export default function ReviewPage() {
       router.push(`/screening/results/${sessionId}`);
     } catch (err) {
       console.error('Error evaluating screening:', err);
-      setError(
-        'Something went wrong while finding benefits for your family. Please try again or contact us for help.'
-      );
+      setError(t('review.errorMessage'));
     } finally {
       setIsLoading(false);
     }
@@ -75,37 +75,39 @@ export default function ReviewPage() {
     router.push('/screening/intake/step-4');
   };
 
+  const yesNo = (val: boolean | undefined) => val ? t('review.yes') : t('review.no');
+
   return (
     <QuestionCard
-      title="Review your answers"
-      description="Please check that everything looks correct before we generate your results."
+      title={t('review.title')}
+      description={t('review.description')}
     >
       <div className="space-y-6">
         {/* Family Situation Section */}
         <div>
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-base font-heading font-semibold text-foreground">
-              Family Situation
+              {t('review.familySituation')}
             </h3>
             <Link
               href="/screening/intake/step-1"
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
-              Edit
+              {t('review.edit')}
             </Link>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">State:</dt>
+              <dt className="text-muted-foreground">{t('review.state')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.state || 'Not provided'}
+                {formData.state || t('review.notProvided')}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Household size:</dt>
+              <dt className="text-muted-foreground">{t('review.householdSize')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.householdSize || 'Not provided'}
+                {formData.householdSize || t('review.notProvided')}
               </dd>
             </div>
           </dl>
@@ -117,33 +119,33 @@ export default function ReviewPage() {
         <div>
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-base font-heading font-semibold text-foreground">
-              Income & Benefits
+              {t('review.incomeAndBenefits')}
             </h3>
             <Link
               href="/screening/intake/step-2"
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
-              Edit
+              {t('review.edit')}
             </Link>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Monthly income:</dt>
+              <dt className="text-muted-foreground">{t('review.monthlyIncome')}</dt>
               <dd className="text-foreground font-medium">
-                ${formData.monthlyIncome || 'Not provided'}
+                ${formData.monthlyIncome || t('review.notProvided')}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Receives SSI:</dt>
+              <dt className="text-muted-foreground">{t('review.receivesSSI')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.receivesSSI ? 'Yes' : 'No'}
+                {yesNo(formData.receivesSSI)}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Receives SNAP:</dt>
+              <dt className="text-muted-foreground">{t('review.receivesSNAP')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.receivesSNAP ? 'Yes' : 'No'}
+                {yesNo(formData.receivesSNAP)}
               </dd>
             </div>
           </dl>
@@ -155,44 +157,44 @@ export default function ReviewPage() {
         <div>
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-base font-heading font-semibold text-foreground">
-              Diagnosis & Insurance
+              {t('review.diagnosisAndInsurance')}
             </h3>
             <Link
               href="/screening/intake/step-3"
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
-              Edit
+              {t('review.edit')}
             </Link>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Has disability diagnosis:</dt>
+              <dt className="text-muted-foreground">{t('review.hasDisability')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.hasDisabilityDiagnosis ? 'Yes' : 'No'}
+                {yesNo(formData.hasDisabilityDiagnosis)}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Age:</dt>
+              <dt className="text-muted-foreground">{t('review.age')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.age || 'Not provided'}
+                {formData.age || t('review.notProvided')}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Has private insurance:</dt>
+              <dt className="text-muted-foreground">{t('review.hasInsurance')}</dt>
               <dd className="text-foreground font-medium">
-                {formData.hasInsurance ? 'Yes' : 'No'}
+                {yesNo(formData.hasInsurance)}
               </dd>
             </div>
             {formData.hasInsurance && formData.insuranceType && (
               <div className="flex justify-between">
-                <dt className="text-muted-foreground">Insurance type:</dt>
+                <dt className="text-muted-foreground">{t('review.insuranceType')}</dt>
                 <dd className="text-foreground font-medium">
                   {formData.insuranceType === 'employer'
-                    ? 'Employer-provided'
+                    ? t('review.employerProvided')
                     : formData.insuranceType === 'marketplace'
-                    ? 'Marketplace/ACA'
-                    : 'Other'}
+                    ? t('review.marketplaceACA')
+                    : t('review.other')}
                 </dd>
               </div>
             )}
@@ -206,20 +208,20 @@ export default function ReviewPage() {
             <div>
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-base font-heading font-semibold text-foreground">
-                  Functional Needs
+                  {t('review.functionalNeeds')}
                 </h3>
                 <Link
                   href="/screening/intake/step-4"
                   className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
                 >
                   <Pencil className="h-3 w-3" />
-                  Edit
+                  {t('review.edit')}
                 </Link>
               </div>
               <dl className="space-y-2 text-sm">
                 {formData.workStatus && (
                   <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Work status:</dt>
+                    <dt className="text-muted-foreground">{t('review.workStatus')}</dt>
                     <dd className="text-foreground font-medium capitalize">
                       {formData.workStatus.replace(/-/g, ' ')}
                     </dd>
@@ -227,15 +229,15 @@ export default function ReviewPage() {
                 )}
                 {formData.hasGuardian !== undefined && (
                   <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Has legal guardian:</dt>
+                    <dt className="text-muted-foreground">{t('review.hasGuardian')}</dt>
                     <dd className="text-foreground font-medium">
-                      {formData.hasGuardian ? 'Yes' : 'No'}
+                      {yesNo(formData.hasGuardian)}
                     </dd>
                   </div>
                 )}
                 {formData.coOccurringDiagnoses && formData.coOccurringDiagnoses.length > 0 && (
                   <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Co-occurring conditions:</dt>
+                    <dt className="text-muted-foreground">{t('review.coOccurring')}</dt>
                     <dd className="text-foreground font-medium capitalize">
                       {formData.coOccurringDiagnoses.map(d => d.replace(/-/g, ' ')).join(', ')}
                     </dd>
@@ -243,7 +245,7 @@ export default function ReviewPage() {
                 )}
                 {formData.functionalLimitations && formData.functionalLimitations.length > 0 && (
                   <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Areas needing help:</dt>
+                    <dt className="text-muted-foreground">{t('review.areasNeedingHelp')}</dt>
                     <dd className="text-foreground font-medium capitalize">
                       {formData.functionalLimitations.map(l => l.replace(/-/g, ' ')).join(', ')}
                     </dd>
@@ -263,7 +265,7 @@ export default function ReviewPage() {
           >
             <Loader2 className="h-5 w-5 text-primary animate-spin" />
             <p className="text-foreground font-medium">
-              Finding benefits for your family...
+              {t('review.findingBenefits')}
             </p>
           </div>
         )}
@@ -286,7 +288,7 @@ export default function ReviewPage() {
                 variant="secondary"
                 onClick={handleGetResults}
               >
-                Try Again
+                {t('common.tryAgain')}
               </Button>
               <Button
                 type="button"
@@ -297,7 +299,7 @@ export default function ReviewPage() {
                   router.push('/screening');
                 }}
               >
-                Start Over
+                {t('common.startOver')}
               </Button>
             </div>
           </div>
@@ -309,7 +311,7 @@ export default function ReviewPage() {
             <div className="flex items-center gap-2 mb-2">
               <AlertCircle className="h-4 w-4 text-destructive" />
               <h4 className="text-foreground font-semibold">
-                Please fix these issues:
+                {t('review.fixIssues')}
               </h4>
             </div>
             <ul className="list-disc list-inside space-y-1 text-destructive text-sm">
@@ -324,7 +326,7 @@ export default function ReviewPage() {
         <div className="flex justify-between pt-2">
           <Button type="button" variant="secondary" onClick={handlePrevious}>
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Previous
+            {t('common.previous')}
           </Button>
           <Button
             type="button"
@@ -335,12 +337,12 @@ export default function ReviewPage() {
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                Finding benefits...
+                {t('review.loadingButton')}
               </>
             ) : (
               <>
                 <Sparkles className="h-4 w-4 mr-1" />
-                Get My Results
+                {t('common.getMyResults')}
               </>
             )}
           </Button>

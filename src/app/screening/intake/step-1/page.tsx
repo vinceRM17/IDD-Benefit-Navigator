@@ -11,28 +11,28 @@ import { QuestionCard } from '@/components/screening/QuestionCard';
 import { AccessibleInput, AccessibleSelect } from '@/components/forms';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 // Build state options grouped by coverage level
 const fullCoverageStates = US_STATES.filter(s => s.coverageLevel === 'full');
 const federalOnlyStates = US_STATES.filter(s => s.coverageLevel === 'federal-only');
 
-const stateOptions = [
-  // Full coverage states first
-  ...fullCoverageStates.map(s => ({
-    value: s.code,
-    label: `${s.name} — Full Coverage`,
-  })),
-  // Then all other states
-  ...federalOnlyStates.map(s => ({
-    value: s.code,
-    label: s.name,
-  })),
-];
-
 export default function Step1Page() {
   const router = useRouter();
   const formData = useScreeningStore((s) => s.formData);
   const setStepData = useScreeningStore((s) => s.setStepData);
+  const t = useTranslations('screening');
+
+  const stateOptions = [
+    ...fullCoverageStates.map(s => ({
+      value: s.code,
+      label: `${s.name} — ${t('step1.stateFullCoverage')}`,
+    })),
+    ...federalOnlyStates.map(s => ({
+      value: s.code,
+      label: s.name,
+    })),
+  ];
 
   const {
     handleSubmit,
@@ -57,13 +57,13 @@ export default function Step1Page() {
 
   return (
     <QuestionCard
-      title="Tell us about your family"
-      description="This helps us understand your household situation and which benefits might be available."
+      title={t('step1.title')}
+      description={t('step1.description')}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <AccessibleSelect
           id="state"
-          label="What state do you live in?"
+          label={t('step1.stateLabel')}
           options={stateOptions}
           required
           value={stateValue || ''}
@@ -71,26 +71,26 @@ export default function Step1Page() {
             setValue('state', value as Step1Data['state'], { shouldValidate: true });
           }}
           error={errors.state?.message}
-          placeholder="Select your state"
+          placeholder={t('step1.statePlaceholder')}
         />
 
         <AccessibleInput
           id="householdSize"
-          label="How many people live in your home?"
+          label={t('step1.householdSizeLabel')}
           type="number"
           required
-          helpText="Include everyone living in your home"
+          helpText={t('step1.householdSizeHelp')}
           value={householdSizeValue?.toString() || ''}
           onChange={(value) => {
             setValue('householdSize', value === '' ? undefined as any : Number(value), { shouldValidate: true });
           }}
           error={errors.householdSize?.message}
-          placeholder="e.g., 4"
+          placeholder={t('step1.householdSizePlaceholder')}
         />
 
         <div className="flex justify-end">
           <Button type="submit">
-            Next
+            {t('common.next')}
             <ArrowRight className="h-4 w-4 ml-1" />
           </Button>
         </div>

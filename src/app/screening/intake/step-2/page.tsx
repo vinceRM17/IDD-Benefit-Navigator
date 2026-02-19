@@ -10,10 +10,12 @@ import { QuestionCard } from '@/components/screening/QuestionCard';
 import { AccessibleInput, AccessibleRadioGroup } from '@/components/forms';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function Step2Page() {
   const router = useRouter();
   const { formData, setStepData } = useScreeningStore();
+  const t = useTranslations('screening');
 
   const {
     handleSubmit,
@@ -42,34 +44,36 @@ export default function Step2Page() {
     router.push('/screening/intake/step-1');
   };
 
+  const yesNo = [
+    { value: 'true', label: t('review.yes') },
+    { value: 'false', label: t('review.no') },
+  ];
+
   return (
     <QuestionCard
-      title="Your household income and current benefits"
-      description="This information helps us understand what benefits you may already receive and what additional support might be available."
+      title={t('step2.title')}
+      description={t('step2.description')}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <AccessibleInput
           id="monthlyIncome"
-          label="What is your total monthly household income?"
+          label={t('step2.monthlyIncomeLabel')}
           type="number"
           required
-          helpText="Your total household income before taxes, per month"
+          helpText={t('step2.monthlyIncomeHelp')}
           value={monthlyIncomeValue?.toString() || ''}
           onChange={(value) => {
             setValue('monthlyIncome', value === '' ? undefined as any : Number(value), { shouldValidate: true });
           }}
           error={errors.monthlyIncome?.message}
-          placeholder="e.g., 2500"
+          placeholder={t('step2.monthlyIncomePlaceholder')}
         />
 
         <AccessibleRadioGroup
           name="receivesSSI"
-          legend="Does anyone in your household receive SSI?"
-          helpText="SSI (Supplemental Security Income) is a federal program that provides monthly payments to people with disabilities who have limited income and resources."
-          options={[
-            { value: 'true', label: 'Yes' },
-            { value: 'false', label: 'No' },
-          ]}
+          legend={t('step2.receivesSSILabel')}
+          helpText={t('step2.receivesSSIHelp')}
+          options={yesNo}
           required
           value={receivesSSIValue?.toString() || 'false'}
           onChange={(value) => {
@@ -80,12 +84,9 @@ export default function Step2Page() {
 
         <AccessibleRadioGroup
           name="receivesSNAP"
-          legend="Does your household currently receive SNAP (food stamps)?"
-          helpText="SNAP (Supplemental Nutrition Assistance Program) helps families buy groceries through an EBT card loaded monthly."
-          options={[
-            { value: 'true', label: 'Yes' },
-            { value: 'false', label: 'No' },
-          ]}
+          legend={t('step2.receivesSNAPLabel')}
+          helpText={t('step2.receivesSNAPHelp')}
+          options={yesNo}
           required
           value={receivesSNAPValue?.toString() || 'false'}
           onChange={(value) => {
@@ -97,10 +98,10 @@ export default function Step2Page() {
         <div className="flex justify-between mt-8">
           <Button type="button" variant="secondary" onClick={handlePrevious}>
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Previous
+            {t('common.previous')}
           </Button>
           <Button type="submit">
-            Next
+            {t('common.next')}
             <ArrowRight className="h-4 w-4 ml-1" />
           </Button>
         </div>
