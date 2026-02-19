@@ -15,7 +15,7 @@ import { useTranslations } from 'next-intl';
 
 export default function Step4Page() {
   const router = useRouter();
-  const { formData, setStepData } = useScreeningStore();
+  const { formData, setStepData, editing, setEditing } = useScreeningStore();
   const t = useTranslations('screening');
 
   const workStatusOptions = [
@@ -67,6 +67,7 @@ export default function Step4Page() {
     if (functionalLimitations.length > 0) data.functionalLimitations = functionalLimitations as Step4Data['functionalLimitations'];
 
     setStepData(data);
+    if (editing) setEditing(false);
     router.push('/screening/intake/review');
   };
 

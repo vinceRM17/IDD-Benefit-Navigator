@@ -19,7 +19,7 @@ import { useTranslations } from 'next-intl';
 
 export default function Step3Page() {
   const router = useRouter();
-  const { formData, setStepData } = useScreeningStore();
+  const { formData, setStepData, editing, setEditing } = useScreeningStore();
   const t = useTranslations('screening');
 
   const {
@@ -52,7 +52,12 @@ export default function Step3Page() {
 
   const onSubmit = (data: Step3Data) => {
     setStepData(data);
-    router.push('/screening/intake/step-4');
+    if (editing) {
+      setEditing(false);
+      router.push('/screening/intake/review');
+    } else {
+      router.push('/screening/intake/step-4');
+    }
   };
 
   const handlePrevious = () => {

@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useScreeningStore } from '@/lib/screening/store';
 import { fullSchema } from '@/lib/screening/schema';
 import { QuestionCard } from '@/components/screening/QuestionCard';
@@ -14,7 +13,7 @@ import { useTranslations } from 'next-intl';
 
 export default function ReviewPage() {
   const router = useRouter();
-  const { formData, setResults } = useScreeningStore();
+  const { formData, setResults, setEditing } = useScreeningStore();
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,13 +88,14 @@ export default function ReviewPage() {
             <h3 className="text-base font-heading font-semibold text-foreground">
               {t('review.familySituation')}
             </h3>
-            <Link
-              href="/screening/intake/step-1"
+            <button
+              type="button"
+              onClick={() => { setEditing(true); router.push('/screening/intake/step-1'); }}
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
               {t('review.edit')}
-            </Link>
+            </button>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -121,13 +121,14 @@ export default function ReviewPage() {
             <h3 className="text-base font-heading font-semibold text-foreground">
               {t('review.incomeAndBenefits')}
             </h3>
-            <Link
-              href="/screening/intake/step-2"
+            <button
+              type="button"
+              onClick={() => { setEditing(true); router.push('/screening/intake/step-2'); }}
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
               {t('review.edit')}
-            </Link>
+            </button>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -159,13 +160,14 @@ export default function ReviewPage() {
             <h3 className="text-base font-heading font-semibold text-foreground">
               {t('review.diagnosisAndInsurance')}
             </h3>
-            <Link
-              href="/screening/intake/step-3"
+            <button
+              type="button"
+              onClick={() => { setEditing(true); router.push('/screening/intake/step-3'); }}
               className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
               <Pencil className="h-3 w-3" />
               {t('review.edit')}
-            </Link>
+            </button>
           </div>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -210,13 +212,14 @@ export default function ReviewPage() {
                 <h3 className="text-base font-heading font-semibold text-foreground">
                   {t('review.functionalNeeds')}
                 </h3>
-                <Link
-                  href="/screening/intake/step-4"
+                <button
+                  type="button"
+                  onClick={() => { setEditing(true); router.push('/screening/intake/step-4'); }}
                   className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
                 >
                   <Pencil className="h-3 w-3" />
                   {t('review.edit')}
-                </Link>
+                </button>
               </div>
               <dl className="space-y-2 text-sm">
                 {formData.workStatus && (

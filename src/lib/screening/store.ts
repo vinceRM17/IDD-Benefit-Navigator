@@ -13,9 +13,12 @@ const RESULTS_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 interface ScreeningState {
   currentStep: number;
+  editing: boolean;
   formData: Partial<FullScreeningData>;
   results: ScreeningResults | null;
   resultsTimestamp: number | null;
+  setCurrentStep: (step: number) => void;
+  setEditing: (editing: boolean) => void;
   setStepData: (data: Partial<FullScreeningData>) => void;
   nextStep: () => void;
   prevStep: () => void;
@@ -29,9 +32,18 @@ export const useScreeningStore = create<ScreeningState>()(
   persist(
     (set, get) => ({
       currentStep: 1,
+      editing: false,
       formData: {},
       results: null,
       resultsTimestamp: null,
+
+      setCurrentStep: (step) => {
+        set({ currentStep: step });
+      },
+
+      setEditing: (editing) => {
+        set({ editing });
+      },
 
       setStepData: (data) => {
         set((state) => ({
@@ -54,6 +66,7 @@ export const useScreeningStore = create<ScreeningState>()(
       reset: () => {
         set({
           currentStep: 1,
+          editing: false,
           formData: {},
           results: null,
           resultsTimestamp: null,

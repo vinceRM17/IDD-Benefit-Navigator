@@ -21,6 +21,8 @@ export default function Step1Page() {
   const router = useRouter();
   const formData = useScreeningStore((s) => s.formData);
   const setStepData = useScreeningStore((s) => s.setStepData);
+  const editing = useScreeningStore((s) => s.editing);
+  const setEditing = useScreeningStore((s) => s.setEditing);
   const t = useTranslations('screening');
 
   const stateOptions = [
@@ -52,7 +54,12 @@ export default function Step1Page() {
 
   const onSubmit = (data: Step1Data) => {
     setStepData(data);
-    router.push('/screening/intake/step-2');
+    if (editing) {
+      setEditing(false);
+      router.push('/screening/intake/review');
+    } else {
+      router.push('/screening/intake/step-2');
+    }
   };
 
   return (

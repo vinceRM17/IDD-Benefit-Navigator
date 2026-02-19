@@ -17,7 +17,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Heart className="h-5 w-5 fill-primary stroke-primary" />
               <span className="font-heading font-semibold text-foreground">
-                IDD Benefits Navigator
+                {t('nav.appName')}
               </span>
             </div>
 

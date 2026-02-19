@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useScreeningStore } from '@/lib/screening/store';
 import { StepIndicator } from '@/components/screening/StepIndicator';
 import { useTranslations } from 'next-intl';
@@ -9,9 +10,25 @@ interface IntakeLayoutProps {
   children: React.ReactNode;
 }
 
+function getStepFromPath(pathname: string): number {
+  if (pathname.includes('/step-1')) return 1;
+  if (pathname.includes('/step-2')) return 2;
+  if (pathname.includes('/step-3')) return 3;
+  if (pathname.includes('/step-4')) return 4;
+  if (pathname.includes('/review')) return 5;
+  return 1;
+}
+
 export default function IntakeLayout({ children }: IntakeLayoutProps) {
-  const currentStep = useScreeningStore((state) => state.currentStep);
+  const pathname = usePathname();
+  const setCurrentStep = useScreeningStore((s) => s.setCurrentStep);
   const t = useTranslations('screening.steps');
+
+  const currentStep = getStepFromPath(pathname);
+
+  useEffect(() => {
+    setCurrentStep(currentStep);
+  }, [currentStep, setCurrentStep]);
 
   const steps = [
     { id: 1, label: t('familySituation'), href: '/screening/intake/step-1' },
