@@ -6,10 +6,28 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useScreeningStore } from '@/lib/screening/store';
 import { step1Schema, type Step1Data } from '@/lib/screening/schema';
+import { US_STATES } from '@/lib/data/states';
 import { QuestionCard } from '@/components/screening/QuestionCard';
 import { AccessibleInput, AccessibleSelect } from '@/components/forms';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+
+// Build state options grouped by coverage level
+const fullCoverageStates = US_STATES.filter(s => s.coverageLevel === 'full');
+const federalOnlyStates = US_STATES.filter(s => s.coverageLevel === 'federal-only');
+
+const stateOptions = [
+  // Full coverage states first
+  ...fullCoverageStates.map(s => ({
+    value: s.code,
+    label: `${s.name} — Full Coverage`,
+  })),
+  // Then all other states
+  ...federalOnlyStates.map(s => ({
+    value: s.code,
+    label: s.name,
+  })),
+];
 
 export default function Step1Page() {
   const router = useRouter();
@@ -24,7 +42,7 @@ export default function Step1Page() {
   } = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
-      state: formData.state || 'KY',
+      state: formData.state || undefined,
       householdSize: formData.householdSize || undefined,
     },
   });
@@ -46,11 +64,11 @@ export default function Step1Page() {
         <AccessibleSelect
           id="state"
           label="What state do you live in?"
-          options={[{ value: 'KY', label: 'Kentucky' }]}
+          options={stateOptions}
           required
           value={stateValue || ''}
           onChange={(value) => {
-            setValue('state', value as 'KY', { shouldValidate: true });
+            setValue('state', value as Step1Data['state'], { shouldValidate: true });
           }}
           error={errors.state?.message}
           placeholder="Select your state"

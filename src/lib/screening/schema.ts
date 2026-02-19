@@ -4,12 +4,13 @@
  */
 
 import { z } from 'zod';
+import { STATE_CODES } from '@/lib/data/states';
 
 /**
  * Step 1: Family Situation
  */
 export const step1Schema = z.object({
-  state: z.enum(['KY'], {
+  state: z.enum(STATE_CODES, {
     errorMap: () => ({ message: 'Please select your state' }),
   }),
   householdSize: z.coerce

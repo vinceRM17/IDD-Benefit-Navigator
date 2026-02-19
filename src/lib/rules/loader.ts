@@ -1,5 +1,5 @@
 /**
- * State configuration loader with schema validation
+ * State configuration loader with schema validation and federal fallback
  */
 
 import * as fs from 'fs/promises';
@@ -20,13 +20,6 @@ const configDir = path.join(process.cwd(), 'src/lib/rules/config');
  * @param stateCode - State abbreviation (e.g., "KY", "TEST")
  * @returns Validated state configuration with programs and income limits
  * @throws Error if state not found or validation fails
- *
- * @example
- * ```typescript
- * const config = await loadStateConfig('KY');
- * console.log(config.programs); // Array of program rules
- * console.log(config.incomeLimits.medicaid[4]); // HH4 Medicaid limit
- * ```
  */
 export async function loadStateConfig(stateCode: string): Promise<StateConfig> {
   // Find the directory for this state code
@@ -37,6 +30,7 @@ export async function loadStateConfig(stateCode: string): Promise<StateConfig> {
 
   // Look for directory with matching stateCode in config
   for (const dir of stateDirs) {
+    if (dir.name === 'federal' || dir.name === '_template') continue;
     try {
       const testPath = path.join(configDir, dir.name, 'programs.json');
       const testContent = await fs.readFile(testPath, 'utf-8');
@@ -77,25 +71,54 @@ export async function loadStateConfig(stateCode: string): Promise<StateConfig> {
 }
 
 /**
- * Get list of available state codes
+ * Load state config with federal fallback
  *
- * Scans the config directory and reads the stateCode from each
- * state's programs.json file.
+ * Tries to load the state-specific config first. If not found,
+ * falls back to the federal config which provides SSI, SSDI, SNAP screening.
+ * The federal config's stateCode and stateName are overridden with the
+ * requested state's values, and programIds are rewritten to use the state prefix.
  *
- * @returns Array of state codes (e.g., ["KY", "TEST"])
- *
- * @example
- * ```typescript
- * const states = await getAvailableStates();
- * console.log(states); // ["KY", "TEST"]
- * ```
+ * @param stateCode - State abbreviation (e.g., "KY", "OH")
+ * @param stateName - State name for display (optional, defaults to stateCode)
+ * @returns State or federal configuration
+ */
+export async function loadStateOrFederalConfig(
+  stateCode: string,
+  stateName?: string
+): Promise<StateConfig> {
+  try {
+    return await loadStateConfig(stateCode);
+  } catch {
+    // Fall back to federal config
+    const federalPath = path.join(configDir, 'federal', 'programs.json');
+    const configContent = await fs.readFile(federalPath, 'utf-8');
+    const config = JSON.parse(configContent) as StateConfig;
+
+    // Override with requested state info
+    config.stateCode = stateCode;
+    config.stateName = stateName || stateCode;
+    config.coverageLevel = 'federal-only';
+
+    // Rewrite programIds to use state prefix instead of "federal-"
+    config.programs = config.programs.map(program => ({
+      ...program,
+      programId: program.programId.replace('federal-', `${stateCode.toLowerCase()}-`),
+    }));
+
+    return config;
+  }
+}
+
+/**
+ * Get list of available state codes (states with full configs only)
  */
 export async function getAvailableStates(): Promise<string[]> {
   try {
     const entries = await fs.readdir(configDir, { withFileTypes: true });
-    const stateDirs = entries.filter(entry => entry.isDirectory());
+    const stateDirs = entries.filter(entry =>
+      entry.isDirectory() && entry.name !== 'federal' && entry.name !== '_template'
+    );
 
-    // Read stateCode from each config file
     const states: string[] = [];
     for (const dir of stateDirs) {
       try {
@@ -106,7 +129,6 @@ export async function getAvailableStates(): Promise<string[]> {
           states.push(config.stateCode);
         }
       } catch {
-        // Skip directories without valid config
         continue;
       }
     }

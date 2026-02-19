@@ -1,20 +1,7 @@
 import { EligibilityResult } from '@/lib/rules/types';
+import type { StateConfig } from '@/lib/rules/types';
 
-/**
- * Program priority map for ranking within same confidence level
- * Lower number = higher priority
- */
-const PROGRAM_PRIORITY: Record<string, number> = {
-  'ky-medicaid': 1, // Unlocks other programs like waivers
-  'ky-michelle-p-waiver': 2, // High value, often unknown to families
-  'ky-hcb-waiver': 3,
-  'ky-scl-waiver': 4,
-  'ky-ssi': 5, // Monthly income + auto Medicaid
-  'ky-ssdi': 6, // Work-history based disability income
-  'ky-snap': 7, // Food assistance
-};
-
-/** Default priority for programs not in the map */
+/** Default priority for programs not in the config */
 const DEFAULT_PRIORITY = 99;
 
 /**
@@ -27,6 +14,20 @@ const CONFIDENCE_ORDER: Record<string, number> = {
 };
 
 /**
+ * Build a priority map from state config enrichment data
+ */
+function buildPriorityMap(config?: StateConfig): Record<string, number> {
+  if (!config) return {};
+  const map: Record<string, number> = {};
+  for (const program of config.programs) {
+    if (program.enrichment?.priority) {
+      map[program.programId] = program.enrichment.priority;
+    }
+  }
+  return map;
+}
+
+/**
  * Map program name to programId for priority lookup
  */
 function getProgramId(programName: string, stateCode: string = 'KY'): string {
@@ -37,12 +38,16 @@ function getProgramId(programName: string, stateCode: string = 'KY'): string {
  * Rank programs by confidence and priority
  * @param results - Eligibility results to rank
  * @param stateCode - State code (default: 'KY')
+ * @param config - Optional state config for priority lookup
  * @returns Sorted array with rank field added (1-indexed)
  */
 export function rankPrograms(
   results: EligibilityResult[],
-  stateCode: string = 'KY'
+  stateCode: string = 'KY',
+  config?: StateConfig
 ): EligibilityResult[] {
+  const priorityMap = buildPriorityMap(config);
+
   // Sort by confidence first, then by program priority
   const sorted = [...results].sort((a, b) => {
     // Compare confidence levels
@@ -56,8 +61,8 @@ export function rankPrograms(
     // Within same confidence, compare program priority
     const programIdA = getProgramId(a.program, stateCode);
     const programIdB = getProgramId(b.program, stateCode);
-    const priorityA = PROGRAM_PRIORITY[programIdA] || DEFAULT_PRIORITY;
-    const priorityB = PROGRAM_PRIORITY[programIdB] || DEFAULT_PRIORITY;
+    const priorityA = priorityMap[programIdA] || DEFAULT_PRIORITY;
+    const priorityB = priorityMap[programIdB] || DEFAULT_PRIORITY;
 
     return priorityA - priorityB;
   });

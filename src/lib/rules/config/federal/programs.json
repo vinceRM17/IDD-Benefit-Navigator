@@ -1,0 +1,148 @@
+{
+  "stateCode": "FEDERAL",
+  "stateName": "Federal Programs",
+  "coverageLevel": "federal-only",
+  "programs": [
+    {
+      "programId": "federal-ssi",
+      "programName": "SSI",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "ssi-eligible",
+        "params": {
+          "program": "SSI",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for SSI" },
+          { "condition": "highIncome", "reason": "High income may reduce SSI benefit amount" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Apply through Social Security Administration at ssa.gov or call 1-800-772-1213"],
+        "requiredDocuments": ["Medical records", "Proof of income", "Work history"],
+        "priority": 1
+      }
+    },
+    {
+      "programId": "federal-ssdi",
+      "programName": "SSDI",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "ssdi-eligible",
+        "params": {
+          "program": "SSDI",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for SSDI (requires work history)" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Apply through Social Security Administration at ssa.gov or call 1-800-772-1213"],
+        "requiredDocuments": ["Medical records", "Work history", "Social Security statement"],
+        "priority": 2
+      }
+    },
+    {
+      "programId": "federal-snap",
+      "programName": "SNAP",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": {
+              "fact": "incomeLimitSNAP"
+            }
+          }
+        ]
+      },
+      "event": {
+        "type": "snap-eligible",
+        "params": {
+          "program": "SNAP",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income below federal SNAP limit" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income above federal SNAP limit" }
+        ],
+        "nextSteps": ["Contact your state's SNAP office or apply at your local Department of Social Services"],
+        "requiredDocuments": ["Proof of income", "Proof of identity", "Proof of residency"],
+        "priority": 3
+      }
+    }
+  ],
+  "incomeLimits": {
+    "incomeLimitSNAP": {
+      "1": 2610,
+      "2": 3526,
+      "3": 4442,
+      "4": 5360,
+      "5": 6276,
+      "6": 7192,
+      "7": 8110,
+      "8": 9026
+    }
+  },
+  "benefitInteractions": [
+    {
+      "programs": ["SSI", "SSDI"],
+      "description": "SSI and SSDI are different programs. You may qualify for one or both depending on work history and income.",
+      "recommendation": "Apply for both programs. They serve different purposes and can stack."
+    },
+    {
+      "programs": ["SSI", "SNAP"],
+      "description": "SSI income counts toward SNAP eligibility. You may still qualify for SNAP.",
+      "recommendation": "Apply for SNAP even if you receive SSI. Your SSI income will be counted, but you may still qualify."
+    }
+  ],
+  "actionPlanOrder": [
+    {
+      "programName": "SSI",
+      "step": "Apply for SSI (Supplemental Security Income) through the Social Security Administration at ssa.gov or call 1-800-772-1213.",
+      "combinedWith": "SSDI",
+      "combinedStep": "Apply for both SSI and SSDI through Social Security at ssa.gov or call 1-800-772-1213. They are different programs and you may qualify for both."
+    },
+    {
+      "programName": "SSDI",
+      "step": "Apply for SSDI (Social Security Disability Insurance) through the Social Security Administration. After 24 months, you will automatically get Medicare."
+    },
+    {
+      "programName": "SNAP",
+      "step": "Apply for SNAP (food assistance) through your state's social services office."
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-01-01",
+    "source": "Federal government programs (SSA, USDA)",
+    "effectiveDate": "2025-01-01"
+  }
+}

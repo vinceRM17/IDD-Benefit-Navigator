@@ -1,0 +1,172 @@
+{
+  "_comment": "Template for new state configuration. Copy this directory and customize for your state.",
+  "_instructions": [
+    "1. Copy this directory to a new folder named after your state (e.g., 'ohio')",
+    "2. Update stateCode with 2-letter abbreviation (e.g., 'OH')",
+    "3. Update stateName with full name (e.g., 'Ohio')",
+    "4. Set coverageLevel to 'full' when all programs are configured",
+    "5. Add state-specific programs (Medicaid, waivers, etc.)",
+    "6. Set income limits using fact names that match condition references",
+    "7. Add benefit interactions between programs",
+    "8. Add action plan ordering",
+    "9. Create matching content files in src/content/programs/",
+    "10. Run: npx ts-node scripts/validate-state-config.ts <STATE_CODE>"
+  ],
+  "stateCode": "XX",
+  "stateName": "State Name",
+  "coverageLevel": "full",
+  "programs": [
+    {
+      "programId": "xx-medicaid",
+      "programName": "Medicaid",
+      "conditions": {
+        "any": [
+          {
+            "all": [
+              {
+                "fact": "monthlyIncome",
+                "operator": "lessThanInclusive",
+                "value": { "fact": "incomeLimitMedicaid" }
+              }
+            ]
+          },
+          {
+            "fact": "receivesSSI",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "medicaid-eligible",
+        "params": {
+          "program": "Medicaid",
+          "confidence": "likely"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "receivesSSI", "reason": "SSI recipients are categorically eligible" },
+          { "condition": "incomeAtLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income at or below Medicaid limit" },
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income below Medicaid limit" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income above Medicaid limit" }
+        ],
+        "nextSteps": ["Apply through your state's Medicaid office"],
+        "requiredDocuments": ["Proof of income", "Proof of residency", "Social Security cards"],
+        "priority": 1
+      }
+    },
+    {
+      "programId": "xx-snap",
+      "programName": "SNAP",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": { "fact": "incomeLimitSNAP" }
+          }
+        ]
+      },
+      "event": {
+        "type": "snap-eligible",
+        "params": {
+          "program": "SNAP",
+          "confidence": "likely"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income below SNAP limit" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income above SNAP limit" }
+        ],
+        "nextSteps": ["Apply through your state's SNAP office"],
+        "requiredDocuments": ["Proof of income", "Utility bills", "Rent/mortgage statements"],
+        "priority": 7
+      }
+    },
+    {
+      "programId": "xx-ssi",
+      "programName": "SSI",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "ssi-eligible",
+        "params": {
+          "program": "SSI",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for SSI" },
+          { "condition": "highIncome", "reason": "High income may reduce SSI benefit amount" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Apply through Social Security Administration"],
+        "requiredDocuments": ["Medical records", "Proof of income", "Work history"],
+        "priority": 5
+      }
+    }
+  ],
+  "incomeLimits": {
+    "incomeLimitMedicaid": {
+      "_comment": "Replace with your state's Medicaid income limits by household size",
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0
+    },
+    "incomeLimitSNAP": {
+      "_comment": "Federal SNAP limits (same nationwide, update annually)",
+      "1": 2610,
+      "2": 3526,
+      "3": 4442,
+      "4": 5360,
+      "5": 6276,
+      "6": 7192,
+      "7": 8110,
+      "8": 9026
+    },
+    "incomeLimitSSI": {
+      "1": 994
+    }
+  },
+  "benefitInteractions": [],
+  "actionPlanOrder": [
+    {
+      "programName": "Medicaid",
+      "step": "Apply for Medicaid first. Many other programs require Medicaid."
+    },
+    {
+      "programName": "SSI",
+      "step": "Apply for SSI through Social Security at ssa.gov or call 1-800-772-1213."
+    },
+    {
+      "programName": "SNAP",
+      "step": "Apply for SNAP (food assistance) through your state's social services office."
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "YYYY-MM-DD",
+    "source": "State agency name",
+    "effectiveDate": "YYYY-MM-DD"
+  }
+}

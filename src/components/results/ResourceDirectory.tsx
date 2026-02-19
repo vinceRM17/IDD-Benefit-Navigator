@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { partnerOrganizations } from '@/content/resources/partners';
-import { applicationPortals } from '@/content/resources/portals';
+import { getPartnersByState } from '@/content/resources/partners';
+import { getPortalsByState } from '@/content/resources/portals';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +27,7 @@ interface FamilyContext {
 interface ResourceDirectoryProps {
   eligibleProgramIds: string[];
   familyContext?: FamilyContext;
+  stateCode?: string;
 }
 
 function getRelevantServices(context?: FamilyContext): string[] {
@@ -67,10 +68,13 @@ function getServiceLabel(service: string): string {
   return labels[service] ?? service;
 }
 
-export function ResourceDirectory({ eligibleProgramIds, familyContext }: ResourceDirectoryProps) {
+export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode = 'KY' }: ResourceDirectoryProps) {
   const relevantServices = getRelevantServices(familyContext);
 
-  const relevantPartners = partnerOrganizations
+  const partners = getPartnersByState(stateCode);
+  const portals = getPortalsByState(stateCode);
+
+  const relevantPartners = partners
     .map((org) => {
       const matchingPrograms = org.relevantPrograms.filter((programId) =>
         eligibleProgramIds.includes(programId)
@@ -91,7 +95,7 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext }: Resourc
       return b.matchCount - a.matchCount;
     });
 
-  const relevantPortals = applicationPortals.filter((portal) =>
+  const relevantPortals = portals.filter((portal) =>
     portal.programIds.some((programId) => eligibleProgramIds.includes(programId))
   );
 

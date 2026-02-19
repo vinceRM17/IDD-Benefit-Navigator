@@ -1,6 +1,7 @@
 {
   "stateCode": "KY",
   "stateName": "Kentucky",
+  "coverageLevel": "full",
   "programs": [
     {
       "programId": "ky-medicaid",
@@ -31,6 +32,19 @@
           "program": "Medicaid",
           "confidence": "likely"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "receivesSSI", "reason": "SSI recipients are categorically eligible" },
+          { "condition": "incomeAtLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income at or below Kentucky Medicaid limit" },
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income below Kentucky Medicaid limit" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitMedicaid", "reason": "Income above Kentucky Medicaid limit" }
+        ],
+        "nextSteps": ["Apply through kynect.ky.gov or local DCBS office"],
+        "requiredDocuments": ["Proof of income", "Proof of residency", "Social Security cards"],
+        "priority": 1
       }
     },
     {
@@ -53,6 +67,17 @@
           "program": "SNAP",
           "confidence": "likely"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income below Kentucky SNAP limit" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitSNAP", "reason": "Income above Kentucky SNAP limit" }
+        ],
+        "nextSteps": ["Apply through kynect.ky.gov or local DCBS office"],
+        "requiredDocuments": ["Proof of income", "Utility bills", "Rent/mortgage statements"],
+        "priority": 7
       }
     },
     {
@@ -73,6 +98,18 @@
           "program": "SSI",
           "confidence": "possible"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for SSI" },
+          { "condition": "highIncome", "reason": "High income may reduce SSI benefit amount" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Apply through Social Security Administration"],
+        "requiredDocuments": ["Medical records", "Proof of income", "Work history"],
+        "priority": 5
       }
     },
     {
@@ -93,6 +130,17 @@
           "program": "Michelle P Waiver",
           "confidence": "possible"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "IDD diagnosis qualifies for waiver services" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No IDD diagnosis documented" }
+        ],
+        "nextSteps": ["Contact Kentucky Department for Aging and Independent Living"],
+        "requiredDocuments": ["IDD diagnosis documentation", "Proof of Kentucky residency"],
+        "priority": 2
       }
     },
     {
@@ -118,6 +166,18 @@
           "program": "HCB Waiver",
           "confidence": "possible"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "meetsAgeCriteria", "reason": "IDD diagnosis and age 18+ qualifies for HCB waiver" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No IDD diagnosis documented" },
+          { "condition": "ageBelow", "minAge": 18, "reason": "Must be 18 or older for HCB Waiver" }
+        ],
+        "nextSteps": ["Contact Kentucky Department for Aging and Independent Living"],
+        "requiredDocuments": ["Documentation of disability or medical condition", "Proof of Medicaid eligibility", "Proof of age (must be 18 or older)"],
+        "priority": 3
       }
     },
     {
@@ -143,11 +203,23 @@
           "program": "SCL Waiver",
           "confidence": "possible"
         }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "meetsAgeCriteria", "reason": "IDD diagnosis and age 3+ qualifies for SCL waiver" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No IDD diagnosis documented" },
+          { "condition": "ageBelow", "minAge": 3, "reason": "Must be 3 or older for SCL Waiver" }
+        ],
+        "nextSteps": ["Contact Kentucky Department for Aging and Independent Living"],
+        "requiredDocuments": ["IDD diagnosis documentation", "Proof of Medicaid eligibility", "Proof of Kentucky residency"],
+        "priority": 4
       }
     }
   ],
   "incomeLimits": {
-    "medicaid": {
+    "incomeLimitMedicaid": {
       "1": 1800,
       "2": 2434,
       "3": 3067,
@@ -157,7 +229,7 @@
       "7": 5600,
       "8": 6234
     },
-    "snap": {
+    "incomeLimitSNAP": {
       "1": 2610,
       "2": 3526,
       "3": 4442,
@@ -167,10 +239,91 @@
       "7": 8110,
       "8": 9026
     },
-    "ssi": {
+    "incomeLimitSSI": {
       "1": 994
     }
   },
+  "benefitInteractions": [
+    {
+      "programs": ["private-insurance", "Medicaid"],
+      "requiresInsurance": true,
+      "description": "Your private insurance and Medicaid can work together.",
+      "recommendation": "Keep your private insurance. Medicaid will work alongside it to reduce your out-of-pocket costs. Tell both your insurance company and Medicaid that you have dual coverage."
+    },
+    {
+      "programs": ["Medicaid", "SSI"],
+      "description": "Getting SSI in Kentucky usually means you automatically qualify for Medicaid.",
+      "recommendation": "Apply for SSI first — Medicaid may follow automatically without a separate application."
+    },
+    {
+      "programs": ["Medicaid", "SSDI"],
+      "description": "After receiving SSDI for 24 months, you automatically qualify for Medicare. If you also qualify for Medicaid, you can have both.",
+      "recommendation": "Apply for both Medicaid and SSDI. After 2 years on SSDI, Medicare will be added automatically."
+    },
+    {
+      "programs": ["Medicaid", "Michelle P Waiver"],
+      "description": "You need Medicaid to use the Michelle P Waiver. The waiver adds extra services on top of what Medicaid covers.",
+      "recommendation": "Apply for Medicaid first, then apply for the Michelle P Waiver. Get on the waitlist as early as possible."
+    },
+    {
+      "programs": ["Medicaid", "HCB Waiver"],
+      "description": "You need Medicaid to use the HCB Waiver. The waiver provides services in your home and community.",
+      "recommendation": "Apply for Medicaid first, then get on the HCB Waiver waitlist. The wait can be long, so apply early."
+    },
+    {
+      "programs": ["Medicaid", "SCL Waiver"],
+      "description": "You need Medicaid to use the SCL Waiver. SCL provides comprehensive community living supports.",
+      "recommendation": "Apply for Medicaid first, then get on the SCL Waiver waitlist. You can be on multiple waiver waitlists."
+    },
+    {
+      "programs": ["SSI", "SSDI"],
+      "description": "SSI and SSDI are different programs. You may qualify for one or both depending on work history and income.",
+      "recommendation": "Apply for both programs. They serve different purposes and can stack."
+    },
+    {
+      "programs": ["Medicaid", "SNAP"],
+      "description": "You can apply for both Medicaid and SNAP at the same time through kynect.",
+      "recommendation": "One application at kynect.ky.gov can start both programs. This saves time."
+    },
+    {
+      "programs": ["SSI", "SNAP"],
+      "description": "SSI income counts toward SNAP eligibility. You may still qualify for SNAP.",
+      "recommendation": "Apply for SNAP even if you receive SSI. Your SSI income will be counted, but you may still qualify."
+    }
+  ],
+  "actionPlanOrder": [
+    {
+      "programName": "Medicaid",
+      "step": "Apply for Medicaid first. Many other programs require Medicaid, and it unlocks waiver services."
+    },
+    {
+      "programName": "SSI",
+      "step": "Apply for SSI (Supplemental Security Income). In Kentucky, SSI often comes with automatic Medicaid.",
+      "combinedWith": "SSDI",
+      "combinedStep": "Apply for both SSI and SSDI through Social Security. They are different programs and you may qualify for both."
+    },
+    {
+      "programName": "SSDI",
+      "step": "Apply for SSDI (Social Security Disability Insurance). After 24 months, you will automatically get Medicare."
+    },
+    {
+      "programName": "Michelle P Waiver",
+      "step": "Get on the waiver waitlist(s). These programs often have long waits, so apply as early as possible. You can be on multiple lists."
+    },
+    {
+      "programName": "HCB Waiver",
+      "step": "_waiver"
+    },
+    {
+      "programName": "SCL Waiver",
+      "step": "_waiver"
+    },
+    {
+      "programName": "SNAP",
+      "step": "Apply for SNAP (food assistance) at kynect.ky.gov or by calling 1-855-459-6328.",
+      "withMedicaidStep": "Apply for SNAP (food assistance). You can apply for SNAP and Medicaid together at kynect.ky.gov."
+    }
+  ],
   "metadata": {
     "lastUpdated": "2025-01-01",
     "source": "Kentucky Cabinet for Health and Family Services",
