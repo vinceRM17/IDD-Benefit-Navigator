@@ -20,6 +20,7 @@ import {
   HelpCircle,
   Shield,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface ProgramCardProps {
   result: EnrichedResult;
@@ -27,14 +28,15 @@ interface ProgramCardProps {
 
 export function ProgramCard({ result }: ProgramCardProps) {
   const { content, confidence } = result;
+  const t = useTranslations('results');
 
   const getBadge = () => {
     if (confidence === 'likely') {
-      return { variant: 'success' as const, text: 'Likely Eligible' };
+      return { variant: 'success' as const, text: t('badges.likelyEligible') };
     } else if (confidence === 'possible') {
-      return { variant: 'warm' as const, text: 'May Be Eligible' };
+      return { variant: 'warm' as const, text: t('badges.mayBeEligible') };
     } else {
-      return { variant: 'secondary' as const, text: 'Unlikely' };
+      return { variant: 'secondary' as const, text: t('badges.unlikely') };
     }
   };
 
@@ -55,7 +57,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
           <div className="mb-4 p-4 bg-primary/5 border border-primary/20 rounded-lg flex gap-3">
             <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
             <p className="text-sm text-foreground">
-              <strong>Important:</strong> {content.waitlistInfo}
+              <strong>{t('programCard.important')}</strong> {content.waitlistInfo}
             </p>
           </div>
         )}
@@ -73,7 +75,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
 
         {/* What it covers */}
         <div className="mb-4">
-          <h4 className="font-heading font-semibold text-foreground mb-2">What it covers:</h4>
+          <h4 className="font-heading font-semibold text-foreground mb-2">{t('programCard.whatItCovers')}</h4>
           <ul className="list-disc list-inside space-y-1 text-foreground/80">
             {content.whatItCovers.map((item, index) => (
               <li key={index}>{item}</li>
@@ -88,7 +90,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
               <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-heading font-semibold text-foreground mb-2">
-                  While you wait:
+                  {t('programCard.whileYouWait')}
                 </h4>
                 <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
                   {content.whileYouWait.map((item, index) => (
@@ -107,7 +109,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
               <HelpCircle className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-heading font-semibold text-foreground mb-2">
-                  Things families often wonder:
+                  {t('programCard.thingsFamiliesWonder')}
                 </h4>
                 <ul className="space-y-2">
                   {content.commonMisconceptions.map((item, index) => (
@@ -131,7 +133,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Apply here
+              {t('programCard.applyHere')}
               <ExternalLink className="h-4 w-4 ml-1.5" />
             </a>
           </Button>
@@ -139,7 +141,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
           <div className="text-sm text-muted-foreground">
             <p className="inline-flex items-center gap-1.5">
               <Phone className="h-3.5 w-3.5" />
-              Need help?{' '}
+              {t('programCard.needHelp')}{' '}
               <a
                 href={`tel:${content.applicationPhone}`}
                 className="font-medium text-primary hover:text-primary/80"
@@ -156,7 +158,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
             <Shield className="h-5 w-5 text-accent-foreground shrink-0 mt-0.5" />
             <div>
               <h4 className="font-heading font-semibold text-foreground mb-1">
-                About your insurance:
+                {t('programCard.aboutYourInsurance')}
               </h4>
               <p className="text-sm text-foreground/80">
                 {content.insuranceCoordination}

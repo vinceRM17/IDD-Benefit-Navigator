@@ -12,11 +12,13 @@
     "resources": "Resources",
     "whatIf": "What If?"
   },
+  "tablistLabel": "Results sections",
   "overview": {
     "title": "Your Benefit Recommendations",
     "subtitle": "Based on what you shared about your family, here are the programs that may help.",
     "encouragement": "Navigating these programs is hard — you are not the only family working through this. You do not have to figure everything out today, and you do not have to do it alone. Start with what feels most important to your family right now.",
-    "programsTitle": "Programs You May Qualify For"
+    "programsTitle": "Programs You May Qualify For",
+    "actionPlanTitle": "Your Action Plan"
   },
   "programs": {
     "likelyTitle": "Programs You Likely Qualify For",
@@ -27,23 +29,89 @@
   "documents": {
     "title": "Documents You'll Need",
     "subtitle": "Gather these documents to speed up your applications.",
-    "none": "No document checklists available."
+    "none": "No document checklists available.",
+    "documentsFor": "Documents You'll Need for {programName}",
+    "gathered": "{checked} of {total} gathered"
   },
   "badges": {
     "likelyEligible": "Likely Eligible",
     "mayBeEligible": "May Be Eligible",
     "unlikely": "Unlikely"
   },
+  "programCard": {
+    "important": "Important:",
+    "whatItCovers": "What it covers:",
+    "whileYouWait": "While you wait:",
+    "thingsFamiliesWonder": "Things families often wonder:",
+    "applyHere": "Apply here",
+    "needHelp": "Need help?",
+    "aboutYourInsurance": "About your insurance:",
+    "howToApply": "How to apply for {programName}"
+  },
+  "summary": {
+    "viewDetails": "View details"
+  },
+  "interactions": {
+    "title": "How Your Benefits Work Together",
+    "whatToDo": "What to do:"
+  },
+  "ai": {
+    "personalizedByAI": "Personalized by AI",
+    "personalizing": "Personalizing explanation...",
+    "fallback": "We were not able to personalize this explanation right now. The expert information above has everything you need.",
+    "disclaimer": "This explanation is adapted to your family's situation. The expert information above is the official source.",
+    "loadingLabel": "Loading personalized explanation for {programName}"
+  },
+  "pdf": {
+    "download": "Download Action Plan (PDF)",
+    "generating": "Generating PDF...",
+    "downloadLabel": "Download Your Action Plan as PDF",
+    "error": "Unable to generate PDF. Please try again."
+  },
+  "account": {
+    "title": "Save your progress",
+    "description": "Create a free account to save your screening results, get reminders before benefits need renewal, and come back anytime to check your progress.",
+    "createAccount": "Create Account",
+    "continueWithout": "Continue without an account",
+    "savedAutomatically": "Your screening results will be saved automatically.",
+    "ariaLabel": "Account signup suggestion"
+  },
+  "coverage": {
+    "title": "Federal Programs Only for {stateName}",
+    "description": "We currently show federal programs (SSI, SSDI, SNAP) for {stateName}. State-specific programs like Medicaid waivers are not yet available. Sign up below to be notified when we add full {stateName} coverage."
+  },
+  "resources": {
+    "orgTitle": "Organizations That Can Help",
+    "recommended": "Recommended",
+    "helpfulBecause": "Based on your family's situation, {orgName} may be especially helpful because they offer {services}.",
+    "services": "Services:",
+    "referMe": "Refer Me",
+    "contactDirectly": "Contact directly:",
+    "serves": "Serves:",
+    "address": "Address:",
+    "noPartners": "We're building our partner network. Check back soon for organizations in your area.",
+    "whereToApply": "Where to Apply",
+    "goTo": "Go to {portalName}",
+    "opensNewWindow": "(opens in new window)",
+    "noPortals": "No direct application portals available for your eligible programs. Contact the organizations listed above for assistance."
+  },
+  "actions": {
+    "startOver": "Start Over",
+    "clearMyData": "Clear My Data",
+    "disclaimer": "This screening is for informational purposes only. Final eligibility is determined by the program administrators."
+  },
   "whatIf": {
     "title": "What If My Income Changes?",
     "subtitle": "Use the slider to explore how changes in your household income might affect which programs you qualify for.",
     "incomeLabel": "Monthly household income",
     "currentIncome": "Your current income",
+    "perMonth": "${value} per month",
     "gained": "Programs You Might Gain",
     "lost": "Programs You Might Lose",
     "unchanged": "Programs Not Affected by Income",
     "noChange": "At this income level, your program eligibility would likely stay the same.",
     "moveSlider": "Move the slider to see how income changes could affect your eligibility.",
+    "resetToActualIncome": "Reset to actual income",
     "disclaimer": "This is an estimate only. Actual eligibility depends on many factors beyond income. Contact each program for specific details."
   }
 }

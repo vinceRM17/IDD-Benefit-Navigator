@@ -1,0 +1,101 @@
+{
+  "glossary": {
+    "title": "Glosario",
+    "description": "Términos comunes y abreviaturas usadas en beneficios por discapacidad. Escrito en lenguaje sencillo para que todos puedan entender.",
+    "searchPlaceholder": "Buscar términos...",
+    "searchLabel": "Buscar términos del glosario",
+    "noTermsFound": "No se encontraron términos que coincidan con \"{search}\"",
+    "seeAlso": "Ver también:",
+    "lettersLabel": "Letras del glosario"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "description": "Respuestas a preguntas comunes sobre el Navegador de Beneficios IDD, elegibilidad y cómo solicitar programas.",
+    "categories": {
+      "general": "Preguntas Generales",
+      "eligibility": "Preguntas sobre Elegibilidad",
+      "application": "Preguntas sobre Solicitudes",
+      "privacy": "Privacidad y Seguridad"
+    },
+    "entries": {
+      "whatIsNavigator": {
+        "q": "¿Qué es el Navegador de Beneficios IDD?",
+        "a": "El Navegador de Beneficios IDD es una herramienta gratuita que ayuda a las familias de personas con discapacidades intelectuales y del desarrollo a entender para qué programas de beneficios pueden calificar. Hace algunas preguntas sobre su familia y le da resultados personalizados con guía paso a paso.",
+        "cat": "general"
+      },
+      "isFree": {
+        "q": "¿Esta herramienta es realmente gratuita?",
+        "a": "Sí, el Navegador de Beneficios IDD es completamente gratuito. No necesita crear una cuenta, pagar nada, ni proporcionar información personal como su nombre o número de Seguro Social.",
+        "cat": "general"
+      },
+      "infoSafe": {
+        "q": "¿Mi información está segura?",
+        "a": "Sí. No recopilamos su nombre, dirección ni número de Seguro Social. Sus respuestas de evaluación se almacenan solo en su navegador y no se envían a terceros. Puede borrar todos sus datos en cualquier momento.",
+        "cat": "privacy"
+      },
+      "sellData": {
+        "q": "¿Venden mis datos?",
+        "a": "No. Nunca vendemos, compartimos ni damos su información a nadie. Su privacidad es muy importante para nosotros.",
+        "cat": "privacy"
+      },
+      "determineEligibility": {
+        "q": "¿Esta herramienta determina mi elegibilidad?",
+        "a": "No. Esta herramienta le da una estimación de los programas para los que puede calificar según las reglas generales de elegibilidad. Solo los administradores de los programas (como el Seguro Social, Medicaid o la oficina de beneficios de su estado) pueden tomar decisiones oficiales de elegibilidad.",
+        "cat": "eligibility"
+      },
+      "likelyEligible": {
+        "q": "¿Qué significa \"probablemente elegible\"?",
+        "a": "Probablemente elegible significa que según lo que nos dijo, parece cumplir con los requisitos principales de este programa. Sin embargo, el programa real puede tener requisitos adicionales que no preguntamos. Recomendamos solicitar para averiguarlo con certeza.",
+        "cat": "eligibility"
+      },
+      "mayBeEligible": {
+        "q": "¿Qué significa \"puede ser elegible\"?",
+        "a": "Puede ser elegible significa que podría calificar para este programa, pero necesitamos más información de la que nuestra evaluación proporciona. Recomendamos contactar al programa directamente para saber más sobre su situación específica.",
+        "cat": "eligibility"
+      },
+      "howToApply": {
+        "q": "¿Cómo solicito estos programas?",
+        "a": "Cada programa tiene su propio proceso de solicitud. Su página de resultados incluye los próximos pasos específicos y enlaces de solicitud para cada programa para el que puede calificar. Muchos programas permiten solicitar en línea, por teléfono o en persona.",
+        "cat": "application"
+      },
+      "multiplePrograms": {
+        "q": "¿Puedo solicitar varios programas a la vez?",
+        "a": "En muchos estados, puede solicitar Medicaid y SNAP al mismo tiempo a través del portal de beneficios de su estado. SSI y SSDI son solicitudes separadas a través del Seguro Social. Los programas de exención típicamente requieren un proceso de solicitud separado.",
+        "cat": "application"
+      },
+      "denied": {
+        "q": "¿Qué pasa si mi solicitud es denegada?",
+        "a": "Si su solicitud es denegada, generalmente tiene derecho a apelar. La carta de denegación explicará cómo apelar y el plazo. Muchas de las organizaciones asociadas listadas en nuestra sección de Recursos pueden ayudarle con apelaciones de forma gratuita.",
+        "cat": "application"
+      },
+      "statesCovered": {
+        "q": "¿Qué estados cubre esta herramienta?",
+        "a": "El Navegador de Beneficios IDD funciona en los 50 estados. Los programas federales como SSI, SSDI y SNAP están disponibles en todo el país. Algunos estados tienen programas estatales adicionales con información local detallada.",
+        "cat": "general"
+      },
+      "childUse": {
+        "q": "Mi familiar es un niño. ¿Podemos usar esta herramienta?",
+        "a": "Sí. Muchos programas atienden a niños con discapacidades, incluyendo SSI, Medicaid, IDEA/Educación Especial y asistencia de guardería. La herramienta preguntará sobre la edad y proporcionará resultados apropiados para su familiar.",
+        "cat": "eligibility"
+      }
+    }
+  },
+  "glossaryEntries": {
+    "ssi": { "term": "SSI", "definition": "Ingreso de Seguridad Suplementario — un beneficio mensual en efectivo del gobierno federal para personas con discapacidades que tienen ingresos y recursos limitados." },
+    "ssdi": { "term": "SSDI", "definition": "Seguro de Discapacidad del Seguro Social — un beneficio mensual en efectivo para personas que han trabajado y pagado impuestos del Seguro Social antes de quedar discapacitadas." },
+    "snap": { "term": "SNAP", "definition": "Programa de Asistencia Nutricional Suplementaria — un programa federal que proporciona dinero en una tarjeta EBT para ayudar a comprar alimentos. A veces se llama estampillas de comida." },
+    "medicaid": { "term": "Medicaid", "definition": "Un programa de seguro de salud del gobierno para personas con bajos ingresos. Cubre visitas al médico, estancias en el hospital, recetas, terapia y otro cuidado médico." },
+    "waiver": { "term": "Exención (Waiver)", "definition": "Un programa de exención de Medicaid que proporciona servicios adicionales más allá del Medicaid regular. Estos servicios ayudan a las personas con discapacidades a vivir en su hogar o comunidad en lugar de en una institución." },
+    "idd": { "term": "IDD", "definition": "Discapacidades Intelectuales y del Desarrollo — un grupo de condiciones que afectan cómo una persona aprende, se comunica o maneja las actividades diarias. Estas condiciones comienzan antes de los 22 años y se espera que duren toda la vida." },
+    "iep": { "term": "IEP", "definition": "Programa de Educación Individualizado — un plan escrito que describe los servicios de educación especial que un niño con discapacidad recibirá en la escuela. Los padres son parte del equipo que crea el IEP." },
+    "able": { "term": "Cuenta ABLE", "definition": "Una cuenta de ahorros especial libre de impuestos para personas cuya discapacidad comenzó antes de los 26 años. Puede ahorrar hasta $100,000 sin perder los beneficios de SSI o Medicaid." },
+    "fpl": { "term": "FPL", "definition": "Nivel Federal de Pobreza — una cantidad de ingresos establecida por el gobierno cada año. Muchos programas de beneficios usan el FPL para decidir quién califica. Por ejemplo, una familia de 4 al 100% del FPL gana aproximadamente $31,200 por año." },
+    "ebt": { "term": "EBT", "definition": "Transferencia Electrónica de Beneficios — una tarjeta que funciona como una tarjeta de débito. Los beneficios de SNAP y alguna asistencia en efectivo se cargan en esta tarjeta cada mes." },
+    "hcb": { "term": "HCB", "definition": "Exención de Servicios en el Hogar y la Comunidad — un programa de exención de Medicaid que proporciona servicios para ayudar a adultos con discapacidades a vivir en su hogar y comunidad." },
+    "scl": { "term": "SCL", "definition": "Exención de Apoyos para la Vida Comunitaria — una exención integral de Medicaid para personas con discapacidades intelectuales o del desarrollo. Proporciona apoyo residencial, servicios diurnos y más." },
+    "mpw": { "term": "MPW", "definition": "Exención Michelle P. — una exención de Medicaid de Kentucky nombrada en honor a Michelle P., quien abogó por servicios comunitarios para personas con discapacidades. Proporciona servicios para ayudar a las personas a vivir de forma independiente." },
+    "vocRehab": { "term": "Rehabilitación Vocacional", "definition": "Un programa estatal que ayuda a las personas con discapacidades a prepararse, encontrar y mantener empleos. Los servicios incluyen capacitación laboral, entrenamiento y apoyo en el lugar de trabajo sin costo para usted." },
+    "section8": { "term": "Sección 8", "definition": "Otro nombre para el programa de Vales de Elección de Vivienda. Ayuda a las familias con bajos ingresos a pagar por vivienda segura y decente en el mercado privado." },
+    "ccdf": { "term": "CCDF", "definition": "Fondo de Cuidado y Desarrollo Infantil — un programa federal que ayuda a las familias con bajos ingresos a pagar el cuidado infantil para que los padres puedan trabajar o ir a la escuela." }
+  }
+}

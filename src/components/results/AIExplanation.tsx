@@ -11,6 +11,7 @@
 import { useEffect, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export interface AIExplanationProps {
   programName: string;
@@ -34,6 +35,7 @@ export function AIExplanation(props: AIExplanationProps) {
   const [loading, setLoading] = useState(true);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [error, setError] = useState(false);
+  const t = useTranslations('results.ai');
 
   useEffect(() => {
     async function fetchExplanation() {
@@ -79,8 +81,7 @@ export function AIExplanation(props: AIExplanationProps) {
         aria-live="polite"
       >
         <p className="text-sm text-muted-foreground">
-          We were not able to personalize this explanation right now. The expert
-          information above has everything you need.
+          {t('fallback')}
         </p>
       </div>
     );
@@ -93,12 +94,12 @@ export function AIExplanation(props: AIExplanationProps) {
         className="mt-4 p-4 bg-secondary rounded-lg border border-border"
         role="status"
         aria-live="polite"
-        aria-label={`Loading personalized explanation for ${props.programName}`}
+        aria-label={t('loadingLabel', { programName: props.programName })}
       >
         <div className="flex items-center gap-2 mb-3">
           <Badge variant="outline" className="gap-1">
             <Sparkles className="h-3 w-3" />
-            Personalized by AI
+            {t('personalizedByAI')}
           </Badge>
         </div>
         <div className="space-y-2">
@@ -106,7 +107,7 @@ export function AIExplanation(props: AIExplanationProps) {
           <div className="h-4 bg-muted rounded animate-pulse w-5/6"></div>
           <div className="h-4 bg-muted rounded animate-pulse w-4/6"></div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3">Personalizing explanation...</p>
+        <p className="text-xs text-muted-foreground mt-3">{t('personalizing')}</p>
       </div>
     );
   }
@@ -116,12 +117,12 @@ export function AIExplanation(props: AIExplanationProps) {
     <section
       className="mt-4 p-4 bg-secondary rounded-lg border border-border"
       aria-live="polite"
-      aria-label={`AI-personalized explanation for ${props.programName}`}
+      aria-label={t('loadingLabel', { programName: props.programName })}
     >
       <div className="flex items-center gap-2 mb-3">
         <Badge variant="outline" className="gap-1">
           <Sparkles className="h-3 w-3" />
-          Personalized by AI
+          {t('personalizedByAI')}
         </Badge>
       </div>
 
@@ -130,8 +131,7 @@ export function AIExplanation(props: AIExplanationProps) {
       </div>
 
       <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border">
-        This explanation is adapted to your family&apos;s situation. The expert
-        information above is the official source.
+        {t('disclaimer')}
       </p>
     </section>
   );

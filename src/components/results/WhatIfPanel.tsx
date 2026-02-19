@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { RotateCcw, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { simpleCompareEligibility } from '@/lib/screening/what-if';
 import type { EnrichedResult } from '@/lib/results/types';
+import { useTranslations } from 'next-intl';
 
 interface WhatIfPanelProps {
   programs: EnrichedResult[];
@@ -16,6 +17,7 @@ interface WhatIfPanelProps {
 
 export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
   const [scenarioIncome, setScenarioIncome] = useState(currentIncome);
+  const t = useTranslations('results.whatIf');
 
   const formatCurrency = (value: number) =>
     `$${value.toLocaleString('en-US')}`;
@@ -32,11 +34,10 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
     <div>
       <header className="mb-6">
         <h2 className="text-2xl font-heading font-bold text-foreground mb-2">
-          What If My Income Changes?
+          {t('title')}
         </h2>
         <p className="text-muted-foreground">
-          Use the slider to explore how changes in your household income might
-          affect which programs you qualify for.
+          {t('subtitle')}
         </p>
       </header>
 
@@ -45,7 +46,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
         <CardContent className="p-card-padding">
           <div className="flex items-center justify-between mb-2">
             <label className="font-medium text-foreground">
-              Monthly household income
+              {t('incomeLabel')}
             </label>
             <span className="text-lg font-heading font-bold text-primary">
               {formatCurrency(scenarioIncome)}
@@ -57,8 +58,8 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
             min={0}
             max={10000}
             step={50}
-            label="Monthly household income"
-            formatValue={(v) => `$${v.toLocaleString()} per month`}
+            label={t('incomeLabel')}
+            formatValue={(v) => `$${v.toLocaleString()}`}
             onChange={setScenarioIncome}
             className="mb-3"
           />
@@ -66,7 +67,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>$0</span>
             <span>
-              Your current income:{' '}
+              {t('currentIncome')}:{' '}
               <strong className="text-foreground">
                 {formatCurrency(currentIncome)}
               </strong>
@@ -82,7 +83,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
                 onClick={() => setScenarioIncome(currentIncome)}
               >
                 <RotateCcw className="h-3.5 w-3.5 mr-1" />
-                Reset to actual income
+                {t('resetToActualIncome')}
               </Button>
             </div>
           )}
@@ -94,10 +95,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
         {isAtBaseline ? (
           <Card>
             <CardContent className="p-card-padding text-center text-muted-foreground">
-              <p>
-                Move the slider to see how income changes could affect your
-                eligibility.
-              </p>
+              <p>{t('moveSlider')}</p>
             </CardContent>
           </Card>
         ) : (
@@ -108,7 +106,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingUp className="h-5 w-5 text-emerald-600" />
                     <h3 className="font-heading font-semibold text-foreground">
-                      Programs You Might Gain
+                      {t('gained')}
                     </h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -128,7 +126,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <TrendingDown className="h-5 w-5 text-red-500" />
                     <h3 className="font-heading font-semibold text-foreground">
-                      Programs You Might Lose
+                      {t('lost')}
                     </h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -148,7 +146,7 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
                   <div className="flex items-center gap-2 mb-3">
                     <Minus className="h-5 w-5 text-muted-foreground" />
                     <h3 className="font-heading font-semibold text-foreground">
-                      Programs Not Affected by Income
+                      {t('unchanged')}
                     </h3>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -165,17 +163,13 @@ export function WhatIfPanel({ programs, currentIncome }: WhatIfPanelProps) {
             {!hasChanges && (
               <Card>
                 <CardContent className="p-card-padding text-center text-muted-foreground">
-                  <p>
-                    At this income level, your program eligibility would likely
-                    stay the same.
-                  </p>
+                  <p>{t('noChange')}</p>
                 </CardContent>
               </Card>
             )}
 
             <p className="text-sm text-muted-foreground text-center">
-              This is an estimate only. Actual eligibility depends on many
-              factors beyond income. Contact each program for specific details.
+              {t('disclaimer')}
             </p>
           </div>
         )}

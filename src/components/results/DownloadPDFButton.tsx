@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { EnrichedResult, BenefitInteraction } from '@/lib/results/types';
 import { Button } from '@/components/ui/button';
 import { Download, Loader2, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DownloadPDFButtonProps {
   results: EnrichedResult[];
@@ -24,6 +25,7 @@ export function DownloadPDFButton({
 }: DownloadPDFButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('results.pdf');
 
   const handleDownload = async () => {
     setIsLoading(true);
@@ -57,7 +59,7 @@ export function DownloadPDFButton({
       URL.revokeObjectURL(url);
     } catch (err) {
       console.error('PDF download error:', err);
-      setError('Unable to generate PDF. Please try again.');
+      setError(t('error'));
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +71,7 @@ export function DownloadPDFButton({
         variant="warm"
         onClick={handleDownload}
         disabled={isLoading}
-        aria-label={isLoading ? 'Generating PDF...' : 'Download Your Action Plan as PDF'}
+        aria-label={isLoading ? t('generating') : t('downloadLabel')}
         aria-busy={isLoading}
       >
         {isLoading ? (
@@ -77,7 +79,7 @@ export function DownloadPDFButton({
         ) : (
           <Download className="h-4 w-4 mr-1.5" />
         )}
-        {isLoading ? 'Generating PDF...' : 'Download Action Plan (PDF)'}
+        {isLoading ? t('generating') : t('download')}
       </Button>
 
       {error && (

@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Info } from 'lucide-react';
 import { WaitlistSignup } from './WaitlistSignup';
+import { useTranslations } from 'next-intl';
 
 interface StateCoverageBannerProps {
   stateCode: string;
@@ -16,6 +17,8 @@ export function StateCoverageBanner({
   stateName,
   coverageLevel,
 }: StateCoverageBannerProps) {
+  const t = useTranslations('results.coverage');
+
   if (coverageLevel === 'full') return null;
 
   return (
@@ -26,12 +29,10 @@ export function StateCoverageBanner({
           <div className="flex-1 space-y-3">
             <div>
               <h3 className="font-heading font-semibold text-amber-900">
-                Federal Programs Only for {stateName}
+                {t('title', { stateName })}
               </h3>
               <p className="text-sm text-amber-800 mt-1">
-                We currently show federal programs (SSI, SSDI, SNAP) for {stateName}.
-                State-specific programs like Medicaid waivers are not yet available.
-                Sign up below to be notified when we add full {stateName} coverage.
+                {t('description', { stateName })}
               </p>
             </div>
             <WaitlistSignup stateCode={stateCode} stateName={stateName} />

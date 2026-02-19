@@ -1,12 +1,41 @@
 'use client';
 
-import React from 'react';
-import { getFAQByCategory, getCategoryLabel } from '@/content/resources/faq';
+import React, { useMemo } from 'react';
 import { HelpCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+interface FAQEntry {
+  question: string;
+  answer: string;
+  category: string;
+}
 
 export default function FAQPage() {
-  const grouped = getFAQByCategory();
+  const t = useTranslations('resources.faq');
+
   const categories = ['general', 'eligibility', 'application', 'privacy'];
+
+  const entryKeys = [
+    'whatIsNavigator', 'isFree', 'infoSafe', 'sellData',
+    'determineEligibility', 'likelyEligible', 'mayBeEligible',
+    'howToApply', 'multiplePrograms', 'denied',
+    'statesCovered', 'childUse',
+  ];
+
+  const grouped = useMemo(() => {
+    const result: Record<string, FAQEntry[]> = {};
+    for (const key of entryKeys) {
+      const entry: FAQEntry = {
+        question: t(`entries.${key}.q`),
+        answer: t(`entries.${key}.a`),
+        category: t(`entries.${key}.cat`),
+      };
+      if (!result[entry.category]) result[entry.category] = [];
+      result[entry.category].push(entry);
+    }
+    return result;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t]);
 
   return (
     <div className="py-section">
@@ -14,11 +43,11 @@ export default function FAQPage() {
         <div className="flex items-center gap-3 mb-2">
           <HelpCircle className="h-7 w-7 text-primary" />
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            Frequently Asked Questions
+            {t('title')}
           </h1>
         </div>
         <p className="text-muted-foreground mb-8">
-          Answers to common questions about the IDD Benefits Navigator, eligibility, and how to apply for programs.
+          {t('description')}
         </p>
 
         <div className="space-y-10">
@@ -28,7 +57,7 @@ export default function FAQPage() {
             return (
               <section key={category}>
                 <h2 className="text-xl font-heading font-bold text-foreground mb-4">
-                  {getCategoryLabel(category)}
+                  {t(`categories.${category}`)}
                 </h2>
                 <div className="space-y-3">
                   {entries.map((entry, index) => (

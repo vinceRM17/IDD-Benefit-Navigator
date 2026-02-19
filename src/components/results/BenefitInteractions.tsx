@@ -4,10 +4,13 @@
  * WCAG compliant with proper heading hierarchy
  */
 
+'use client';
+
 import { BenefitInteraction } from '@/lib/results/types';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ArrowRightLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface BenefitInteractionsProps {
   interactions: BenefitInteraction[];
@@ -16,6 +19,8 @@ interface BenefitInteractionsProps {
 export function BenefitInteractions({
   interactions,
 }: BenefitInteractionsProps) {
+  const t = useTranslations('results.interactions');
+
   if (interactions.length === 0) {
     return null;
   }
@@ -24,7 +29,7 @@ export function BenefitInteractions({
     <Card>
       <CardHeader>
         <h2 className="text-2xl font-heading font-semibold text-foreground">
-          How Your Benefits Work Together
+          {t('title')}
         </h2>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -47,7 +52,7 @@ export function BenefitInteractions({
             {/* Recommendation */}
             <Separator className="mb-3" />
             <p className="text-sm font-medium text-primary">
-              What to do: {interaction.recommendation}
+              {t('whatToDo')} {interaction.recommendation}
             </p>
           </div>
         ))}

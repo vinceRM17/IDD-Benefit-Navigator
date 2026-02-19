@@ -17,6 +17,7 @@ import {
   ArrowRight,
   Star,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface FamilyContext {
   hasDisabilityDiagnosis?: boolean;
@@ -70,6 +71,7 @@ function getServiceLabel(service: string): string {
 
 export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode = 'KY' }: ResourceDirectoryProps) {
   const relevantServices = getRelevantServices(familyContext);
+  const t = useTranslations('results.resources');
 
   const partners = getPartnersByState(stateCode);
   const portals = getPortalsByState(stateCode);
@@ -106,7 +108,7 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
         <div className="flex items-center gap-3 mb-4">
           <Building2 className="h-6 w-6 text-primary" />
           <h3 className="text-2xl font-heading font-bold text-foreground">
-            Organizations That Can Help
+            {t('orgTitle')}
           </h3>
         </div>
         {relevantPartners.length > 0 ? (
@@ -124,7 +126,7 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
                     {org.isRecommended && (
                       <Badge variant="success" className="gap-1">
                         <Star className="h-3 w-3" />
-                        Recommended
+                        {t('recommended')}
                       </Badge>
                     )}
                   </div>
@@ -133,16 +135,17 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
 
                   {org.isRecommended && org.matchingServices.length > 0 && (
                     <div className="text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-md p-3 mb-3">
-                      Based on your family&apos;s situation, {org.name} may be
-                      especially helpful because they offer{' '}
-                      {org.matchingServices.map(getServiceLabel).join(' and ')}.
+                      {t('helpfulBecause', {
+                        orgName: org.name,
+                        services: org.matchingServices.map(getServiceLabel).join(' & '),
+                      })}
                     </div>
                   )}
 
                   {/* Services */}
                   <div className="mb-3">
                     <p className="font-medium text-foreground text-sm mb-1">
-                      Services:
+                      {t('services')}
                     </p>
                     <ul className="list-disc list-inside text-foreground/80 text-sm space-y-1">
                       {org.services.map((service, idx) => (
@@ -183,7 +186,7 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
                           className="text-primary hover:text-primary/80"
                         >
                           {org.website.replace(/^https?:\/\//, '')}
-                          <span className="sr-only"> (opens in new window)</span>
+                          <span className="sr-only"> {t('opensNewWindow')}</span>
                         </a>
                       </div>
                     </div>
@@ -191,14 +194,14 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
                     {org.email ? (
                       <Button size="sm" asChild>
                         <Link href={`/referral?partner=${org.id}`}>
-                          Refer Me
+                          {t('referMe')}
                           <ArrowRight className="h-4 w-4 ml-1" />
                         </Link>
                       </Button>
                     ) : (
                       <p className="text-sm text-muted-foreground inline-flex items-center gap-1.5">
                         <Phone className="h-3.5 w-3.5" />
-                        Contact directly:{' '}
+                        {t('contactDirectly')}{' '}
                         <a
                           href={`tel:${org.phone}`}
                           className="text-primary hover:text-primary/80"
@@ -212,12 +215,12 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
                   {/* Service Area */}
                   <p className="text-sm text-muted-foreground mt-3 inline-flex items-center gap-1.5">
                     <MapPin className="h-3.5 w-3.5" />
-                    Serves: {org.servesArea}
+                    {t('serves')} {org.servesArea}
                   </p>
 
                   {org.address && (
                     <p className="text-sm text-muted-foreground mt-1">
-                      Address: {org.address}
+                      {t('address')} {org.address}
                     </p>
                   )}
                 </CardContent>
@@ -226,14 +229,14 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
           </div>
         ) : (
           <p className="text-muted-foreground">
-            We&apos;re building our partner network. Check back soon for organizations in your area.
+            {t('noPartners')}
           </p>
         )}
       </div>
 
       {/* Application Portals */}
       <div>
-        <h3 className="text-2xl font-heading font-bold text-foreground mb-4">Where to Apply</h3>
+        <h3 className="text-2xl font-heading font-bold text-foreground mb-4">{t('whereToApply')}</h3>
         {relevantPortals.length > 0 ? (
           <div className="space-y-4">
             {relevantPortals.map((portal) => (
@@ -250,9 +253,9 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Go to {portal.name}
+                      {t('goTo', { portalName: portal.name })}
                       <ExternalLink className="h-4 w-4 ml-1.5" />
-                      <span className="sr-only"> (opens in new window)</span>
+                      <span className="sr-only"> {t('opensNewWindow')}</span>
                     </a>
                   </Button>
 
@@ -267,8 +270,7 @@ export function ResourceDirectory({ eligibleProgramIds, familyContext, stateCode
           </div>
         ) : (
           <p className="text-muted-foreground">
-            No direct application portals available for your eligible programs.
-            Contact the organizations listed above for assistance.
+            {t('noPortals')}
           </p>
         )}
       </div>

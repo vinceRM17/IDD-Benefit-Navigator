@@ -18,9 +18,10 @@ interface TabNavProps {
   tabs: Tab[];
   defaultTab?: string;
   onTabChange?: (tabId: string) => void;
+  ariaLabel?: string;
 }
 
-export function TabNav({ tabs, defaultTab, onTabChange }: TabNavProps) {
+export function TabNav({ tabs, defaultTab, onTabChange, ariaLabel }: TabNavProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
   const tabRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
@@ -77,7 +78,7 @@ export function TabNav({ tabs, defaultTab, onTabChange }: TabNavProps) {
       {/* Tab list */}
       <div
         role="tablist"
-        aria-label="Results sections"
+        aria-label={ariaLabel || "Results sections"}
         className="flex gap-1 border-b border-border mb-6 overflow-x-auto"
       >
         {tabs.map((tab) => {

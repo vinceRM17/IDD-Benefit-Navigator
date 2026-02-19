@@ -12,11 +12,13 @@
     "resources": "Recursos",
     "whatIf": "¿Qué Pasa Si?"
   },
+  "tablistLabel": "Secciones de resultados",
   "overview": {
     "title": "Sus Recomendaciones de Beneficios",
     "subtitle": "Según lo que compartió sobre su familia, estos son los programas que pueden ayudar.",
     "encouragement": "Navegar estos programas es difícil — no es la única familia que pasa por esto. No tiene que resolver todo hoy, y no tiene que hacerlo solo. Comience con lo que sea más importante para su familia en este momento.",
-    "programsTitle": "Programas Para los Que Puede Calificar"
+    "programsTitle": "Programas Para los Que Puede Calificar",
+    "actionPlanTitle": "Su Plan de Acción"
   },
   "programs": {
     "likelyTitle": "Programas Para los Que Probablemente Califica",
@@ -27,23 +29,89 @@
   "documents": {
     "title": "Documentos Que Necesitará",
     "subtitle": "Reúna estos documentos para acelerar sus solicitudes.",
-    "none": "No hay listas de documentos disponibles."
+    "none": "No hay listas de documentos disponibles.",
+    "documentsFor": "Documentos Que Necesitará para {programName}",
+    "gathered": "{checked} de {total} reunidos"
   },
   "badges": {
     "likelyEligible": "Probablemente Elegible",
     "mayBeEligible": "Puede Ser Elegible",
     "unlikely": "Poco Probable"
   },
+  "programCard": {
+    "important": "Importante:",
+    "whatItCovers": "Lo que cubre:",
+    "whileYouWait": "Mientras espera:",
+    "thingsFamiliesWonder": "Cosas que las familias suelen preguntarse:",
+    "applyHere": "Solicitar aquí",
+    "needHelp": "¿Necesita ayuda?",
+    "aboutYourInsurance": "Sobre su seguro:",
+    "howToApply": "Cómo solicitar {programName}"
+  },
+  "summary": {
+    "viewDetails": "Ver detalles"
+  },
+  "interactions": {
+    "title": "Cómo Funcionan Sus Beneficios Juntos",
+    "whatToDo": "Qué hacer:"
+  },
+  "ai": {
+    "personalizedByAI": "Personalizado por IA",
+    "personalizing": "Personalizando la explicación...",
+    "fallback": "No pudimos personalizar esta explicación en este momento. La información experta de arriba tiene todo lo que necesita.",
+    "disclaimer": "Esta explicación está adaptada a la situación de su familia. La información experta de arriba es la fuente oficial.",
+    "loadingLabel": "Cargando explicación personalizada para {programName}"
+  },
+  "pdf": {
+    "download": "Descargar Plan de Acción (PDF)",
+    "generating": "Generando PDF...",
+    "downloadLabel": "Descargar Su Plan de Acción como PDF",
+    "error": "No se pudo generar el PDF. Por favor intente de nuevo."
+  },
+  "account": {
+    "title": "Guarde su progreso",
+    "description": "Cree una cuenta gratuita para guardar sus resultados de evaluación, recibir recordatorios antes de que los beneficios necesiten renovación, y regresar en cualquier momento para revisar su progreso.",
+    "createAccount": "Crear Cuenta",
+    "continueWithout": "Continuar sin cuenta",
+    "savedAutomatically": "Sus resultados de evaluación se guardarán automáticamente.",
+    "ariaLabel": "Sugerencia de registro de cuenta"
+  },
+  "coverage": {
+    "title": "Solo Programas Federales para {stateName}",
+    "description": "Actualmente mostramos programas federales (SSI, SSDI, SNAP) para {stateName}. Los programas específicos del estado como las exenciones de Medicaid aún no están disponibles. Regístrese abajo para ser notificado cuando agreguemos cobertura completa de {stateName}."
+  },
+  "resources": {
+    "orgTitle": "Organizaciones Que Pueden Ayudar",
+    "recommended": "Recomendado",
+    "helpfulBecause": "Según la situación de su familia, {orgName} puede ser especialmente útil porque ofrecen {services}.",
+    "services": "Servicios:",
+    "referMe": "Referirme",
+    "contactDirectly": "Contactar directamente:",
+    "serves": "Atiende:",
+    "address": "Dirección:",
+    "noPartners": "Estamos construyendo nuestra red de socios. Vuelva pronto para encontrar organizaciones en su área.",
+    "whereToApply": "Dónde Solicitar",
+    "goTo": "Ir a {portalName}",
+    "opensNewWindow": "(abre en nueva ventana)",
+    "noPortals": "No hay portales de solicitud directa disponibles para sus programas elegibles. Contacte a las organizaciones listadas arriba para asistencia."
+  },
+  "actions": {
+    "startOver": "Comenzar de Nuevo",
+    "clearMyData": "Borrar Mis Datos",
+    "disclaimer": "Esta evaluación es solo para fines informativos. La elegibilidad final es determinada por los administradores de cada programa."
+  },
   "whatIf": {
     "title": "¿Qué Pasa Si Cambian Mis Ingresos?",
     "subtitle": "Use el control deslizante para explorar cómo los cambios en el ingreso de su hogar podrían afectar los programas para los que califica.",
     "incomeLabel": "Ingreso mensual del hogar",
     "currentIncome": "Su ingreso actual",
+    "perMonth": "${value} por mes",
     "gained": "Programas Que Podría Obtener",
     "lost": "Programas Que Podría Perder",
     "unchanged": "Programas No Afectados por el Ingreso",
     "noChange": "Con este nivel de ingresos, su elegibilidad para los programas probablemente se mantendría igual.",
     "moveSlider": "Mueva el control deslizante para ver cómo los cambios de ingreso podrían afectar su elegibilidad.",
+    "resetToActualIncome": "Restablecer al ingreso actual",
     "disclaimer": "Esta es solo una estimación. La elegibilidad real depende de muchos factores además del ingreso. Contacte a cada programa para obtener detalles específicos."
   }
 }

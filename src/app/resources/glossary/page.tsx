@@ -1,27 +1,78 @@
 'use client';
 
-import React, { useState } from 'react';
-import { getGlossaryByLetter, type GlossaryEntry } from '@/content/resources/glossary';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { BookOpen, Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+interface GlossaryEntry {
+  term: string;
+  definition: string;
+  seeAlso?: string[];
+}
 
 export default function GlossaryPage() {
   const [search, setSearch] = useState('');
-  const grouped = getGlossaryByLetter();
+  const t = useTranslations('resources.glossary');
+  const entriesRaw = useTranslations('resources.glossaryEntries');
+
+  // Build glossary entries from message file
+  const entries = useMemo(() => {
+    const keys = ['ssi', 'ssdi', 'snap', 'medicaid', 'waiver', 'idd', 'iep', 'able', 'fpl', 'ebt', 'hcb', 'scl', 'mpw', 'vocRehab', 'section8', 'ccdf'];
+    const seeAlsoMap: Record<string, string[]> = {
+      ssi: ['SSDI'],
+      ssdi: ['SSI'],
+      snap: ['EBT'],
+      medicaid: ['Waiver'],
+      waiver: ['HCB', 'SCL', 'MPW'],
+      iep: [],
+      able: [],
+      fpl: ['Medicaid', 'SNAP'],
+      ebt: ['SNAP'],
+      hcb: ['Waiver', 'SCL', 'MPW'],
+      scl: ['Waiver', 'HCB', 'MPW'],
+      mpw: ['Waiver', 'HCB', 'SCL'],
+      vocRehab: [],
+      section8: [],
+      ccdf: [],
+      idd: [],
+    };
+
+    return keys.map((key) => ({
+      term: entriesRaw(`${key}.term`),
+      definition: entriesRaw(`${key}.definition`),
+      seeAlso: seeAlsoMap[key]?.length ? seeAlsoMap[key] : undefined,
+    }));
+  }, [entriesRaw]);
+
+  // Group by letter
+  const grouped = useMemo(() => {
+    const sorted = [...entries].sort((a, b) => a.term.localeCompare(b.term));
+    const groups: Record<string, GlossaryEntry[]> = {};
+    for (const entry of sorted) {
+      const letter = entry.term[0].toUpperCase();
+      if (!groups[letter]) groups[letter] = [];
+      groups[letter].push(entry);
+    }
+    return groups;
+  }, [entries]);
+
   const letters = Object.keys(grouped).sort();
 
-  const filteredGrouped: Record<string, GlossaryEntry[]> = {};
-  if (search) {
+  const filteredGrouped = useMemo(() => {
+    if (!search) return grouped;
     const lower = search.toLowerCase();
-    for (const [letter, entries] of Object.entries(grouped)) {
-      const filtered = entries.filter(
+    const result: Record<string, GlossaryEntry[]> = {};
+    for (const [letter, items] of Object.entries(grouped)) {
+      const filtered = items.filter(
         (e) =>
           e.term.toLowerCase().includes(lower) ||
           e.definition.toLowerCase().includes(lower)
       );
-      if (filtered.length > 0) filteredGrouped[letter] = filtered;
+      if (filtered.length > 0) result[letter] = filtered;
     }
-  }
+    return result;
+  }, [search, grouped]);
 
   const displayGrouped = search ? filteredGrouped : grouped;
   const displayLetters = Object.keys(displayGrouped).sort();
@@ -32,11 +83,11 @@ export default function GlossaryPage() {
         <div className="flex items-center gap-3 mb-2">
           <BookOpen className="h-7 w-7 text-primary" />
           <h1 className="text-3xl font-heading font-bold text-foreground">
-            Glossary
+            {t('title')}
           </h1>
         </div>
         <p className="text-muted-foreground mb-6">
-          Common terms and abbreviations used in disability benefits. Written in plain language so everyone can understand.
+          {t('description')}
         </p>
 
         {/* Search */}
@@ -44,16 +95,16 @@ export default function GlossaryPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="search"
-            placeholder="Search terms..."
+            placeholder={t('searchPlaceholder')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            aria-label="Search glossary terms"
+            aria-label={t('searchLabel')}
           />
         </div>
 
         {/* Letter navigation */}
-        <nav aria-label="Glossary letters" className="flex flex-wrap gap-1 mb-8">
+        <nav aria-label={t('lettersLabel')} className="flex flex-wrap gap-1 mb-8">
           {letters.map((letter) => (
             <a
               key={letter}
@@ -83,7 +134,7 @@ export default function GlossaryPage() {
                         <p className="text-foreground/80 mb-2">{entry.definition}</p>
                         {entry.seeAlso && entry.seeAlso.length > 0 && (
                           <p className="text-sm text-muted-foreground">
-                            See also:{' '}
+                            {t('seeAlso')}{' '}
                             {entry.seeAlso.map((term, i) => (
                               <span key={term}>
                                 {i > 0 && ', '}
@@ -103,7 +154,7 @@ export default function GlossaryPage() {
           </div>
         ) : (
           <p className="text-muted-foreground text-center py-8">
-            No terms found matching &ldquo;{search}&rdquo;
+            {t('noTermsFound', { search })}
           </p>
         )}
       </div>

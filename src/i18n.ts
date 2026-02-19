@@ -11,16 +11,18 @@ export const defaultLocale: Locale = 'en';
  * Load all messages for a given locale
  */
 export async function getMessages(locale: Locale) {
-  const [common, screening, results] = await Promise.all([
+  const [common, screening, results, resources] = await Promise.all([
     import(`./messages/${locale}/common.json`),
     import(`./messages/${locale}/screening.json`),
     import(`./messages/${locale}/results.json`),
+    import(`./messages/${locale}/resources.json`),
   ]);
 
   return {
     common: common.default,
     screening: screening.default,
     results: results.default,
+    resources: resources.default,
   };
 }
 
@@ -34,6 +36,8 @@ export function getMessagesSync(locale: Locale) {
   const screening = require(`./messages/${locale}/screening.json`);
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const results = require(`./messages/${locale}/results.json`);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const resources = require(`./messages/${locale}/resources.json`);
 
-  return { common, screening, results };
+  return { common, screening, results, resources };
 }

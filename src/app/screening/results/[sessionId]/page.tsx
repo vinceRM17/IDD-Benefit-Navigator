@@ -38,6 +38,7 @@ import {
   Clock,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function ResultsPage() {
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const t = useTranslations('results');
 
   useEffect(() => {
     setMounted(true);
@@ -72,7 +74,7 @@ export default function ResultsPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" />
-          <p>Loading your results...</p>
+          <p>{t('loading')}</p>
         </div>
       </div>
     );
@@ -86,15 +88,14 @@ export default function ResultsPage() {
           <div className="mb-6">
             <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h1 className="text-2xl font-heading font-bold text-foreground mb-3">
-              Your results have expired
+              {t('expired.title')}
             </h1>
             <p className="text-muted-foreground mb-6">
-              For your privacy, screening results are not kept for long. Let&apos;s
-              start a new screening to find the benefits your family may qualify for.
+              {t('expired.message')}
             </p>
           </div>
           <Button asChild>
-            <Link href="/screening">Start New Screening</Link>
+            <Link href="/screening">{t('actions.startOver')}</Link>
           </Button>
         </div>
       </div>
@@ -147,7 +148,7 @@ export default function ResultsPage() {
           <div className="mt-4">
             <ActionPlan
               steps={result.content.nextSteps}
-              title={`How to apply for ${result.content.name}`}
+              title={t('programCard.howToApply', { programName: result.content.name })}
             />
           </div>
         )}
@@ -169,23 +170,19 @@ export default function ResultsPage() {
     <div>
       <header className="mb-8">
         <h2 className="text-2xl font-heading font-bold text-foreground mb-2">
-          Your Benefit Recommendations
+          {t('overview.title')}
         </h2>
         <p className="text-lg text-muted-foreground">
-          Based on what you shared about your family, here are the programs
-          that may help.
+          {t('overview.subtitle')}
         </p>
         <p className="text-base text-muted-foreground mt-3">
-          Navigating these programs is hard — you are not the only family
-          working through this. You do not have to figure everything out
-          today, and you do not have to do it alone. Start with what feels
-          most important to your family right now.
+          {t('overview.encouragement')}
         </p>
       </header>
 
       {actionSteps.length > 0 && (
         <div className="mb-8">
-          <ActionPlan steps={actionSteps} title="Your Action Plan" />
+          <ActionPlan steps={actionSteps} title={t('overview.actionPlanTitle')} />
         </div>
       )}
 
@@ -198,7 +195,7 @@ export default function ResultsPage() {
       {eligiblePrograms.length > 0 && (
         <section>
           <h3 className="text-lg font-heading font-semibold text-foreground mb-4">
-            Programs You May Qualify For
+            {t('overview.programsTitle')}
           </h3>
           <div className="space-y-3">
             {eligiblePrograms.map((result) => (
@@ -219,7 +216,7 @@ export default function ResultsPage() {
       {likelyPrograms.length > 0 && (
         <section className="mb-8">
           <h2 className="text-2xl font-heading font-semibold text-foreground mb-4">
-            Programs You Likely Qualify For
+            {t('programs.likelyTitle')}
           </h2>
           <div className="space-y-6">{renderProgramDetails(likelyPrograms)}</div>
         </section>
@@ -228,7 +225,7 @@ export default function ResultsPage() {
       {possiblePrograms.length > 0 && (
         <section className="mb-8">
           <h2 className="text-2xl font-heading font-semibold text-foreground mb-4">
-            Programs You May Qualify For
+            {t('programs.possibleTitle')}
           </h2>
           <div className="space-y-6">{renderProgramDetails(possiblePrograms)}</div>
         </section>
@@ -241,12 +238,10 @@ export default function ResultsPage() {
               <details>
                 <summary className="text-lg font-heading font-semibold text-foreground cursor-pointer flex items-center gap-2">
                   <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                  Other Programs (based on your answers, these may not apply)
+                  {t('programs.unlikelyTitle')}
                 </summary>
                 <p className="text-sm text-muted-foreground mt-2 mb-4">
-                  Your situation may change, or you might have additional needs
-                  that qualify you for these programs. Click a program to learn
-                  more.
+                  {t('programs.unlikelyNote')}
                 </p>
                 <div className="space-y-4 mt-4">
                   {unlikelyPrograms.map((result) => (
@@ -266,11 +261,11 @@ export default function ResultsPage() {
       <div className="flex items-center gap-3 mb-2">
         <ClipboardList className="h-6 w-6 text-primary" />
         <h2 className="text-2xl font-heading font-semibold text-foreground">
-          Documents You&apos;ll Need
+          {t('documents.title')}
         </h2>
       </div>
       <p className="text-muted-foreground mb-6">
-        Gather these documents to speed up your applications.
+        {t('documents.subtitle')}
       </p>
 
       {eligiblePrograms.length > 0 ? (
@@ -286,7 +281,7 @@ export default function ResultsPage() {
             ))}
         </div>
       ) : (
-        <p className="text-muted-foreground">No document checklists available.</p>
+        <p className="text-muted-foreground">{t('documents.none')}</p>
       )}
     </div>
   );
@@ -314,11 +309,11 @@ export default function ResultsPage() {
   );
 
   const tabs: Tab[] = [
-    { id: 'overview', label: 'Overview', content: overviewContent },
-    { id: 'programs', label: 'Programs', content: programsContent },
-    { id: 'documents', label: 'Documents', content: documentsContent },
-    { id: 'resources', label: 'Resources', content: resourcesContent },
-    { id: 'what-if', label: 'What If?', content: whatIfContent },
+    { id: 'overview', label: t('tabs.overview'), content: overviewContent },
+    { id: 'programs', label: t('tabs.programs'), content: programsContent },
+    { id: 'documents', label: t('tabs.documents'), content: documentsContent },
+    { id: 'resources', label: t('tabs.resources'), content: resourcesContent },
+    { id: 'what-if', label: t('tabs.whatIf'), content: whatIfContent },
   ];
 
   return (
@@ -326,7 +321,7 @@ export default function ResultsPage() {
       <div className="max-w-4xl mx-auto">
         {/* Page title */}
         <h1 className="text-3xl font-heading font-bold text-foreground mb-6">
-          Your Personalized Results
+          {t('title')}
         </h1>
 
         {/* Partial coverage banner for federal-only states */}
@@ -343,6 +338,7 @@ export default function ResultsPage() {
           tabs={tabs}
           defaultTab={activeTab}
           onTabChange={setActiveTab}
+          ariaLabel={t('tablistLabel')}
         />
 
         {/* Actions */}
@@ -350,7 +346,7 @@ export default function ResultsPage() {
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <Button variant="secondary" onClick={handleStartOver}>
             <RotateCcw className="h-4 w-4 mr-1.5" />
-            Start Over
+            {t('actions.startOver')}
           </Button>
           <DownloadPDFButton
             results={results.programs}
@@ -361,10 +357,7 @@ export default function ResultsPage() {
         {/* Footer note */}
         <div className="mt-8 text-center flex items-center justify-center gap-2 text-sm text-muted-foreground">
           <Info className="h-4 w-4 shrink-0" />
-          <p>
-            This screening is for informational purposes only. Final eligibility
-            is determined by the program administrators.
-          </p>
+          <p>{t('actions.disclaimer')}</p>
         </div>
 
         {/* Clear data */}
@@ -375,7 +368,7 @@ export default function ResultsPage() {
             className="text-muted-foreground hover:text-destructive"
             onClick={handleClearData}
           >
-            Clear My Data
+            {t('actions.clearMyData')}
           </Button>
         </div>
       </div>

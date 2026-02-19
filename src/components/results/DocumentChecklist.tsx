@@ -9,6 +9,7 @@
 
 import { useState } from 'react';
 import { FileText } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DocumentChecklistProps {
   documents: string[];
@@ -22,6 +23,7 @@ export function DocumentChecklist({
   const [checkedItems, setCheckedItems] = useState<Record<number, boolean>>(
     {}
   );
+  const t = useTranslations('results.documents');
 
   const handleCheck = (index: number) => {
     setCheckedItems((prev) => ({
@@ -41,10 +43,10 @@ export function DocumentChecklist({
       <fieldset>
         <legend className="font-heading font-semibold text-foreground mb-1 flex items-center gap-2">
           <FileText className="h-4 w-4 text-primary" />
-          Documents You&apos;ll Need for {programName}
+          {t('documentsFor', { programName })}
         </legend>
         <p className="text-xs text-muted-foreground mb-3">
-          {checkedCount} of {documents.length} gathered
+          {t('gathered', { checked: checkedCount, total: documents.length })}
         </p>
 
         <div className="space-y-2">
