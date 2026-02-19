@@ -141,16 +141,16 @@ export default function Home() {
           <p className="text-muted-foreground text-center mb-section max-w-xl mx-auto">
             We screen for the major benefit programs available to Kentucky families.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {programs.map((program) => (
               <Card key={program.name} className="transition-shadow hover:shadow-md">
-                <CardContent className="p-card-padding flex items-start gap-3">
+                <CardContent className="p-4 flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center shrink-0">
                     <program.icon className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-heading font-semibold text-foreground">{program.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-0.5">{program.desc}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5 leading-snug">{program.desc}</p>
                   </div>
                 </CardContent>
               </Card>
