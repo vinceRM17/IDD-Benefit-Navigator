@@ -17,9 +17,11 @@ import {
   UserPlus,
   Send,
 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function ReferralConfirmationPage() {
   const router = useRouter();
+  const t = useTranslations('referral.confirmation');
   const [results, setResults] = useState<ReferralResult[]>([]);
   const [familyEmail, setFamilyEmail] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -53,7 +55,7 @@ export default function ReferralConfirmationPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
-          Loading...
+          {t('loading')}
         </p>
       </div>
     );
@@ -65,15 +67,15 @@ export default function ReferralConfirmationPage() {
         <Card className="max-w-2xl mx-auto text-center">
           <CardContent className="p-8">
             <h1 className="text-2xl font-heading font-bold text-foreground mb-4">
-              No Referral Data Found
+              {t('noDataTitle')}
             </h1>
             <p className="text-muted-foreground mb-6">
-              We couldn&apos;t find any referral information. You may have already viewed this confirmation or navigated here directly.
+              {t('noDataDescription')}
             </p>
             <Button asChild>
               <Link href="/referral">
                 <Send className="h-4 w-4 mr-1.5" />
-                Submit a Referral
+                {t('submitReferral')}
               </Link>
             </Button>
           </CardContent>
@@ -92,17 +94,17 @@ export default function ReferralConfirmationPage() {
               <CheckCircle2 className="h-8 w-8 text-emerald-600" />
             </div>
             <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-              Your Referral Has Been Sent
+              {t('sentTitle')}
             </h1>
             <p className="text-lg text-muted-foreground">
-              We&apos;ve connected you with the organizations you selected.
+              {t('sentSubtitle')}
             </p>
           </div>
 
           {/* Partner List */}
           <div className="mb-8">
             <h2 className="text-xl font-heading font-semibold text-foreground mb-4">
-              We&apos;ve sent your referral to:
+              {t('sentTo')}
             </h2>
             <ul className="space-y-2">
               {results.map((result) => (
@@ -113,7 +115,7 @@ export default function ReferralConfirmationPage() {
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0" />
                   <span className="text-foreground font-medium">{result.partnerName}</span>
                   {result.sent && (
-                    <span className="text-sm text-muted-foreground">(Sent)</span>
+                    <span className="text-sm text-muted-foreground">{t('sentBadge')}</span>
                   )}
                 </li>
               ))}
@@ -124,8 +126,7 @@ export default function ReferralConfirmationPage() {
           <div className="bg-primary/5 border border-primary/20 rounded-md p-4 mb-8 flex items-center gap-3">
             <Mail className="h-5 w-5 text-primary shrink-0" />
             <p className="text-foreground/80">
-              You&apos;ll receive a confirmation email at{' '}
-              <span className="font-semibold text-foreground">{familyEmail}</span> with details of your referral.
+              {t('confirmationEmail', { email: familyEmail })}
             </p>
           </div>
 
@@ -133,26 +134,26 @@ export default function ReferralConfirmationPage() {
           {!isAuthenticated ? (
             <div className="bg-accent/10 border border-accent/30 rounded-md p-4 mb-8">
               <p className="text-foreground font-medium mb-2">
-                This is your only record of this referral.
+                {t('onlyRecord')}
               </p>
               <p className="text-foreground/80 text-sm mb-3">
-                To track referrals in the future, consider creating an account.
+                {t('trackFuture')}
               </p>
               <Button size="sm" asChild>
                 <Link href="/auth/signup">
                   <UserPlus className="h-4 w-4 mr-1" />
-                  Create an Account
+                  {t('createAccount')}
                 </Link>
               </Button>
             </div>
           ) : (
             <div className="bg-primary/5 border border-primary/20 rounded-md p-4 mb-8">
               <p className="text-foreground/80 mb-3">
-                View your referrals and track their status on your dashboard.
+                {t('viewDashboard')}
               </p>
               <Button size="sm" asChild>
                 <Link href="/dashboard/referrals">
-                  View Your Referrals
+                  {t('viewYourReferrals')}
                   <ArrowRight className="h-4 w-4 ml-1" />
                 </Link>
               </Button>
@@ -162,7 +163,7 @@ export default function ReferralConfirmationPage() {
           {/* Privacy Notice */}
           <Separator className="mb-6" />
           <p className="text-sm text-muted-foreground mb-6">
-            If you change your mind, contact the organization directly to ask them not to use your information.
+            {t('changeYourMind')}
           </p>
 
           {/* Next Actions */}
@@ -170,13 +171,13 @@ export default function ReferralConfirmationPage() {
             <Button variant="secondary" className="flex-1" asChild>
               <Link href="/screening">
                 <ClipboardList className="h-4 w-4 mr-1.5" />
-                Start a New Screening
+                {t('startNewScreening')}
               </Link>
             </Button>
             <Button className="flex-1" asChild>
               <Link href="/">
                 <HomeIcon className="h-4 w-4 mr-1.5" />
-                Return to Home
+                {t('returnHome')}
               </Link>
             </Button>
           </div>

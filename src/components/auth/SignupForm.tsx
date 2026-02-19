@@ -6,10 +6,12 @@ import { AccessibleInput } from '@/components/forms';
 import { useScreeningStore } from '@/lib/screening/store';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Loader2, UserPlus, CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function SignupForm() {
   const router = useRouter();
   const { formData, results } = useScreeningStore();
+  const t = useTranslations('auth.signup');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,19 +25,19 @@ export function SignupForm() {
     const errors: Record<string, string> = {};
 
     if (!email) {
-      errors.email = 'Email is required';
+      errors.email = t('emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.email = 'Please enter a valid email address';
+      errors.email = t('emailInvalid');
     }
 
     if (!password) {
-      errors.password = 'Password is required';
+      errors.password = t('passwordRequired');
     } else if (password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
+      errors.password = t('passwordMinLength');
     }
 
     if (password !== confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
+      errors.confirmPassword = t('passwordsMismatch');
     }
 
     setFieldErrors(errors);
@@ -70,12 +72,12 @@ export function SignupForm() {
         setSuccess({ screeningSaved: data.screeningSaved });
         setTimeout(() => router.push('/dashboard'), 2000);
       } else if (res.status === 409) {
-        setError('An account with this email already exists. Try signing in instead.');
+        setError(t('accountExists'));
       } else {
-        setError(data.error || 'Something went wrong. Please try again.');
+        setError(data.error || t('genericError'));
       }
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('genericError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -88,14 +90,14 @@ export function SignupForm() {
           <CheckCircle2 className="h-6 w-6 text-emerald-600" />
         </div>
         <p className="text-lg font-heading font-medium text-foreground mb-2">
-          Your account has been created.
+          {t('accountCreated')}
         </p>
         {success.screeningSaved && (
           <p className="text-foreground/80">
-            We&apos;ve saved your screening results to your account.
+            {t('screeningSaved')}
           </p>
         )}
-        <p className="text-sm text-muted-foreground mt-4">Redirecting to your dashboard...</p>
+        <p className="text-sm text-muted-foreground mt-4">{t('redirecting')}</p>
       </div>
     );
   }
@@ -103,34 +105,34 @@ export function SignupForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <p className="text-muted-foreground text-center mb-6">
-        Save your progress so you can come back anytime
+        {t('subtitle')}
       </p>
 
       <AccessibleInput
         id="signup-email"
-        label="Email"
+        label={t('email')}
         type="email"
         required
         value={email}
         onChange={setEmail}
         error={fieldErrors.email}
-        placeholder="your@email.com"
+        placeholder={t('emailPlaceholder')}
       />
 
       <AccessibleInput
         id="signup-password"
-        label="Password"
+        label={t('password')}
         type="password"
         required
         value={password}
         onChange={setPassword}
         error={fieldErrors.password}
-        helpText="At least 8 characters"
+        helpText={t('passwordHelp')}
       />
 
       <AccessibleInput
         id="signup-confirm-password"
-        label="Confirm Password"
+        label={t('confirmPassword')}
         type="password"
         required
         value={confirmPassword}
@@ -156,13 +158,13 @@ export function SignupForm() {
         ) : (
           <UserPlus className="h-4 w-4 mr-1.5" />
         )}
-        {isSubmitting ? 'Creating account...' : 'Create Account'}
+        {isSubmitting ? t('creatingAccount') : t('createAccount')}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{' '}
+        {t('hasAccount')}{' '}
         <a href="/auth/login" className="text-primary hover:text-primary/80 font-medium">
-          Sign in
+          {t('signIn')}
         </a>
       </p>
     </form>

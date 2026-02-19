@@ -1,0 +1,78 @@
+{
+  "privacy": {
+    "backToHome": "Volver al Inicio",
+    "title": "Política de Privacidad",
+    "lastUpdated": "Última actualización: {date}",
+    "intro": "Su privacidad es importante para nosotros. Esta política explica qué información recopilamos, cómo la usamos y cómo la protegemos. Estamos comprometidos con la transparencia y con ponerle en control de sus datos.",
+    "footer": "Esta política de privacidad está diseñada para ser clara y comprensible. Si tiene preguntas sobre cualquier sección, por favor",
+    "contactUs": "contáctenos",
+    "ariaLabel": "Contenido de la política de privacidad",
+    "sections": {
+      "whatWeCollect": {
+        "title": "Qué Recopilamos",
+        "content": "Durante el proceso de evaluación de beneficios, preguntamos sobre el tamaño de su hogar, ingresos, información de diagnóstico, estado de seguro y estado de residencia. Esta información nos ayuda a determinar qué programas de beneficios pueden estar disponibles para su familia.\n\nNO recopilamos nombres, números de Seguro Social ni direcciones a menos que elija crear una cuenta. Puede completar todo el proceso de evaluación de forma anónima."
+      },
+      "howWeUseData": {
+        "title": "Cómo Usamos Sus Datos",
+        "content": "Su información se usa únicamente para determinar qué programas de beneficios pueden aplicar a su familia. Comparamos su situación con los criterios de elegibilidad de varios programas federales, estatales y locales.\n\nNo vendemos, compartimos ni usamos sus datos con fines publicitarios. Su información de evaluación nunca se comparte con terceros sin su consentimiento explícito."
+      },
+      "anonymousScreening": {
+        "title": "Evaluación Anónima",
+        "content": "Si usa el evaluador de beneficios sin crear una cuenta, sus datos existen solo durante su sesión activa. Cuando cierra su navegador o su sesión expira (después de 10 minutos de inactividad), todos los datos de evaluación se eliminan permanentemente de nuestros servidores.\n\nEsto significa que sus respuestas, resultados de elegibilidad y cualquier otra información que proporcionó se eliminan completamente. No podemos recuperar esta información una vez que su sesión termina."
+      },
+      "dataSecurity": {
+        "title": "Seguridad de Datos",
+        "content": "Tomamos la seguridad de su información en serio. Todos los datos están protegidos usando cifrado estándar de la industria:\n\n\u2022 Datos en tránsito: Todas las comunicaciones usan cifrado HTTPS (TLS 1.3)\n\u2022 Datos en reposo: La información confidencial está cifrada usando cifrado AES-256\n\u2022 Sesiones: Los datos de sesión se almacenan en el servidor (no en su navegador) y están cifrados\n\nSeguimos estándares de seguridad adyacentes a HIPAA para proteger información relacionada con la salud, aunque no somos una entidad cubierta bajo HIPAA."
+      },
+      "accountData": {
+        "title": "Si Crea una Cuenta",
+        "content": "Los titulares de cuentas se benefician de resultados de evaluación guardados y recomendaciones personalizadas de beneficios. Si crea una cuenta:\n\n\u2022 Sus datos están cifrados y almacenados de forma segura\n\u2022 Su contraseña se codifica usando bcrypt (cifrado unidireccional - no podemos ver su contraseña)\n\u2022 El tiempo de espera de la sesión se extiende a 15 minutos de inactividad\n\u2022 Puede ver sus evaluaciones guardadas y seguir el progreso de solicitudes\n\nTiene derecho a eliminar su cuenta y todos los datos asociados en cualquier momento. La eliminación de la cuenta es permanente y no se puede deshacer."
+      },
+      "auditLogging": {
+        "title": "Registro de Auditoría",
+        "content": "Por razones de seguridad y cumplimiento, registramos eventos de acceso como:\n\n\u2022 Quién accedió a qué información (ID de usuario o \"anónimo\")\n\u2022 Cuándo ocurrió el acceso\n\u2022 Dirección IP de la solicitud\n\u2022 Éxito o fracaso de la acción\n\nEstos registros de auditoría NO contienen sus respuestas de evaluación ni resultados de elegibilidad - solo metadatos sobre el acceso al sistema. Los registros se conservan durante 90 días para análisis de seguridad y luego se eliminan permanentemente."
+      },
+      "referrals": {
+        "title": "Referencias",
+        "content": "Cuando envía una referencia, compartimos su nombre, correo electrónico, número de teléfono (si lo proporcionó) y un resumen de los programas para los que puede ser elegible con la(s) organización(es) asociada(s) seleccionada(s).\n\nNo compartimos cifras de ingresos brutos, detalles de diagnóstico ni otros datos de evaluación confidenciales con las organizaciones asociadas. La referencia incluye solo información de elegibilidad de alto nivel para ayudar a los socios a entender cómo pueden asistirle.\n\nCada organización asociada tiene sus propias prácticas de privacidad. Recomendamos revisar sus políticas directamente antes de enviar una referencia."
+      },
+      "yourRights": {
+        "title": "Sus Derechos",
+        "content": "Tiene derecho a:\n\n\u2022 Saber qué datos tenemos sobre usted\n\u2022 Solicitar una copia de sus datos\n\u2022 Corregir información incorrecta\n\u2022 Eliminar su cuenta y todos los datos asociados\n\u2022 Optar por no participar en la recopilación de datos usando la opción de evaluación anónima\n\u2022 Retirar el consentimiento para el procesamiento de datos en cualquier momento\n\nPara ejercer cualquiera de estos derechos, contáctenos usando la información a continuación."
+      },
+      "contact": {
+        "title": "Preguntas Sobre Privacidad",
+        "content": "Si tiene preguntas o inquietudes sobre cómo manejamos sus datos, contáctenos:\n\nCorreo electrónico: privacy@benefits-navigator.example.com\n\nResponderemos a las consultas de privacidad dentro de 2 días hábiles."
+      }
+    }
+  },
+  "accessibility": {
+    "backToHome": "Volver al Inicio",
+    "title": "Declaración de Accesibilidad",
+    "ariaLabel": "Contenido de la declaración de accesibilidad",
+    "commitment": {
+      "title": "Nuestro Compromiso",
+      "content": "El Navegador de Beneficios IDD está comprometido con garantizar la accesibilidad digital para personas con discapacidades. Mejoramos continuamente la experiencia del usuario para todos y aplicamos los estándares de accesibilidad relevantes."
+    },
+    "standards": {
+      "title": "Estándares",
+      "content": "Nuestro objetivo es cumplir con las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1 en el Nivel AA. Estas pautas explican cómo hacer que el contenido web sea más accesible para personas con una amplia gama de discapacidades, incluyendo visuales, auditivas, físicas, del habla, cognitivas, del lenguaje, de aprendizaje y neurológicas."
+    },
+    "features": {
+      "title": "Características",
+      "items": {
+        "keyboard": "Soporte de navegación por teclado en toda la aplicación",
+        "skipNav": "Enlaces de saltar navegación para usuarios de lectores de pantalla",
+        "aria": "Etiquetas y roles ARIA en elementos interactivos",
+        "contrast": "Proporciones suficientes de contraste de color para la legibilidad del texto",
+        "resize": "Texto redimensionable sin pérdida de contenido o funcionalidad",
+        "language": "Lenguaje claro y simple a un nivel de lectura accesible",
+        "forms": "Etiquetas de formularios y mensajes de error para tecnología asistiva"
+      }
+    },
+    "feedback": {
+      "title": "Comentarios",
+      "content": "Agradecemos sus comentarios sobre la accesibilidad del Navegador de Beneficios IDD. Si encuentra barreras de accesibilidad o tiene sugerencias de mejora, contáctenos. Tomamos los comentarios de accesibilidad en serio y haremos nuestro mejor esfuerzo para responder dentro de 2 días hábiles."
+    }
+  }
+}

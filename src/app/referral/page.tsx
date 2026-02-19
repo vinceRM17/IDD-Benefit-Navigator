@@ -19,24 +19,26 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-
-const referralFormSchema = z.object({
-  familyName: z.string().min(1, 'Name is required'),
-  familyEmail: z.string().email('Valid email is required'),
-  familyPhone: z.string().optional(),
-  familyNote: z.string().max(500, 'Note must be under 500 characters').optional(),
-  selectedPartners: z.array(z.string()).min(1, 'Select at least one organization'),
-  consent: z.boolean().refine((val) => val === true, {
-    message: 'You must agree to share your information',
-  }),
-});
-
-type ReferralFormData = z.infer<typeof referralFormSchema>;
+import { useTranslations } from 'next-intl';
 
 function ReferralFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { results, formData } = useScreeningStore();
+  const t = useTranslations('referral.form');
+
+  const referralFormSchema = z.object({
+    familyName: z.string().min(1, t('nameRequired')),
+    familyEmail: z.string().email(t('emailRequired')),
+    familyPhone: z.string().optional(),
+    familyNote: z.string().max(500, t('noteMaxLength')).optional(),
+    selectedPartners: z.array(z.string()).min(1, t('selectAtLeastOne')),
+    consent: z.boolean().refine((val) => val === true, {
+      message: t('mustAgree'),
+    }),
+  });
+
+  type ReferralFormData = z.infer<typeof referralFormSchema>;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -118,7 +120,7 @@ function ReferralFormContent() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Failed to submit referral');
+        throw new Error(error.error || t('submitFailed'));
       }
 
       const { results } = await response.json() as { results: ReferralResult[] };
@@ -129,7 +131,7 @@ function ReferralFormContent() {
       router.push('/referral/confirmation');
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : 'An unexpected error occurred'
+        error instanceof Error ? error.message : t('unexpectedError')
       );
     } finally {
       setIsSubmitting(false);
@@ -146,10 +148,10 @@ function ReferralFormContent() {
       <div className="max-w-2xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
-            Request a Referral
+            {t('title')}
           </h1>
           <p className="text-lg text-muted-foreground">
-            Connect with partner organizations who can help you apply for benefits and navigate the system.
+            {t('subtitle')}
           </p>
         </header>
 
@@ -158,10 +160,10 @@ function ReferralFormContent() {
           <Card>
             <CardHeader>
               <h2 className="text-xl font-heading font-semibold text-foreground">
-                Select Organizations
+                {t('selectOrgs')}
               </h2>
               <p className="text-sm text-muted-foreground">
-                Choose one or more organizations to connect with. Each will receive your referral separately.
+                {t('selectOrgsDescription')}
               </p>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -196,20 +198,20 @@ function ReferralFormContent() {
           <Card>
             <CardHeader>
               <h2 className="text-xl font-heading font-semibold text-foreground">
-                Your Contact Information
+                {t('contactInfo')}
               </h2>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <label htmlFor="familyName" className="block text-sm font-medium text-foreground mb-1">
-                  Your Name <span className="text-destructive">*</span>
+                  {t('yourName')} <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
                   id="familyName"
                   {...register('familyName')}
                   className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-                  placeholder="Jane Smith"
+                  placeholder={t('namePlaceholder')}
                 />
                 {errors.familyName && (
                   <p className="mt-1 text-sm text-destructive flex items-center gap-1.5">
@@ -221,14 +223,14 @@ function ReferralFormContent() {
 
               <div>
                 <label htmlFor="familyEmail" className="block text-sm font-medium text-foreground mb-1">
-                  Your Email <span className="text-destructive">*</span>
+                  {t('yourEmail')} <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="email"
                   id="familyEmail"
                   {...register('familyEmail')}
                   className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-                  placeholder="jane@example.com"
+                  placeholder={t('emailPlaceholder')}
                 />
                 {errors.familyEmail && (
                   <p className="mt-1 text-sm text-destructive flex items-center gap-1.5">
@@ -240,27 +242,27 @@ function ReferralFormContent() {
 
               <div>
                 <label htmlFor="familyPhone" className="block text-sm font-medium text-foreground mb-1">
-                  Your Phone Number (optional)
+                  {t('yourPhone')}
                 </label>
                 <input
                   type="tel"
                   id="familyPhone"
                   {...register('familyPhone')}
                   className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-                  placeholder="(555) 123-4567"
+                  placeholder={t('phonePlaceholder')}
                 />
               </div>
 
               <div>
                 <label htmlFor="familyNote" className="block text-sm font-medium text-foreground mb-1">
-                  Note to Organization (optional)
+                  {t('noteToOrg')}
                 </label>
                 <textarea
                   id="familyNote"
                   {...register('familyNote')}
                   rows={4}
                   className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
-                  placeholder="Share any additional information or questions for the organization..."
+                  placeholder={t('notePlaceholder')}
                   maxLength={500}
                 />
                 <div className="mt-1 flex justify-between items-center">
@@ -279,14 +281,14 @@ function ReferralFormContent() {
           <Card>
             <CardHeader>
               <h2 className="text-xl font-heading font-semibold text-foreground">
-                Programs You May Be Eligible For
+                {t('programsEligible')}
               </h2>
             </CardHeader>
             <CardContent>
               {eligiblePrograms.length > 0 ? (
                 <>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Based on your screening, this information will be shared with the organizations you select:
+                    {t('programsShared')}
                   </p>
                   <ul className="list-disc list-inside space-y-1 text-foreground/80">
                     {eligiblePrograms.map((programId) => (
@@ -297,13 +299,13 @@ function ReferralFormContent() {
               ) : (
                 <div className="text-sm text-muted-foreground">
                   <p className="mb-2">
-                    Complete a screening first to include your eligibility results in the referral.
+                    {t('completeScreening')}
                   </p>
                   <a
                     href="/screening"
                     className="text-primary hover:text-primary/80 underline"
                   >
-                    Start a screening
+                    {t('startScreening')}
                   </a>
                 </div>
               )}
@@ -315,7 +317,7 @@ function ReferralFormContent() {
             <CardHeader>
               <h2 className="text-xl font-heading font-semibold text-foreground flex items-center gap-2">
                 <Shield className="h-5 w-5 text-primary" />
-                Privacy & Consent
+                {t('privacyConsent')}
               </h2>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -327,7 +329,7 @@ function ReferralFormContent() {
                     className="mt-1 h-4 w-4 border-input rounded focus:ring-ring accent-primary"
                   />
                   <span className="text-foreground/80">
-                    I agree to share my screening summary and contact information with the selected organization(s).
+                    {t('consentText')}
                   </span>
                 </label>
                 {errors.consent && (
@@ -343,7 +345,7 @@ function ReferralFormContent() {
                 onClick={() => setShowDataPreview(!showDataPreview)}
                 className="text-primary hover:text-primary/80 font-medium text-sm inline-flex items-center gap-1"
               >
-                What gets shared?
+                {t('whatGetsShared')}
                 {showDataPreview ? (
                   <ChevronUp className="h-4 w-4" />
                 ) : (
@@ -353,30 +355,27 @@ function ReferralFormContent() {
 
               {showDataPreview && (
                 <div className="bg-card rounded-md border border-border p-4 text-sm">
-                  <p className="font-medium text-foreground mb-2">Information that will be shared:</p>
+                  <p className="font-medium text-foreground mb-2">{t('infoShared')}</p>
                   <ul className="list-disc list-inside space-y-1 text-foreground/80 mb-3">
-                    <li>Your name and contact information</li>
+                    <li>{t('nameAndContact')}</li>
                     {eligiblePrograms.length > 0 && (
                       <li>
-                        Programs you may be eligible for:{' '}
-                        {eligiblePrograms.map(getProgramName).join(', ')}
+                        {t('programsList', {
+                          programs: eligiblePrograms.map(getProgramName).join(', '),
+                        })}
                       </li>
                     )}
-                    {watchedNote && <li>Your optional note to the organization</li>}
+                    {watchedNote && <li>{t('optionalNote')}</li>}
                   </ul>
                   <p className="text-muted-foreground italic">
-                    We do NOT share raw income, diagnosis details, or other sensitive information.
+                    {t('noSensitiveData')}
                   </p>
                 </div>
               )}
 
               <div className="text-sm text-muted-foreground space-y-2">
-                <p>
-                  This is an informational referral and not an application. Each organization has their own privacy practices.
-                </p>
-                <p>
-                  If you change your mind after submission, contact the organization directly to ask them not to use your information.
-                </p>
+                <p>{t('informationalReferral')}</p>
+                <p>{t('changeYourMind')}</p>
               </div>
             </CardContent>
           </Card>
@@ -401,7 +400,7 @@ function ReferralFormContent() {
               ) : (
                 <Send className="h-4 w-4 mr-1.5" />
               )}
-              {isSubmitting ? 'Sending...' : 'Send Referral'}
+              {isSubmitting ? t('sending') : t('sendReferral')}
             </Button>
           </div>
         </form>
@@ -411,12 +410,14 @@ function ReferralFormContent() {
 }
 
 export default function ReferralPage() {
+  const t = useTranslations('referral.form');
+
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-muted-foreground flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
-          Loading...
+          {t('loading')}
         </p>
       </div>
     }>

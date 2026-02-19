@@ -1,13 +1,13 @@
-import { Metadata } from 'next';
+'use client';
+
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Sign In - IDD Benefits Navigator',
-};
+import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {
+  const t = useTranslations('auth.login');
+
   return (
     <main className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -18,7 +18,7 @@ export default function LoginPage() {
             </div>
           </div>
           <h1 className="text-2xl font-heading font-bold text-foreground text-center mb-6">
-            Sign In
+            {t('title')}
           </h1>
           <LoginForm />
         </CardContent>

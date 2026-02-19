@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, CheckCircle2, Trash2, X, Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface AccountDeletionProps {
   deletedAt: string | null;
@@ -12,6 +13,7 @@ interface AccountDeletionProps {
 
 export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
   const router = useRouter();
+  const t = useTranslations('dashboard.settings');
   const [showConfirm, setShowConfirm] = useState(false);
   const [confirmText, setConfirmText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,10 +35,10 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
       if (res.ok) {
         router.push('/auth/login');
       } else {
-        setError('Something went wrong. Please try again.');
+        setError(t('genericError'));
       }
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('genericError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -50,35 +52,33 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
       const res = await fetch('/api/account/cancel-delete', { method: 'POST' });
 
       if (res.ok) {
-        setMessage('Account deletion cancelled. Your data is safe.');
+        setMessage(t('deletionCancelled'));
         router.refresh();
       } else {
-        setError('Something went wrong. Please try again.');
+        setError(t('genericError'));
       }
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('genericError'));
     } finally {
       setIsSubmitting(false);
     }
   }
 
   if (isPendingDeletion) {
+    const formattedDate = deletionDate?.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }) ?? '';
+
     return (
       <Card className="border-accent/30 bg-accent/5">
         <CardContent className="p-card-padding">
           <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
-            Account Scheduled for Deletion
+            {t('scheduledForDeletion')}
           </h3>
           <p className="text-foreground/80 text-sm mb-4">
-            Your account is scheduled for deletion on{' '}
-            <strong>
-              {deletionDate?.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </strong>
-            . Your data will be permanently removed after this date.
+            {t('scheduledDescription', { date: formattedDate })}
           </p>
 
           {message && (
@@ -105,7 +105,7 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
             ) : (
               <X className="h-4 w-4 mr-1.5" />
             )}
-            {isSubmitting ? 'Cancelling...' : 'Cancel Deletion'}
+            {isSubmitting ? t('cancelling') : t('cancelDeletion')}
           </Button>
         </CardContent>
       </Card>
@@ -116,12 +116,10 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
     <Card>
       <CardContent className="p-card-padding">
         <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
-          Delete Account
+          {t('deleteAccount')}
         </h3>
         <p className="text-muted-foreground text-sm mb-4">
-          This will permanently delete your account, screening history, and all
-          saved data after a 14-day grace period. You can cancel the deletion
-          during that time.
+          {t('deleteDescription')}
         </p>
 
         {error && (
@@ -137,28 +135,28 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
             onClick={() => setShowConfirm(true)}
           >
             <Trash2 className="h-4 w-4 mr-1.5" />
-            Delete My Account
+            {t('deleteMyAccount')}
           </Button>
         ) : (
           <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-4 space-y-4">
             <p className="text-destructive font-medium text-sm">
-              Are you sure? Type <strong>DELETE</strong> to confirm.
+              {t('areYouSure')}
             </p>
             <div>
               <label htmlFor="delete-confirm" className="sr-only">
-                Type DELETE to confirm account deletion
+                {t('typeDeleteLabel')}
               </label>
               <input
                 id="delete-confirm"
                 type="text"
                 value={confirmText}
                 onChange={(e) => setConfirmText(e.target.value)}
-                placeholder="Type DELETE"
+                placeholder={t('typeDeletePlaceholder')}
                 className="w-full px-3 py-2 border border-destructive/30 rounded-lg text-sm focus:ring-2 focus:ring-ring focus:outline-none bg-background"
                 aria-describedby="delete-help"
               />
               <p id="delete-help" className="text-xs text-destructive mt-1">
-                Type the word DELETE in all caps to enable the delete button.
+                {t('typeDeleteHelp')}
               </p>
             </div>
             <div className="flex gap-3">
@@ -172,7 +170,7 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
                 ) : (
                   <Trash2 className="h-4 w-4 mr-1.5" />
                 )}
-                {isSubmitting ? 'Deleting...' : 'Permanently Delete'}
+                {isSubmitting ? t('deleting') : t('permanentlyDelete')}
               </Button>
               <Button
                 variant="secondary"
@@ -181,7 +179,7 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
                   setConfirmText('');
                 }}
               >
-                Cancel
+                {t('cancel')}
               </Button>
             </div>
           </div>

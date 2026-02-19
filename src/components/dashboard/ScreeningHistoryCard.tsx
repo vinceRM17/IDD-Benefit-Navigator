@@ -6,12 +6,14 @@ import type { ScreeningResults } from '@/lib/results/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface ScreeningHistoryCardProps {
   screening: Screening;
 }
 
 export function ScreeningHistoryCard({ screening }: ScreeningHistoryCardProps) {
+  const t = useTranslations('dashboard.history');
   const results = screening.results as ScreeningResults | null;
   const completedDate = new Date(screening.completedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -47,10 +49,10 @@ export function ScreeningHistoryCard({ screening }: ScreeningHistoryCardProps) {
           </div>
           <div className="text-right">
             <p className="text-sm font-medium text-foreground">
-              {likelyCount + possibleCount} programs
+              {t('programs', { count: likelyCount + possibleCount })}
             </p>
             <p className="text-xs text-muted-foreground">
-              {likelyCount} likely, {possibleCount} possible
+              {t('likely', { count: likelyCount })}, {t('possible', { count: possibleCount })}
             </p>
           </div>
         </div>
@@ -60,7 +62,7 @@ export function ScreeningHistoryCard({ screening }: ScreeningHistoryCardProps) {
             href={`/screening/results/${results?.sessionId ?? 'latest'}`}
             className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
           >
-            View Results
+            {t('viewResults')}
             <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>

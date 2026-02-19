@@ -5,6 +5,7 @@ import { getProgramDisplayName } from '@/content/programs/recertification';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Loader2, Save } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface ReminderPref {
   id: number;
@@ -17,6 +18,7 @@ interface ReminderPref {
 }
 
 export function ReminderPreferences() {
+  const t = useTranslations('dashboard.settings');
   const [preferences, setPreferences] = useState<ReminderPref[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState<string | null>(null);
@@ -48,7 +50,7 @@ export function ReminderPreferences() {
       });
 
       if (res.ok) {
-        setMessage('Reminder preferences updated');
+        setMessage(t('preferencesUpdated'));
         setTimeout(() => setMessage(null), 3000);
       }
     } catch {
@@ -68,7 +70,7 @@ export function ReminderPreferences() {
     return (
       <p className="text-muted-foreground text-sm flex items-center gap-2">
         <Loader2 className="h-4 w-4 animate-spin" />
-        Loading reminder settings...
+        {t('loadingReminders')}
       </p>
     );
   }
@@ -76,7 +78,7 @@ export function ReminderPreferences() {
   if (preferences.length === 0) {
     return (
       <p className="text-muted-foreground text-sm">
-        Complete a screening to set up recertification reminders for your eligible programs.
+        {t('noScreenings')}
       </p>
     );
   }
@@ -99,7 +101,7 @@ export function ReminderPreferences() {
               month: 'long',
               day: 'numeric',
             })
-          : 'Not set';
+          : t('notSet');
 
         return (
           <Card key={pref.programId}>
@@ -109,14 +111,14 @@ export function ReminderPreferences() {
               </h3>
 
               <p className="text-sm text-muted-foreground mb-3">
-                Recertification date: <strong className="text-foreground">{formattedDate}</strong>{' '}
+                {t('recertDate')} <strong className="text-foreground">{formattedDate}</strong>{' '}
                 <span className="text-muted-foreground">
-                  {isUserDate ? '(Your date)' : '(Estimated)'}
+                  {isUserDate ? t('yourDate') : t('estimated')}
                 </span>
               </p>
               {!isUserDate && (
                 <p className="text-xs text-muted-foreground mb-3">
-                  Based on typical {getProgramDisplayName(pref.programId)} recertification cycle
+                  {t('basedOnTypical', { programName: getProgramDisplayName(pref.programId) })}
                 </p>
               )}
 
@@ -126,7 +128,7 @@ export function ReminderPreferences() {
                   htmlFor={`recert-date-${pref.programId}`}
                   className="block text-sm font-medium text-foreground mb-1"
                 >
-                  Set your actual recertification date
+                  {t('setActualDate')}
                 </label>
                 <input
                   id={`recert-date-${pref.programId}`}
@@ -148,7 +150,7 @@ export function ReminderPreferences() {
               {/* Reminder toggles */}
               <fieldset className="mb-4">
                 <legend className="text-sm font-medium text-foreground mb-2">
-                  Send reminders
+                  {t('sendReminders')}
                 </legend>
                 <div className="flex flex-wrap gap-4">
                   <label className="flex items-center gap-2 text-sm text-foreground/80">
@@ -160,7 +162,7 @@ export function ReminderPreferences() {
                       }
                       className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
                     />
-                    60 days before
+                    {t('daysBefore60')}
                   </label>
                   <label className="flex items-center gap-2 text-sm text-foreground/80">
                     <input
@@ -171,7 +173,7 @@ export function ReminderPreferences() {
                       }
                       className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
                     />
-                    30 days before
+                    {t('daysBefore30')}
                   </label>
                   <label className="flex items-center gap-2 text-sm text-foreground/80">
                     <input
@@ -182,7 +184,7 @@ export function ReminderPreferences() {
                       }
                       className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
                     />
-                    7 days before
+                    {t('daysBefore7')}
                   </label>
                 </div>
               </fieldset>
@@ -197,7 +199,7 @@ export function ReminderPreferences() {
                 ) : (
                   <Save className="h-4 w-4 mr-1" />
                 )}
-                {saving === pref.programId ? 'Saving...' : 'Save Preferences'}
+                {saving === pref.programId ? t('saving') : t('savePreferences')}
               </Button>
             </CardContent>
           </Card>

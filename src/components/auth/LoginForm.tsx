@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { AccessibleInput } from '@/components/forms';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Loader2, LogIn } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function LoginForm() {
   const router = useRouter();
+  const t = useTranslations('auth.login');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,12 +31,12 @@ export function LoginForm() {
       if (res.ok) {
         router.push('/dashboard');
       } else if (res.status === 401) {
-        setError('Invalid email or password. Please try again.');
+        setError(t('invalidCredentials'));
       } else {
-        setError('Something went wrong. Please try again.');
+        setError(t('genericError'));
       }
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError(t('genericError'));
     } finally {
       setIsSubmitting(false);
     }
@@ -43,22 +45,22 @@ export function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <p className="text-muted-foreground text-center mb-6">
-        Welcome back
+        {t('welcomeBack')}
       </p>
 
       <AccessibleInput
         id="login-email"
-        label="Email"
+        label={t('email')}
         type="email"
         required
         value={email}
         onChange={setEmail}
-        placeholder="your@email.com"
+        placeholder={t('emailPlaceholder')}
       />
 
       <AccessibleInput
         id="login-password"
-        label="Password"
+        label={t('password')}
         type="password"
         required
         value={password}
@@ -83,13 +85,13 @@ export function LoginForm() {
         ) : (
           <LogIn className="h-4 w-4 mr-1.5" />
         )}
-        {isSubmitting ? 'Signing in...' : 'Sign In'}
+        {isSubmitting ? t('signingIn') : t('signIn')}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{' '}
+        {t('noAccount')}{' '}
         <a href="/auth/signup" className="text-primary hover:text-primary/80 font-medium">
-          Create one
+          {t('createOne')}
         </a>
       </p>
     </form>
