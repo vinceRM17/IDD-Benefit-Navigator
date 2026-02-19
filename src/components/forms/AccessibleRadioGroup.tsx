@@ -13,6 +13,7 @@ interface AccessibleRadioGroupProps {
   legend: string;
   options: RadioOption[];
   required?: boolean;
+  helpText?: string;
   error?: string;
   value: string;
   onChange: (value: string) => void;
@@ -23,6 +24,7 @@ export function AccessibleRadioGroup({
   legend,
   options,
   required = false,
+  helpText,
   error,
   value,
   onChange,
@@ -32,7 +34,7 @@ export function AccessibleRadioGroup({
 
   return (
     <fieldset aria-describedby={describedBy}>
-      <legend className="font-medium text-foreground mb-2">
+      <legend className="font-medium text-foreground mb-1">
         {legend}
         {required && (
           <span aria-label="required" className="text-destructive ml-1">
@@ -40,6 +42,9 @@ export function AccessibleRadioGroup({
           </span>
         )}
       </legend>
+      {helpText && (
+        <p className="text-sm text-muted-foreground mb-2">{helpText}</p>
+      )}
 
       <div className="space-y-2">
         {options.map((option) => (

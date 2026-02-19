@@ -20,6 +20,7 @@ import {
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
+import { generateActionPlan } from '@/lib/results/action-plan';
 import { useEffect, useState, useCallback } from 'react';
 import type { Tab } from '@/components/results/TabNav';
 import { Button } from '@/components/ui/button';
@@ -76,9 +77,9 @@ export default function ResultsPage() {
     .filter((p) => p.eligible && (p.confidence === 'likely' || p.confidence === 'possible'))
     .map((p) => p.programId);
 
-  const actionSteps = results.programs
-    .filter((p) => p.confidence === 'likely' || p.confidence === 'possible')
-    .flatMap((p) => p.content.nextSteps);
+  const actionSteps = generateActionPlan(
+    results.programs.filter((p) => p.confidence === 'likely' || p.confidence === 'possible')
+  );
 
   const familyContext = {
     householdSize: formData.householdSize || 1,

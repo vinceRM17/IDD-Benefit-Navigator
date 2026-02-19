@@ -65,6 +65,7 @@ export default function Step2Page() {
         <AccessibleRadioGroup
           name="receivesSSI"
           legend="Does anyone in your household receive SSI?"
+          helpText="SSI (Supplemental Security Income) is a federal program that provides monthly payments to people with disabilities who have limited income and resources."
           options={[
             { value: 'true', label: 'Yes' },
             { value: 'false', label: 'No' },
@@ -80,6 +81,7 @@ export default function Step2Page() {
         <AccessibleRadioGroup
           name="receivesSNAP"
           legend="Does your household currently receive SNAP (food stamps)?"
+          helpText="SNAP (Supplemental Nutrition Assistance Program) helps families buy groceries through an EBT card loaded monthly."
           options={[
             { value: 'true', label: 'Yes' },
             { value: 'false', label: 'No' },
