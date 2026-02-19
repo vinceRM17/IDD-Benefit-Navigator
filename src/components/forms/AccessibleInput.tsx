@@ -35,18 +35,18 @@ export function AccessibleInput({
   ].filter(Boolean).join(' ') || undefined;
 
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="font-medium text-gray-900">
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="font-medium text-foreground">
         {label}
         {required && (
-          <span aria-label="required" className="text-red-700 ml-1">
+          <span aria-label="required" className="text-destructive ml-1">
             *
           </span>
         )}
       </label>
 
       {helpText && (
-        <span id={helpId} className="text-gray-600 text-sm">
+        <span id={helpId} className="text-muted-foreground text-sm">
           {helpText}
         </span>
       )}
@@ -60,8 +60,8 @@ export function AccessibleInput({
         aria-required={required}
         aria-invalid={!!error}
         aria-describedby={describedBy}
-        className={`w-full px-3 py-2 border rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px] ${
-          error ? 'border-red-500' : 'border-gray-300'
+        className={`w-full px-3 py-2 border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring min-h-[44px] transition-colors ${
+          error ? 'border-destructive' : 'border-input'
         }`}
       />
 

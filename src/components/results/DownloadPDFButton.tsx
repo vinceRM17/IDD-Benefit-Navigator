@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { EnrichedResult, BenefitInteraction } from '@/lib/results/types';
+import { Button } from '@/components/ui/button';
+import { Download, Loader2, AlertCircle } from 'lucide-react';
 
 interface DownloadPDFButtonProps {
   results: EnrichedResult[];
@@ -28,7 +30,6 @@ export function DownloadPDFButton({
     setError(null);
 
     try {
-      // POST to PDF generation endpoint
       const response = await fetch('/api/pdf/action-plan', {
         method: 'POST',
         headers: {
@@ -44,10 +45,7 @@ export function DownloadPDFButton({
         throw new Error('Failed to generate PDF');
       }
 
-      // Get blob from response
       const blob = await response.blob();
-
-      // Create temporary anchor element and trigger download
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
@@ -55,7 +53,6 @@ export function DownloadPDFButton({
       document.body.appendChild(anchor);
       anchor.click();
 
-      // Clean up
       document.body.removeChild(anchor);
       URL.revokeObjectURL(url);
     } catch (err) {
@@ -68,23 +65,28 @@ export function DownloadPDFButton({
 
   return (
     <div>
-      <button
+      <Button
+        variant="warm"
         onClick={handleDownload}
         disabled={isLoading}
         aria-label={isLoading ? 'Generating PDF...' : 'Download Your Action Plan as PDF'}
         aria-busy={isLoading}
-        className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        {isLoading ? 'Generating PDF...' : 'Download Your Action Plan (PDF)'}
-      </button>
+        {isLoading ? (
+          <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+        ) : (
+          <Download className="h-4 w-4 mr-1.5" />
+        )}
+        {isLoading ? 'Generating PDF...' : 'Download Action Plan (PDF)'}
+      </Button>
 
-      {/* Error message with assertive announcement for screen readers */}
       {error && (
         <p
           role="alert"
           aria-live="assertive"
-          className="mt-2 text-sm text-red-600"
+          className="mt-2 text-sm text-destructive flex items-center gap-1.5"
         >
+          <AlertCircle className="h-3.5 w-3.5" />
           {error}
         </p>
       )}

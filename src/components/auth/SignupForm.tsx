@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AccessibleInput } from '@/components/forms';
 import { useScreeningStore } from '@/lib/screening/store';
+import { Button } from '@/components/ui/button';
+import { AlertCircle, Loader2, UserPlus, CheckCircle2 } from 'lucide-react';
 
 export function SignupForm() {
   const router = useRouter();
@@ -51,7 +53,6 @@ export function SignupForm() {
     try {
       const body: Record<string, unknown> = { email, password };
 
-      // Include screening data for migration if available
       if (Object.keys(formData).length > 0 && results) {
         body.screeningData = formData;
         body.screeningResults = results;
@@ -83,22 +84,25 @@ export function SignupForm() {
   if (success) {
     return (
       <div className="text-center p-6" role="status">
-        <p className="text-lg font-medium text-green-800 mb-2">
+        <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+        </div>
+        <p className="text-lg font-heading font-medium text-foreground mb-2">
           Your account has been created.
         </p>
         {success.screeningSaved && (
-          <p className="text-gray-700">
+          <p className="text-foreground/80">
             We&apos;ve saved your screening results to your account.
           </p>
         )}
-        <p className="text-sm text-gray-500 mt-4">Redirecting to your dashboard...</p>
+        <p className="text-sm text-muted-foreground mt-4">Redirecting to your dashboard...</p>
       </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      <p className="text-gray-700 text-center mb-6">
+      <p className="text-muted-foreground text-center mb-6">
         Save your progress so you can come back anytime
       </p>
 
@@ -135,22 +139,29 @@ export function SignupForm() {
       />
 
       {error && (
-        <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
+        <div role="alert" className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm flex items-center gap-2">
+          <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3 px-4 bg-blue-700 text-white rounded-lg font-medium hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+        className="w-full"
+        size="lg"
       >
+        {isSubmitting ? (
+          <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+        ) : (
+          <UserPlus className="h-4 w-4 mr-1.5" />
+        )}
         {isSubmitting ? 'Creating account...' : 'Create Account'}
-      </button>
+      </Button>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-muted-foreground">
         Already have an account?{' '}
-        <a href="/auth/login" className="text-blue-700 hover:underline font-medium">
+        <a href="/auth/login" className="text-primary hover:text-primary/80 font-medium">
           Sign in
         </a>
       </p>

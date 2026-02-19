@@ -3,7 +3,7 @@
 ## Milestones
 
 - SHIPPED **v1.0 MVP** — Phases 1-4 (shipped 2026-02-12)
-- **v1.1 UI/UX Redesign** — Phases 5-9 (in progress)
+- SHIPPED **v1.1 UI/UX Redesign** — Phases 5-9 (shipped 2026-02-18)
 
 ## Phases
 
@@ -19,15 +19,15 @@
 
 ---
 
-### v1.1 UI/UX Redesign (In Progress)
+### v1.1 UI/UX Redesign (SHIPPED 2026-02-18)
 
 **Milestone Goal:** Transform every page from functional to beautiful — friendly, empowering, and distinctive. Visual refresh only; no feature or backend changes.
 
-- [ ] **Phase 5: Design System Foundation** - Install shadcn/ui, define custom theme, and establish the animation and token system all pages will build on
-- [ ] **Phase 6: Layout and Home Page** - Redesign the persistent shell (header, footer, page structure) and the home page that every visitor sees first
-- [ ] **Phase 7: Screening Flow** - Redesign every step of the intake and evaluation journey — from landing through the loading state
-- [ ] **Phase 8: Results Pages** - Redesign the recommendations, program details, action plans, and resource directory
-- [ ] **Phase 9: Auth, Dashboard, and Supporting Pages** - Redesign the account surfaces (login, signup, dashboard, settings, referral tracking) and the utility pages (privacy, accessibility, referral confirmation)
+- [x] **Phase 5: Design System Foundation** - Install shadcn/ui, define custom theme, and establish the animation and token system all pages will build on
+- [x] **Phase 6: Layout and Home Page** - Redesign the persistent shell (header, footer, page structure) and the home page that every visitor sees first
+- [x] **Phase 7: Screening Flow** - Redesign every step of the intake and evaluation journey — from landing through the loading state
+- [x] **Phase 8: Results Pages** - Redesign the recommendations, program details, action plans, and resource directory
+- [x] **Phase 9: Auth, Dashboard, and Supporting Pages** - Redesign the account surfaces (login, signup, dashboard, settings, referral tracking) and the utility pages (privacy, accessibility, referral confirmation)
 
 ---
 
@@ -46,8 +46,8 @@
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Install shadcn/ui with custom Nunito typography, warm teal/amber CSS variable theme, and 5 core UI components (FOUN-01, FOUN-02)
-- [ ] 05-02-PLAN.md — Motion animation system with shared presets, PageTransition wrapper, responsive spacing tokens, and CSS keyframes (FOUN-03, FOUN-04)
+- [x] 05-01-PLAN.md — Install shadcn/ui with custom Nunito typography, warm teal/amber CSS variable theme, and 5 core UI components (FOUN-01, FOUN-02) — completed 2026-02-18
+- [x] 05-02-PLAN.md — Motion animation system with shared presets, PageTransition wrapper, responsive spacing tokens, and CSS keyframes (FOUN-03, FOUN-04) — completed 2026-02-18
 
 ---
 
@@ -65,8 +65,8 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 06-01: Header and footer redesign (LAYO-01, LAYO-02)
-- [ ] 06-02: Page structure tokens and home page (LAYO-03, HOME-01, HOME-02)
+- [x] 06-01: Header and footer redesign (LAYO-01, LAYO-02) — completed 2026-02-18
+- [x] 06-02: Page structure tokens and home page (LAYO-03, HOME-01, HOME-02) — completed 2026-02-18
 
 ---
 
@@ -83,8 +83,8 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 07-01: Screening landing and intake steps 1-3 (SCRN-01, SCRN-02)
-- [ ] 07-02: Review page and pending state (SCRN-03, SCRN-04)
+- [x] 07-01: Screening landing and intake steps 1-3 (SCRN-01, SCRN-02) — completed 2026-02-18
+- [x] 07-02: Review page and pending state (SCRN-03, SCRN-04) — completed 2026-02-18
 
 ---
 
@@ -101,8 +101,8 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 08-01: Results overview and program detail cards (RSLT-01, RSLT-02)
-- [ ] 08-02: Action plans, checklists, and resource directory (RSLT-03, RSLT-04)
+- [x] 08-01: Results overview and program detail cards (RSLT-01, RSLT-02) — completed 2026-02-18
+- [x] 08-02: Action plans, checklists, and resource directory (RSLT-03, RSLT-04) — completed 2026-02-18
 
 ---
 
@@ -120,8 +120,8 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 09-01: Login, signup, and dashboard redesign (ACCT-01, ACCT-02)
-- [ ] 09-02: Referral tracking, settings, and supporting pages (ACCT-03, PAGE-01, PAGE-02)
+- [x] 09-01: Login, signup, and dashboard redesign (ACCT-01, ACCT-02) — completed 2026-02-18
+- [x] 09-02: Referral tracking, settings, and supporting pages (ACCT-03, PAGE-01, PAGE-02) — completed 2026-02-18
 
 ---
 
@@ -135,11 +135,11 @@ Plans:
 | 2. Core Screening MVP | v1.0 | 4/4 | Complete | 2026-02-12 |
 | 3. Enhanced Experience | v1.0 | 6/6 | Complete | 2026-02-12 |
 | 4. Partnership Integration | v1.0 | 4/4 | Complete | 2026-02-12 |
-| 5. Design System Foundation | v1.1 | 0/2 | Not started | - |
-| 6. Layout and Home Page | v1.1 | 0/2 | Not started | - |
-| 7. Screening Flow | v1.1 | 0/2 | Not started | - |
-| 8. Results Pages | v1.1 | 0/2 | Not started | - |
-| 9. Auth, Dashboard, and Supporting Pages | v1.1 | 0/2 | Not started | - |
+| 5. Design System Foundation | v1.1 | 2/2 | Complete | 2026-02-18 |
+| 6. Layout and Home Page | v1.1 | 2/2 | Complete | 2026-02-18 |
+| 7. Screening Flow | v1.1 | 2/2 | Complete | 2026-02-18 |
+| 8. Results Pages | v1.1 | 2/2 | Complete | 2026-02-18 |
+| 9. Auth, Dashboard, and Supporting Pages | v1.1 | 2/2 | Complete | 2026-02-18 |
 
 ---
 *Roadmap created: 2026-02-11*

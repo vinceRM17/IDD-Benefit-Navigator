@@ -4,6 +4,8 @@
  * WCAG compliant with ordered list semantics
  */
 
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+
 interface ActionPlanProps {
   steps: string[];
   title?: string;
@@ -18,24 +20,24 @@ export function ActionPlan({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">{title}</h2>
-
-      <ol className="space-y-4">
-        {steps.map((step, index) => (
-          <li key={index} className="flex items-start gap-4">
-            {/* Numbered circle */}
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
-              {index + 1}
-            </div>
-
-            {/* Step text */}
-            <div className="flex-1 pt-1">
-              <p className="text-gray-700">{step}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
+    <Card>
+      <CardHeader>
+        <h2 className="text-2xl font-heading font-semibold text-foreground">{title}</h2>
+      </CardHeader>
+      <CardContent>
+        <ol className="space-y-4">
+          {steps.map((step, index) => (
+            <li key={index} className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-sm">
+                {index + 1}
+              </div>
+              <div className="flex-1 pt-1">
+                <p className="text-foreground/80">{step}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </CardContent>
+    </Card>
   );
 }

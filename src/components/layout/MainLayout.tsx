@@ -1,6 +1,7 @@
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { SkipLink } from './SkipLink';
+import { PageTransition } from '@/components/ui/page-transition';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -16,9 +17,9 @@ export async function MainLayout({ children, currentPath }: MainLayoutProps) {
         id="main-content"
         tabIndex={-1}
         role="main"
-        className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6"
+        className="flex-1 max-w-7xl w-full mx-auto px-page-x py-page-y"
       >
-        {children}
+        <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
     </div>

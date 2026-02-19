@@ -9,15 +9,11 @@ interface IntakeLayoutProps {
   children: React.ReactNode;
 }
 
-/**
- * Shared layout for all intake steps
- * Shows progress indicator
- */
 export default function IntakeLayout({ children }: IntakeLayoutProps) {
   const currentStep = useScreeningStore((state) => state.currentStep);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto py-page-y">
       <StepIndicator steps={STEPS} currentStep={currentStep} />
       {children}
     </div>

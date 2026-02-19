@@ -8,11 +8,9 @@ import { useScreeningStore } from '@/lib/screening/store';
 import { step1Schema, type Step1Data } from '@/lib/screening/schema';
 import { QuestionCard } from '@/components/screening/QuestionCard';
 import { AccessibleInput, AccessibleSelect } from '@/components/forms';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
-/**
- * Step 1: Family Situation
- * Collects state and household size
- */
 export default function Step1Page() {
   const router = useRouter();
   const formData = useScreeningStore((s) => s.formData);
@@ -73,12 +71,10 @@ export default function Step1Page() {
         />
 
         <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px]"
-          >
+          <Button type="submit">
             Next
-          </button>
+            <ArrowRight className="h-4 w-4 ml-1" />
+          </Button>
         </div>
       </form>
     </QuestionCard>

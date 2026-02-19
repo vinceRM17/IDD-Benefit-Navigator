@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Bookmark, ArrowRight } from 'lucide-react';
 
 const DISMISS_KEY = 'idd_account_prompt_dismissed';
 
@@ -29,41 +32,44 @@ export function AccountPrompt() {
     <aside
       role="complementary"
       aria-label="Account signup suggestion"
-      className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8"
     >
-      <div className="flex items-start gap-4">
-        <span className="text-2xl flex-shrink-0" aria-hidden="true">
-          &#128278;
-        </span>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            Save your progress
-          </h3>
-          <p className="text-gray-700 text-sm mb-4">
-            Create a free account to save your screening results, get reminders
-            before benefits need renewal, and come back anytime to check your
-            progress.
-          </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/auth/signup"
-              className="inline-block bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[36px]"
-            >
-              Create Account
-            </Link>
-            <button
-              onClick={handleDismiss}
-              aria-label="Dismiss account prompt"
-              className="text-sm text-gray-600 hover:text-gray-800 underline"
-            >
-              Continue without an account
-            </button>
+      <Card className="border-primary/20 bg-primary/5">
+        <CardContent className="p-card-padding">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
+              <Bookmark className="h-5 w-5 text-primary" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
+                Save your progress
+              </h3>
+              <p className="text-foreground/80 text-sm mb-4">
+                Create a free account to save your screening results, get reminders
+                before benefits need renewal, and come back anytime to check your
+                progress.
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Button asChild>
+                  <Link href="/auth/signup">
+                    Create Account
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
+                <button
+                  onClick={handleDismiss}
+                  aria-label="Dismiss account prompt"
+                  className="text-sm text-muted-foreground hover:text-foreground underline"
+                >
+                  Continue without an account
+                </button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-3">
+                Your screening results will be saved automatically.
+              </p>
+            </div>
           </div>
-          <p className="text-xs text-gray-500 mt-3">
-            Your screening results will be saved automatically.
-          </p>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </aside>
   );
 }

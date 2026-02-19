@@ -5,6 +5,9 @@
  */
 
 import { BenefitInteraction } from '@/lib/results/types';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { ArrowRightLeft } from 'lucide-react';
 
 interface BenefitInteractionsProps {
   interactions: BenefitInteraction[];
@@ -18,36 +21,37 @@ export function BenefitInteractions({
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-        How Your Benefits Work Together
-      </h2>
-
-      <div className="space-y-4">
+    <Card>
+      <CardHeader>
+        <h2 className="text-2xl font-heading font-semibold text-foreground">
+          How Your Benefits Work Together
+        </h2>
+      </CardHeader>
+      <CardContent className="space-y-4">
         {interactions.map((interaction, index) => (
           <div
             key={index}
-            className="p-4 bg-blue-50 border border-blue-200 rounded-lg"
+            className="p-4 bg-primary/5 border border-primary/20 rounded-lg"
           >
             {/* Programs involved */}
-            <div className="mb-2">
-              <span className="text-sm font-medium text-blue-900">
-                Programs: {interaction.programs.join(' + ')}
+            <div className="mb-2 flex items-center gap-2">
+              <ArrowRightLeft className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">
+                {interaction.programs.join(' + ')}
               </span>
             </div>
 
             {/* Description */}
-            <p className="text-gray-700 mb-3">{interaction.description}</p>
+            <p className="text-foreground/80 mb-3">{interaction.description}</p>
 
             {/* Recommendation */}
-            <div className="pt-3 border-t border-blue-200">
-              <p className="text-sm font-medium text-blue-900">
-                What to do: {interaction.recommendation}
-              </p>
-            </div>
+            <Separator className="mb-3" />
+            <p className="text-sm font-medium text-primary">
+              What to do: {interaction.recommendation}
+            </p>
           </div>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

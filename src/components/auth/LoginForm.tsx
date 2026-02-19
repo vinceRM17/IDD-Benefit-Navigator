@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AccessibleInput } from '@/components/forms';
+import { Button } from '@/components/ui/button';
+import { AlertCircle, Loader2, LogIn } from 'lucide-react';
 
 export function LoginForm() {
   const router = useRouter();
@@ -40,7 +42,7 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      <p className="text-gray-700 text-center mb-6">
+      <p className="text-muted-foreground text-center mb-6">
         Welcome back
       </p>
 
@@ -64,22 +66,29 @@ export function LoginForm() {
       />
 
       {error && (
-        <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
+        <div role="alert" className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm flex items-center gap-2">
+          <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-3 px-4 bg-blue-700 text-white rounded-lg font-medium hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+        className="w-full"
+        size="lg"
       >
+        {isSubmitting ? (
+          <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+        ) : (
+          <LogIn className="h-4 w-4 mr-1.5" />
+        )}
         {isSubmitting ? 'Signing in...' : 'Sign In'}
-      </button>
+      </Button>
 
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{' '}
-        <a href="/auth/signup" className="text-blue-700 hover:underline font-medium">
+        <a href="/auth/signup" className="text-primary hover:text-primary/80 font-medium">
           Create one
         </a>
       </p>

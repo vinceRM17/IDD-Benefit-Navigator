@@ -32,10 +32,10 @@ export function AccessibleRadioGroup({
 
   return (
     <fieldset aria-describedby={describedBy}>
-      <legend className="font-medium text-gray-900 mb-2">
+      <legend className="font-medium text-foreground mb-2">
         {legend}
         {required && (
-          <span aria-label="required" className="text-red-700 ml-1">
+          <span aria-label="required" className="text-destructive ml-1">
             *
           </span>
         )}
@@ -43,7 +43,14 @@ export function AccessibleRadioGroup({
 
       <div className="space-y-2">
         {options.map((option) => (
-          <label key={option.value} className="flex items-center gap-2 cursor-pointer">
+          <label
+            key={option.value}
+            className={`flex items-center gap-3 cursor-pointer rounded-lg border px-4 py-3 transition-colors ${
+              value === option.value
+                ? 'border-primary bg-primary/5'
+                : 'border-input hover:border-primary/40'
+            }`}
+          >
             <input
               type="radio"
               name={name}
@@ -51,9 +58,9 @@ export function AccessibleRadioGroup({
               checked={value === option.value}
               onChange={(e) => onChange(e.target.value)}
               aria-required={required}
-              className="w-4 h-4 text-blue-700 focus:ring-2 focus:ring-blue-500 min-h-[44px] min-w-[44px]"
+              className="w-4 h-4 text-primary accent-primary focus:ring-2 focus:ring-ring"
             />
-            <span className="text-gray-900">{option.label}</span>
+            <span className="text-foreground">{option.label}</span>
           </label>
         ))}
       </div>

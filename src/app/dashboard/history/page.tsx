@@ -3,6 +3,9 @@ import { getUserScreeningHistory } from '@/lib/db/queries';
 import { redirect } from 'next/navigation';
 import { ScreeningHistoryCard } from '@/components/dashboard/ScreeningHistoryCard';
 import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export const metadata = {
   title: 'Screening History - IDD Benefits Navigator',
@@ -16,7 +19,7 @@ export default async function HistoryPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-2xl font-heading font-bold text-foreground mb-6">
         Screening History
       </h1>
 
@@ -27,17 +30,19 @@ export default async function HistoryPage() {
           ))}
         </div>
       ) : (
-        <div className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm text-center">
-          <p className="text-gray-600 mb-4">
-            No screenings yet. Start your first screening to see results here.
-          </p>
-          <Link
-            href="/screening"
-            className="inline-block bg-blue-700 text-white font-medium px-6 py-3 rounded-lg hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 min-h-[44px]"
-          >
-            Start Screening
-          </Link>
-        </div>
+        <Card className="text-center">
+          <CardContent className="p-8">
+            <p className="text-muted-foreground mb-4">
+              No screenings yet. Start your first screening to see results here.
+            </p>
+            <Button asChild>
+              <Link href="/screening">
+                Start Screening
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

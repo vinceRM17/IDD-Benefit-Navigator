@@ -6,6 +6,8 @@
 'use client';
 
 import { EnrichedResult } from '@/lib/results/types';
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight } from 'lucide-react';
 
 interface ProgramSummaryCardProps {
   result: EnrichedResult;
@@ -15,33 +17,26 @@ interface ProgramSummaryCardProps {
 export function ProgramSummaryCard({ result, onViewDetails }: ProgramSummaryCardProps) {
   const { content, confidence } = result;
 
-  const badgeClass =
-    confidence === 'likely'
-      ? 'bg-green-100 text-green-800 border-green-300'
-      : 'bg-yellow-100 text-yellow-800 border-yellow-300';
-
+  const badgeVariant = confidence === 'likely' ? 'success' as const : 'warm' as const;
   const badgeText = confidence === 'likely' ? 'Likely Eligible' : 'May Be Eligible';
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 flex items-start justify-between gap-4">
+    <div className="bg-card rounded-lg border border-border shadow-sm p-4 flex items-start justify-between gap-4">
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-3 mb-1">
-          <h3 className="text-base font-semibold text-gray-900 truncate">
+          <h3 className="text-base font-heading font-semibold text-foreground truncate">
             {content.name}
           </h3>
-          <span
-            className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full border ${badgeClass} whitespace-nowrap`}
-          >
-            {badgeText}
-          </span>
+          <Badge variant={badgeVariant}>{badgeText}</Badge>
         </div>
-        <p className="text-sm text-gray-600 line-clamp-1">{content.description}</p>
+        <p className="text-sm text-muted-foreground line-clamp-1">{content.description}</p>
       </div>
       <button
         onClick={onViewDetails}
-        className="text-sm font-medium text-blue-600 hover:text-blue-700 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
+        className="text-sm font-medium text-primary hover:text-primary/80 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded inline-flex items-center gap-1"
       >
         View details
+        <ArrowRight className="h-3.5 w-3.5" />
       </button>
     </div>
   );

@@ -8,6 +8,7 @@
 'use client';
 
 import { useState } from 'react';
+import { FileText } from 'lucide-react';
 
 interface DocumentChecklistProps {
   documents: string[];
@@ -33,12 +34,18 @@ export function DocumentChecklist({
     return null;
   }
 
+  const checkedCount = Object.values(checkedItems).filter(Boolean).length;
+
   return (
-    <div className="bg-gray-50 rounded-lg p-4">
+    <div className="bg-muted rounded-lg p-4 border border-border">
       <fieldset>
-        <legend className="font-semibold text-gray-900 mb-3">
+        <legend className="font-heading font-semibold text-foreground mb-1 flex items-center gap-2">
+          <FileText className="h-4 w-4 text-primary" />
           Documents You&apos;ll Need for {programName}
         </legend>
+        <p className="text-xs text-muted-foreground mb-3">
+          {checkedCount} of {documents.length} gathered
+        </p>
 
         <div className="space-y-2">
           {documents.map((document, index) => (
@@ -48,12 +55,12 @@ export function DocumentChecklist({
                 id={`doc-${programName}-${index}`}
                 checked={checkedItems[index] || false}
                 onChange={() => handleCheck(index)}
-                className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="mt-1 h-4 w-4 rounded border-input text-primary focus:ring-ring accent-primary"
               />
               <label
                 htmlFor={`doc-${programName}-${index}`}
                 className={`text-sm ${
-                  checkedItems[index] ? 'text-gray-500 line-through' : 'text-gray-700'
+                  checkedItems[index] ? 'text-muted-foreground line-through' : 'text-foreground'
                 }`}
               >
                 {document}

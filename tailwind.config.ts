@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,37 +11,61 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        blue: {
-          50: '#f0f9f6',
-          100: '#d5f0ea',
-          200: '#a8ddd0',
-          300: '#73c5b3',
-          400: '#43a896',
-          500: '#2d8f7f',
-          600: '#1f7268',
-          700: '#1a5d55',
-          800: '#174a44',
-          900: '#143d38',
-          950: '#0a201e',
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
+        popover: { DEFAULT: "hsl(var(--popover))", foreground: "hsl(var(--popover-foreground))" },
+        primary: { DEFAULT: "hsl(var(--primary))", foreground: "hsl(var(--primary-foreground))" },
+        secondary: { DEFAULT: "hsl(var(--secondary))", foreground: "hsl(var(--secondary-foreground))" },
+        muted: { DEFAULT: "hsl(var(--muted))", foreground: "hsl(var(--muted-foreground))" },
+        accent: { DEFAULT: "hsl(var(--accent))", foreground: "hsl(var(--accent-foreground))" },
+        destructive: { DEFAULT: "hsl(var(--destructive))", foreground: "hsl(var(--destructive-foreground))" },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        heading: ["var(--font-heading)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+      },
+      spacing: {
+        section: "var(--space-section)",
+        "card-padding": "var(--space-card-padding)",
+        stack: "var(--space-stack)",
+        inline: "var(--space-inline)",
+        "page-x": "var(--space-page-x)",
+        "page-y": "var(--space-page-y)",
+      },
+      maxWidth: {
+        content: "var(--content-max-width)",
+      },
+      keyframes: {
+        "focus-ring-glow": {
+          "0%": { boxShadow: "0 0 0 2px hsl(var(--ring) / 0)" },
+          "50%": { boxShadow: "0 0 0 3px hsl(var(--ring) / 0.3)" },
+          "100%": { boxShadow: "0 0 0 2px hsl(var(--ring) / 0.15)" },
         },
-        gray: {
-          50: '#F9F9F6',
-          100: '#F3F3EF',
-          200: '#E5E5E0',
-          300: '#D4D4CE',
-          400: '#A3A39C',
-          500: '#73736D',
-          600: '#52524D',
-          700: '#3D3D38',
-          800: '#272723',
-          900: '#1A1A17',
-          950: '#0F0F0D',
+        "gentle-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
         },
+        "slide-in-up": {
+          from: { transform: "translateY(100%)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        "focus-ring": "focus-ring-glow 0.6s ease-out forwards",
+        "gentle-pulse": "gentle-pulse 2s ease-in-out infinite",
+        "slide-in-up": "slide-in-up 0.3s ease-out",
       },
     },
   },
-  plugins: [],
+  plugins: [tailwindAnimate],
 };
 export default config;

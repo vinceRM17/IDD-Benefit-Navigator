@@ -1,9 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { MainLayout } from "@/components/layout/MainLayout";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+  weight: ["400", "600", "700", "800"],
+});
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "IDD Benefits Navigator",
@@ -20,7 +32,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className}>
+      <body className={`${nunito.variable} ${nunitoSans.variable} font-body antialiased`}>
         <MainLayout>{children}</MainLayout>
       </body>
     </html>

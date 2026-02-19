@@ -20,8 +20,18 @@ import {
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { Tab } from '@/components/results/TabNav';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import {
+  RotateCcw,
+  Loader2,
+  ClipboardList,
+  ChevronDown,
+  Info,
+} from 'lucide-react';
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -30,29 +40,28 @@ export default function ResultsPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Handle client-side mounting and check auth status
   useEffect(() => {
     setMounted(true);
-    // Lightweight auth check — 401 means anonymous
     fetch('/api/screenings')
       .then((res) => setIsAuthenticated(res.ok))
       .catch(() => setIsAuthenticated(false));
   }, []);
 
-  // If no results, redirect to screening start
   useEffect(() => {
     if (mounted && !results) {
       router.push('/screening');
     }
   }, [mounted, results, router]);
 
-  // Switch to Programs tab (used by summary card "View details" links)
   const goToPrograms = useCallback(() => setActiveTab('programs'), []);
 
   if (!mounted || !results) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading your results...</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <p>Loading your results...</p>
+        </div>
       </div>
     );
   }
@@ -63,17 +72,14 @@ export default function ResultsPage() {
   const unlikelyPrograms = results.programs.filter((p) => p.confidence === 'unlikely');
   const eligiblePrograms = [...likelyPrograms, ...possiblePrograms];
 
-  // Get eligible program IDs for resource filtering
   const eligibleProgramIds = results.programs
     .filter((p) => p.eligible && (p.confidence === 'likely' || p.confidence === 'possible'))
     .map((p) => p.programId);
 
-  // Generate overall action plan
   const actionSteps = results.programs
     .filter((p) => p.confidence === 'likely' || p.confidence === 'possible')
     .flatMap((p) => p.content.nextSteps);
 
-  // Build family context for AI personalization from form data
   const familyContext = {
     householdSize: formData.householdSize || 1,
     monthlyIncome: formData.monthlyIncome || 0,
@@ -91,7 +97,6 @@ export default function ResultsPage() {
     router.push('/screening');
   };
 
-  // Helper to render full program details (used in Programs tab)
   const renderProgramDetails = (programList: typeof likelyPrograms) =>
     programList.map((result) => (
       <div key={result.programId}>
@@ -129,16 +134,15 @@ export default function ResultsPage() {
 
   const overviewContent = (
     <div>
-      {/* Header */}
       <header className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-heading font-bold text-foreground mb-2">
           Your Benefit Recommendations
         </h2>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-muted-foreground">
           Based on what you shared about your family, here are the programs
           that may help.
         </p>
-        <p className="text-base text-gray-600 mt-3">
+        <p className="text-base text-muted-foreground mt-3">
           Navigating these programs is hard — you are not the only family
           working through this. You do not have to figure everything out
           today, and you do not have to do it alone. Start with what feels
@@ -146,24 +150,21 @@ export default function ResultsPage() {
         </p>
       </header>
 
-      {/* Overall Action Plan */}
       {actionSteps.length > 0 && (
         <div className="mb-8">
           <ActionPlan steps={actionSteps} title="Your Action Plan" />
         </div>
       )}
 
-      {/* Benefit Interactions */}
       {results.benefitInteractions.length > 0 && (
         <div className="mb-8">
           <BenefitInteractions interactions={results.benefitInteractions} />
         </div>
       )}
 
-      {/* Summary cards */}
       {eligiblePrograms.length > 0 && (
         <section>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-heading font-semibold text-foreground mb-4">
             Programs You May Qualify For
           </h3>
           <div className="space-y-3">
@@ -182,44 +183,46 @@ export default function ResultsPage() {
 
   const programsContent = (
     <div>
-      {/* Likely Eligible Programs */}
       {likelyPrograms.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-2xl font-heading font-semibold text-foreground mb-4">
             Programs You Likely Qualify For
           </h2>
           <div className="space-y-6">{renderProgramDetails(likelyPrograms)}</div>
         </section>
       )}
 
-      {/* Possibly Eligible Programs */}
       {possiblePrograms.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-2xl font-heading font-semibold text-foreground mb-4">
             Programs You May Qualify For
           </h2>
           <div className="space-y-6">{renderProgramDetails(possiblePrograms)}</div>
         </section>
       )}
 
-      {/* Unlikely Programs (collapsed by default) */}
       {unlikelyPrograms.length > 0 && (
         <section className="mb-8">
-          <details className="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
-            <summary className="text-lg font-semibold text-gray-900 cursor-pointer">
-              Other Programs (based on your answers, these may not apply)
-            </summary>
-            <p className="text-sm text-gray-600 mt-2 mb-4">
-              Your situation may change, or you might have additional needs
-              that qualify you for these programs. Click a program to learn
-              more.
-            </p>
-            <div className="space-y-4 mt-4">
-              {unlikelyPrograms.map((result) => (
-                <ProgramCard key={result.programId} result={result} />
-              ))}
-            </div>
-          </details>
+          <Card>
+            <CardContent className="p-card-padding">
+              <details>
+                <summary className="text-lg font-heading font-semibold text-foreground cursor-pointer flex items-center gap-2">
+                  <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                  Other Programs (based on your answers, these may not apply)
+                </summary>
+                <p className="text-sm text-muted-foreground mt-2 mb-4">
+                  Your situation may change, or you might have additional needs
+                  that qualify you for these programs. Click a program to learn
+                  more.
+                </p>
+                <div className="space-y-4 mt-4">
+                  {unlikelyPrograms.map((result) => (
+                    <ProgramCard key={result.programId} result={result} />
+                  ))}
+                </div>
+              </details>
+            </CardContent>
+          </Card>
         </section>
       )}
     </div>
@@ -227,10 +230,13 @@ export default function ResultsPage() {
 
   const documentsContent = (
     <div>
-      <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-        Documents You&apos;ll Need
-      </h2>
-      <p className="text-gray-600 mb-6">
+      <div className="flex items-center gap-3 mb-2">
+        <ClipboardList className="h-6 w-6 text-primary" />
+        <h2 className="text-2xl font-heading font-semibold text-foreground">
+          Documents You&apos;ll Need
+        </h2>
+      </div>
+      <p className="text-muted-foreground mb-6">
         Gather these documents to speed up your applications.
       </p>
 
@@ -247,7 +253,7 @@ export default function ResultsPage() {
             ))}
         </div>
       ) : (
-        <p className="text-gray-600">No document checklists available.</p>
+        <p className="text-muted-foreground">No document checklists available.</p>
       )}
     </div>
   );
@@ -274,10 +280,10 @@ export default function ResultsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-section">
+      <div className="max-w-4xl mx-auto">
         {/* Page title */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+        <h1 className="text-3xl font-heading font-bold text-foreground mb-6">
           Your Personalized Results
         </h1>
 
@@ -288,14 +294,13 @@ export default function ResultsPage() {
           onTabChange={setActiveTab}
         />
 
-        {/* Actions — always visible outside tabs */}
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mt-8">
-          <button
-            onClick={handleStartOver}
-            className="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors"
-          >
+        {/* Actions */}
+        <Separator className="mt-8 mb-6" />
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+          <Button variant="secondary" onClick={handleStartOver}>
+            <RotateCcw className="h-4 w-4 mr-1.5" />
             Start Over
-          </button>
+          </Button>
           <DownloadPDFButton
             results={results.programs}
             interactions={results.benefitInteractions}
@@ -303,7 +308,8 @@ export default function ResultsPage() {
         </div>
 
         {/* Footer note */}
-        <div className="mt-8 text-center text-sm text-gray-600">
+        <div className="mt-8 text-center flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <Info className="h-4 w-4 shrink-0" />
           <p>
             This screening is for informational purposes only. Final eligibility
             is determined by the program administrators.

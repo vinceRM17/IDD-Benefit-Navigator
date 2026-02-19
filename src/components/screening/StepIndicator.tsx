@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Check } from 'lucide-react';
 import type { StepConfig } from '@/lib/screening/types';
 
 interface StepIndicatorProps {
@@ -20,34 +21,22 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
           return (
             <li key={step.id} className="flex items-center">
               <div className="flex flex-col items-center">
-                {/* Step circle */}
                 <div
                   className={`
-                    flex items-center justify-center w-10 h-10 rounded-full border-2
-                    ${isCompleted ? 'bg-blue-600 border-blue-600' : ''}
-                    ${isCurrent ? 'bg-blue-600 border-blue-600 font-semibold' : ''}
-                    ${isPending ? 'bg-gray-200 border-gray-300' : ''}
+                    flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors
+                    ${isCompleted ? 'bg-primary border-primary' : ''}
+                    ${isCurrent ? 'bg-primary border-primary font-semibold' : ''}
+                    ${isPending ? 'bg-secondary border-border' : ''}
                   `}
                   aria-current={isCurrent ? 'step' : undefined}
                 >
                   {isCompleted ? (
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <Check className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
                   ) : (
                     <span
-                      className={`
-                        ${isCurrent ? 'text-white' : ''}
-                        ${isPending ? 'text-gray-600' : ''}
+                      className={`text-sm font-medium
+                        ${isCurrent ? 'text-primary-foreground' : ''}
+                        ${isPending ? 'text-muted-foreground' : ''}
                       `}
                     >
                       {step.id}
@@ -55,17 +44,15 @@ export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
                   )}
                 </div>
 
-                {/* Step label */}
                 <span
                   className={`
-                    mt-2 text-sm
-                    ${isCurrent ? 'font-semibold text-blue-700' : ''}
-                    ${isCompleted ? 'text-gray-700' : ''}
-                    ${isPending ? 'text-gray-500' : ''}
+                    mt-2 text-sm hidden sm:block
+                    ${isCurrent ? 'font-semibold text-primary' : ''}
+                    ${isCompleted ? 'text-foreground' : ''}
+                    ${isPending ? 'text-muted-foreground' : ''}
                   `}
                 >
                   {step.label}
-                  {/* Visually hidden status for screen readers */}
                   {isCompleted && (
                     <span className="sr-only"> (completed)</span>
                   )}

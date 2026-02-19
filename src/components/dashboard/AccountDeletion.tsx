@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { AlertCircle, CheckCircle2, Trash2, X, Loader2 } from 'lucide-react';
 
 interface AccountDeletionProps {
   deletedAt: string | null;
@@ -61,111 +64,129 @@ export function AccountDeletion({ deletedAt }: AccountDeletionProps) {
 
   if (isPendingDeletion) {
     return (
-      <div className="border border-orange-200 bg-orange-50 rounded-lg p-6">
-        <h3 className="text-lg font-semibold text-orange-900 mb-2">
-          Account Scheduled for Deletion
-        </h3>
-        <p className="text-orange-800 text-sm mb-4">
-          Your account is scheduled for deletion on{' '}
-          <strong>
-            {deletionDate?.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </strong>
-          . Your data will be permanently removed after this date.
-        </p>
+      <Card className="border-accent/30 bg-accent/5">
+        <CardContent className="p-card-padding">
+          <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
+            Account Scheduled for Deletion
+          </h3>
+          <p className="text-foreground/80 text-sm mb-4">
+            Your account is scheduled for deletion on{' '}
+            <strong>
+              {deletionDate?.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </strong>
+            . Your data will be permanently removed after this date.
+          </p>
 
-        {message && (
-          <div role="status" className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm mb-4">
-            {message}
-          </div>
-        )}
+          {message && (
+            <div role="status" className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm mb-4 flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 shrink-0" />
+              {message}
+            </div>
+          )}
 
-        {error && (
-          <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm mb-4">
-            {error}
-          </div>
-        )}
+          {error && (
+            <div role="alert" className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm mb-4 flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              {error}
+            </div>
+          )}
 
-        <button
-          onClick={handleCancelDeletion}
-          disabled={isSubmitting}
-          className="bg-white border border-orange-300 text-orange-800 font-medium px-4 py-2 rounded-lg hover:bg-orange-100 focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 disabled:opacity-50 min-h-[44px]"
-        >
-          {isSubmitting ? 'Cancelling...' : 'Cancel Deletion'}
-        </button>
-      </div>
+          <Button
+            variant="secondary"
+            onClick={handleCancelDeletion}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+            ) : (
+              <X className="h-4 w-4 mr-1.5" />
+            )}
+            {isSubmitting ? 'Cancelling...' : 'Cancel Deletion'}
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="border border-gray-200 rounded-lg p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">
-        Delete Account
-      </h3>
-      <p className="text-gray-600 text-sm mb-4">
-        This will permanently delete your account, screening history, and all
-        saved data after a 14-day grace period. You can cancel the deletion
-        during that time.
-      </p>
+    <Card>
+      <CardContent className="p-card-padding">
+        <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
+          Delete Account
+        </h3>
+        <p className="text-muted-foreground text-sm mb-4">
+          This will permanently delete your account, screening history, and all
+          saved data after a 14-day grace period. You can cancel the deletion
+          during that time.
+        </p>
 
-      {error && (
-        <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm mb-4">
-          {error}
-        </div>
-      )}
+        {error && (
+          <div role="alert" className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm mb-4 flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            {error}
+          </div>
+        )}
 
-      {!showConfirm ? (
-        <button
-          onClick={() => setShowConfirm(true)}
-          className="bg-red-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 min-h-[44px]"
-        >
-          Delete My Account
-        </button>
-      ) : (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 space-y-4">
-          <p className="text-red-900 font-medium text-sm">
-            Are you sure? Type <strong>DELETE</strong> to confirm.
-          </p>
-          <div>
-            <label htmlFor="delete-confirm" className="sr-only">
-              Type DELETE to confirm account deletion
-            </label>
-            <input
-              id="delete-confirm"
-              type="text"
-              value={confirmText}
-              onChange={(e) => setConfirmText(e.target.value)}
-              placeholder="Type DELETE"
-              className="w-full px-3 py-2 border border-red-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:outline-none"
-              aria-describedby="delete-help"
-            />
-            <p id="delete-help" className="text-xs text-red-700 mt-1">
-              Type the word DELETE in all caps to enable the delete button.
+        {!showConfirm ? (
+          <Button
+            variant="destructive"
+            onClick={() => setShowConfirm(true)}
+          >
+            <Trash2 className="h-4 w-4 mr-1.5" />
+            Delete My Account
+          </Button>
+        ) : (
+          <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-4 space-y-4">
+            <p className="text-destructive font-medium text-sm">
+              Are you sure? Type <strong>DELETE</strong> to confirm.
             </p>
+            <div>
+              <label htmlFor="delete-confirm" className="sr-only">
+                Type DELETE to confirm account deletion
+              </label>
+              <input
+                id="delete-confirm"
+                type="text"
+                value={confirmText}
+                onChange={(e) => setConfirmText(e.target.value)}
+                placeholder="Type DELETE"
+                className="w-full px-3 py-2 border border-destructive/30 rounded-lg text-sm focus:ring-2 focus:ring-ring focus:outline-none bg-background"
+                aria-describedby="delete-help"
+              />
+              <p id="delete-help" className="text-xs text-destructive mt-1">
+                Type the word DELETE in all caps to enable the delete button.
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={confirmText !== 'DELETE' || isSubmitting}
+              >
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+                ) : (
+                  <Trash2 className="h-4 w-4 mr-1.5" />
+                )}
+                {isSubmitting ? 'Deleting...' : 'Permanently Delete'}
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setShowConfirm(false);
+                  setConfirmText('');
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-3">
-            <button
-              onClick={handleDelete}
-              disabled={confirmText !== 'DELETE' || isSubmitting}
-              className="bg-red-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
-            >
-              {isSubmitting ? 'Deleting...' : 'Permanently Delete'}
-            </button>
-            <button
-              onClick={() => {
-                setShowConfirm(false);
-                setConfirmText('');
-              }}
-              className="bg-white border border-gray-300 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 min-h-[44px]"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }

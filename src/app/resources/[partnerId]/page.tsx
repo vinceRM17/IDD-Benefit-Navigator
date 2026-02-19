@@ -2,6 +2,18 @@ import { partnerOrganizations } from '@/content/resources/partners';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import {
+  ArrowLeft,
+  Phone,
+  Mail,
+  Globe,
+  MapPin,
+  Clock,
+  ArrowRight,
+} from 'lucide-react';
 
 interface PageProps {
   params: Promise<{ partnerId: string }>;
@@ -38,145 +50,158 @@ export default async function PartnerDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  // Map program IDs to readable names
+  const programNames: Record<string, string> = {
+    'ky-medicaid': 'Medicaid',
+    'ky-michelle-p-waiver': 'Michelle P. Waiver',
+    'ky-hcb-waiver': 'Home and Community Based Waiver',
+    'ky-scl-waiver': 'Supports for Community Living Waiver',
+    'ky-ssi': 'SSI',
+    'ky-ssdi': 'SSDI',
+    'ky-snap': 'SNAP',
+  };
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto py-section">
       {/* Back Link */}
       <Link
         href="/screening/results"
-        className="text-blue-700 hover:underline mb-6 inline-block"
+        className="text-primary hover:text-primary/80 mb-6 inline-flex items-center gap-1.5 text-sm font-medium"
       >
-        &larr; Back to Results
+        <ArrowLeft className="h-4 w-4" />
+        Back to Results
       </Link>
 
       {/* Organization Name */}
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">{partner.name}</h1>
+      <h1 className="text-3xl font-heading font-bold text-foreground mb-6">{partner.name}</h1>
 
       {/* Extended Description */}
       <div className="mb-8">
-        <p className="text-gray-700 whitespace-pre-line">
+        <p className="text-foreground/80 whitespace-pre-line">
           {partner.extendedDescription || partner.description}
         </p>
       </div>
 
-      {/* Services Offered Section */}
+      {/* Services Offered */}
       <section className="mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3">
+        <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
           Services Offered
         </h2>
         <ul className="list-disc list-inside space-y-2">
           {partner.services.map((service, idx) => (
-            <li key={idx} className="text-gray-700">
+            <li key={idx} className="text-foreground/80">
               {service}
             </li>
           ))}
         </ul>
-        <p className="text-sm text-gray-600 mt-3">
+        <p className="text-sm text-muted-foreground mt-3">
           <span className="font-medium">Programs they can help with:</span>{' '}
           {partner.relevantPrograms
-            .map((programId) => {
-              // Map program IDs to readable names
-              const programNames: Record<string, string> = {
-                'ky-medicaid': 'Medicaid',
-                'ky-michelle-p-waiver': 'Michelle P. Waiver',
-                'ky-hcb-waiver': 'Home and Community Based Waiver',
-                'ky-scl-waiver': 'Supports for Community Living Waiver',
-                'ky-ssi': 'SSI',
-                'ky-ssdi': 'SSDI',
-                'ky-snap': 'SNAP',
-              };
-              return programNames[programId] || programId;
-            })
+            .map((programId) => programNames[programId] || programId)
             .join(', ')}
         </p>
       </section>
 
-      {/* Contact Information Section */}
+      {/* Contact Information */}
       <section className="mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3">
+        <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
           Contact Information
         </h2>
-        <div className="space-y-2 text-gray-700">
-          <p>
-            <strong>Phone:</strong>{' '}
-            <a
-              href={`tel:${partner.phone}`}
-              className="text-blue-600 hover:underline"
-            >
-              {partner.phone}
-            </a>
-          </p>
-          {partner.email && (
-            <p>
-              <strong>Email:</strong>{' '}
+        <Card>
+          <CardContent className="p-card-padding space-y-3">
+            <p className="inline-flex items-center gap-2 text-foreground/80">
+              <Phone className="h-4 w-4 text-muted-foreground" />
               <a
-                href={`mailto:${partner.email}`}
-                className="text-blue-600 hover:underline"
+                href={`tel:${partner.phone}`}
+                className="text-primary hover:text-primary/80"
               >
-                {partner.email}
+                {partner.phone}
               </a>
             </p>
-          )}
-          <p>
-            <strong>Website:</strong>{' '}
-            <a
-              href={partner.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              {partner.website.replace(/^https?:\/\//, '')}
-              <span className="sr-only"> (opens in new window)</span>
-            </a>
-          </p>
-          {partner.address && (
-            <p>
-              <strong>Address:</strong> {partner.address}
+            {partner.email && (
+              <p className="inline-flex items-center gap-2 text-foreground/80">
+                <Mail className="h-4 w-4 text-muted-foreground" />
+                <a
+                  href={`mailto:${partner.email}`}
+                  className="text-primary hover:text-primary/80"
+                >
+                  {partner.email}
+                </a>
+              </p>
+            )}
+            <p className="inline-flex items-center gap-2 text-foreground/80">
+              <Globe className="h-4 w-4 text-muted-foreground" />
+              <a
+                href={partner.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary/80"
+              >
+                {partner.website.replace(/^https?:\/\//, '')}
+                <span className="sr-only"> (opens in new window)</span>
+              </a>
             </p>
-          )}
-        </div>
+            {partner.address && (
+              <p className="inline-flex items-center gap-2 text-foreground/80">
+                <MapPin className="h-4 w-4 text-muted-foreground" />
+                {partner.address}
+              </p>
+            )}
+          </CardContent>
+        </Card>
       </section>
 
-      {/* Service Area Section */}
+      {/* Service Area */}
       <section className="mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-3">
+        <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
           Service Area
         </h2>
-        <p className="text-gray-700">{partner.servesArea}</p>
+        <p className="text-foreground/80 inline-flex items-center gap-2">
+          <MapPin className="h-4 w-4 text-muted-foreground" />
+          {partner.servesArea}
+        </p>
       </section>
 
-      {/* Hours of Operation (if available) */}
+      {/* Hours */}
       {partner.hours && (
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-3">
+          <h2 className="text-xl font-heading font-semibold text-foreground mb-3">
             Hours of Operation
           </h2>
-          <p className="text-gray-700">{partner.hours}</p>
+          <p className="text-foreground/80 inline-flex items-center gap-2">
+            <Clock className="h-4 w-4 text-muted-foreground" />
+            {partner.hours}
+          </p>
         </section>
       )}
 
+      <Separator className="mb-8" />
+
       {/* Request a Referral CTA */}
       {partner.email ? (
-        <a
-          href={`/referral?partner=${partnerId}`}
-          className="inline-block bg-blue-700 text-white font-medium px-6 py-3 rounded-lg hover:bg-blue-800 transition-colors"
-        >
-          Request a Referral
-        </a>
-      ) : (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-          <p className="text-gray-900 font-medium mb-2">Contact Them Directly</p>
-          <p className="text-gray-700 text-sm mb-3">
-            This organization doesn't have an email address on file, so we can't send
-            an electronic referral. Please contact them directly using the phone number
-            above.
-          </p>
-          <a
-            href={`tel:${partner.phone}`}
-            className="inline-block bg-blue-700 text-white font-medium px-6 py-3 rounded-lg hover:bg-blue-800 transition-colors"
-          >
-            Call {partner.phone}
+        <Button asChild size="lg">
+          <a href={`/referral?partner=${partnerId}`}>
+            Request a Referral
+            <ArrowRight className="h-4 w-4 ml-1.5" />
           </a>
-        </div>
+        </Button>
+      ) : (
+        <Card className="bg-muted">
+          <CardContent className="p-card-padding">
+            <p className="font-heading font-semibold text-foreground mb-2">Contact Them Directly</p>
+            <p className="text-foreground/80 text-sm mb-3">
+              This organization doesn&apos;t have an email address on file, so we can&apos;t send
+              an electronic referral. Please contact them directly using the phone number
+              above.
+            </p>
+            <Button asChild>
+              <a href={`tel:${partner.phone}`}>
+                <Phone className="h-4 w-4 mr-1.5" />
+                Call {partner.phone}
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

@@ -7,11 +7,10 @@ import { useScreeningStore } from '@/lib/screening/store';
 import { fullSchema } from '@/lib/screening/schema';
 import { QuestionCard } from '@/components/screening/QuestionCard';
 import { formDataToHouseholdFacts, generateSessionId } from '@/lib/screening/utils';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ArrowLeft, Sparkles, Pencil, AlertCircle, Loader2 } from 'lucide-react';
 
-/**
- * Review page - displays all collected form data
- * Allows editing and validates full schema before proceeding
- */
 export default function ReviewPage() {
   const router = useRouter();
   const { formData, setResults } = useScreeningStore();
@@ -23,7 +22,6 @@ export default function ReviewPage() {
     setValidationErrors([]);
     setError(null);
 
-    // Validate complete form data
     const result = fullSchema.safeParse(formData);
 
     if (!result.success) {
@@ -37,16 +35,11 @@ export default function ReviewPage() {
 
     try {
       setIsLoading(true);
-
-      // Convert form data to HouseholdFacts format
       const householdFacts = formDataToHouseholdFacts(result.data);
 
-      // Call evaluation API
       const response = await fetch('/api/screening/evaluate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(householdFacts),
       });
 
@@ -55,11 +48,8 @@ export default function ReviewPage() {
       }
 
       const screeningResults = await response.json();
-
-      // Store results in Zustand
       setResults(screeningResults);
 
-      // Auto-save for authenticated users (fire-and-forget, don't block navigation)
       fetch('/api/screenings/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,11 +57,8 @@ export default function ReviewPage() {
           screeningData: formData,
           results: screeningResults,
         }),
-      }).catch(() => {
-        // Save failure is non-blocking — anonymous users get 401 (expected)
-      });
+      }).catch(() => {});
 
-      // Generate session ID and navigate to results page
       const sessionId = generateSessionId();
       router.push(`/screening/results/${sessionId}`);
     } catch (err) {
@@ -93,107 +80,114 @@ export default function ReviewPage() {
       title="Review your answers"
       description="Please check that everything looks correct before we generate your results."
     >
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Family Situation Section */}
-        <div className="border-b border-gray-200 pb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-base font-heading font-semibold text-foreground">
               Family Situation
             </h3>
             <Link
               href="/screening/intake/step-1"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+              className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
+              <Pencil className="h-3 w-3" />
               Edit
             </Link>
           </div>
-          <dl className="space-y-2">
+          <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-gray-600">State:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">State:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.state || 'Not provided'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600">Household size:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Household size:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.householdSize || 'Not provided'}
               </dd>
             </div>
           </dl>
         </div>
 
+        <Separator />
+
         {/* Income & Benefits Section */}
-        <div className="border-b border-gray-200 pb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-base font-heading font-semibold text-foreground">
               Income & Benefits
             </h3>
             <Link
               href="/screening/intake/step-2"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+              className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
+              <Pencil className="h-3 w-3" />
               Edit
             </Link>
           </div>
-          <dl className="space-y-2">
+          <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-gray-600">Monthly income:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Monthly income:</dt>
+              <dd className="text-foreground font-medium">
                 ${formData.monthlyIncome || 'Not provided'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600">Receives SSI:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Receives SSI:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.receivesSSI ? 'Yes' : 'No'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600">Receives SNAP:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Receives SNAP:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.receivesSNAP ? 'Yes' : 'No'}
               </dd>
             </div>
           </dl>
         </div>
 
+        <Separator />
+
         {/* Diagnosis & Insurance Section */}
-        <div className="pb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-base font-heading font-semibold text-foreground">
               Diagnosis & Insurance
             </h3>
             <Link
               href="/screening/intake/step-3"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+              className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
             >
+              <Pencil className="h-3 w-3" />
               Edit
             </Link>
           </div>
-          <dl className="space-y-2">
+          <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-gray-600">Has disability diagnosis:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Has disability diagnosis:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.hasDisabilityDiagnosis ? 'Yes' : 'No'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600">Age:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Age:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.age || 'Not provided'}
               </dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-gray-600">Has private insurance:</dt>
-              <dd className="text-gray-900 font-medium">
+              <dt className="text-muted-foreground">Has private insurance:</dt>
+              <dd className="text-foreground font-medium">
                 {formData.hasInsurance ? 'Yes' : 'No'}
               </dd>
             </div>
             {formData.hasInsurance && formData.insuranceType && (
               <div className="flex justify-between">
-                <dt className="text-gray-600">Insurance type:</dt>
-                <dd className="text-gray-900 font-medium">
+                <dt className="text-muted-foreground">Insurance type:</dt>
+                <dd className="text-foreground font-medium">
                   {formData.insuranceType === 'employer'
                     ? 'Employer-provided'
                     : formData.insuranceType === 'marketplace'
@@ -208,11 +202,12 @@ export default function ReviewPage() {
         {/* Loading state */}
         {isLoading && (
           <div
-            className="bg-blue-50 border border-blue-200 rounded-lg p-4"
+            className="bg-primary/5 border border-primary/20 rounded-lg p-4 flex items-center gap-3"
             role="status"
             aria-live="polite"
           >
-            <p className="text-blue-900 font-medium">
+            <Loader2 className="h-5 w-5 text-primary animate-spin" />
+            <p className="text-foreground font-medium">
               Finding benefits for your family...
             </p>
           </div>
@@ -221,21 +216,25 @@ export default function ReviewPage() {
         {/* API Error */}
         {error && (
           <div
-            className="bg-red-50 border border-red-200 rounded-lg p-4"
+            className="bg-destructive/5 border border-destructive/20 rounded-lg p-4 flex items-start gap-3"
             role="alert"
             aria-live="assertive"
           >
-            <p className="text-red-900">{error}</p>
+            <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+            <p className="text-foreground">{error}</p>
           </div>
         )}
 
         {/* Validation Errors */}
         {validationErrors.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <h4 className="text-red-900 font-semibold mb-2">
-              Please fix these issues:
-            </h4>
-            <ul className="list-disc list-inside space-y-1 text-red-700 text-sm">
+          <div className="bg-destructive/5 border border-destructive/20 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertCircle className="h-4 w-4 text-destructive" />
+              <h4 className="text-foreground font-semibold">
+                Please fix these issues:
+              </h4>
+            </div>
+            <ul className="list-disc list-inside space-y-1 text-destructive text-sm">
               {validationErrors.map((error, index) => (
                 <li key={index}>{error}</li>
               ))}
@@ -244,22 +243,29 @@ export default function ReviewPage() {
         )}
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-8">
-          <button
-            type="button"
-            onClick={handlePrevious}
-            className="bg-gray-200 text-gray-800 font-semibold px-6 py-2 rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors min-h-[44px]"
-          >
+        <div className="flex justify-between pt-2">
+          <Button type="button" variant="secondary" onClick={handlePrevious}>
+            <ArrowLeft className="h-4 w-4 mr-1" />
             Previous
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="warm"
             onClick={handleGetResults}
             disabled={isLoading}
-            className="bg-blue-600 text-white font-semibold px-8 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Finding benefits...' : 'Get My Results'}
-          </button>
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                Finding benefits...
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4 mr-1" />
+                Get My Results
+              </>
+            )}
+          </Button>
         </div>
       </div>
     </QuestionCard>

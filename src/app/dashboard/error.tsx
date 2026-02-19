@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { AlertCircle, RotateCcw, ArrowRight } from 'lucide-react';
 
 export default function DashboardError({
   error,
@@ -14,36 +17,37 @@ export default function DashboardError({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+    <div className="py-section">
+      <Card className="max-w-xl mx-auto">
+        <CardContent className="p-card-padding text-center">
+          <div className="w-14 h-14 bg-destructive/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <AlertCircle className="h-7 w-7 text-destructive" />
+          </div>
+          <h2 className="text-2xl font-heading font-bold text-foreground mb-2">
             Could not load your dashboard
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             We had trouble loading your account data. This is usually temporary.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={reset}
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-            >
+            <Button onClick={reset}>
+              <RotateCcw className="h-4 w-4 mr-1" />
               Try again
-            </button>
-            <a
-              href="/"
-              className="px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors inline-block"
-            >
-              Go home
-            </a>
+            </Button>
+            <Button variant="secondary" asChild>
+              <a href="/">
+                Go home
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </a>
+            </Button>
           </div>
           {error.digest && (
-            <p className="mt-6 text-xs text-gray-400">
+            <p className="mt-6 text-xs text-muted-foreground">
               Error ID: {error.digest}
             </p>
           )}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

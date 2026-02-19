@@ -78,7 +78,7 @@ export function TabNav({ tabs, defaultTab, onTabChange }: TabNavProps) {
       <div
         role="tablist"
         aria-label="Results sections"
-        className="flex gap-1 border-b border-gray-200 mb-6 overflow-x-auto"
+        className="flex gap-1 border-b border-border mb-6 overflow-x-auto"
       >
         {tabs.map((tab) => {
           const isActive = tab.id === activeTab;
@@ -93,10 +93,10 @@ export function TabNav({ tabs, defaultTab, onTabChange }: TabNavProps) {
               tabIndex={isActive ? 0 : -1}
               onClick={() => selectTab(tab.id)}
               onKeyDown={handleKeyDown}
-              className={`px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-t-md ${
+              className={`px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-md ${
                 isActive
-                  ? 'text-blue-700 border-b-2 border-blue-600 bg-blue-50'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'text-primary border-b-2 border-primary bg-primary/5'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }`}
             >
               {tab.label}

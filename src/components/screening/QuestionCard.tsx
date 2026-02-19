@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 interface QuestionCardProps {
   title: string;
@@ -8,14 +9,14 @@ interface QuestionCardProps {
 
 export function QuestionCard({ title, description, children }: QuestionCardProps) {
   return (
-    <div className="rounded-xl border border-gray-200 shadow-sm p-6 max-w-2xl mx-auto bg-white">
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
+    <Card className="max-w-2xl mx-auto">
+      <CardHeader>
+        <h2 className="text-xl font-heading font-semibold text-foreground">{title}</h2>
         {description && (
-          <p className="text-sm text-gray-600">{description}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         )}
-      </div>
-      {children}
-    </div>
+      </CardHeader>
+      <CardContent>{children}</CardContent>
+    </Card>
   );
 }

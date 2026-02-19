@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import { getUserByEmail } from '@/lib/db/queries';
 import { AccountDeletion } from '@/components/dashboard/AccountDeletion';
 import { ReminderPreferences } from '@/components/dashboard/ReminderPreferences';
+import { Card, CardContent } from '@/components/ui/card';
+import { Mail } from 'lucide-react';
 
 export const metadata = {
   title: 'Account Settings - IDD Benefits Navigator',
@@ -16,28 +18,35 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-2xl font-heading font-bold text-foreground mb-6">
         Account Settings
       </h1>
 
       {/* Email Display */}
-      <div className="border border-gray-200 rounded-lg p-6 mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">Email</h2>
-        <p className="text-gray-700">{user.email}</p>
-      </div>
+      <Card className="mb-6">
+        <CardContent className="p-card-padding">
+          <h2 className="text-lg font-heading font-semibold text-foreground mb-2 flex items-center gap-2">
+            <Mail className="h-4 w-4 text-muted-foreground" />
+            Email
+          </h2>
+          <p className="text-foreground/80">{user.email}</p>
+        </CardContent>
+      </Card>
 
       {/* Recertification Reminders */}
-      <div className="border border-gray-200 rounded-lg p-6 mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">
-          Recertification Reminders
-        </h2>
-        <p className="text-gray-600 text-sm mb-4">
-          Get email reminders before your benefits need to be renewed. We'll
-          estimate dates based on typical program cycles, or you can enter your
-          actual dates.
-        </p>
-        <ReminderPreferences />
-      </div>
+      <Card className="mb-6">
+        <CardContent className="p-card-padding">
+          <h2 className="text-lg font-heading font-semibold text-foreground mb-2">
+            Recertification Reminders
+          </h2>
+          <p className="text-muted-foreground text-sm mb-4">
+            Get email reminders before your benefits need to be renewed. We&apos;ll
+            estimate dates based on typical program cycles, or you can enter your
+            actual dates.
+          </p>
+          <ReminderPreferences />
+        </CardContent>
+      </Card>
 
       {/* Account Deletion */}
       <AccountDeletion

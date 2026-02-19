@@ -3,11 +3,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { useScreeningStore } from '@/lib/screening/store';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight, Clock, Shield, CheckCircle2, ListChecks } from 'lucide-react';
 
-/**
- * Screening landing page
- * Anonymous entry point - no login required
- */
+const expectations = [
+  { icon: Clock, text: '4-step questionnaire (takes about 5 minutes)' },
+  { icon: ListChecks, text: 'Questions about your family, income, and insurance situation' },
+  { icon: CheckCircle2, text: 'Personalized results showing which benefits you may qualify for' },
+  { icon: ArrowRight, text: 'Step-by-step guidance on what to do next' },
+];
+
 export default function ScreeningPage() {
   const reset = useScreeningStore((state) => state.reset);
 
@@ -16,62 +23,53 @@ export default function ScreeningPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+    <div className="max-w-3xl mx-auto py-section">
+      <div className="text-center mb-section">
+        <Badge variant="warm" className="mb-4">Free & Private</Badge>
+        <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
           Find Benefits for Your Family
         </h1>
-        <p className="text-lg text-gray-600 mb-2">
-          Answer a few questions about your family's situation. We'll help you
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+          Answer a few questions about your family&apos;s situation. We&apos;ll help you
           understand which benefits you may qualify for and what to do next.
         </p>
-        <p className="text-sm text-gray-500 mt-4">
-          No account needed. Your answers stay on your device.
+        <p className="text-sm text-muted-foreground mt-4">
+          No account needed &middot; Your answers stay on your device
         </p>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-3">
-          What to expect
-        </h2>
-        <ul className="space-y-2 text-gray-700">
-          <li className="flex items-start">
-            <span className="text-blue-600 mr-2">✓</span>
-            <span>4-step questionnaire (takes about 5 minutes)</span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-blue-600 mr-2">✓</span>
-            <span>
-              Questions about your family, income, and insurance situation
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-blue-600 mr-2">✓</span>
-            <span>
-              Personalized results showing which benefits you may qualify for
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-blue-600 mr-2">✓</span>
-            <span>Step-by-step guidance on what to do next</span>
-          </li>
-        </ul>
-      </div>
+      <Card className="mb-8">
+        <CardContent className="p-card-padding">
+          <h2 className="text-lg font-heading font-semibold text-foreground mb-4">
+            What to expect
+          </h2>
+          <ul className="space-y-3">
+            {expectations.map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-primary/10 text-primary rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                  <item.icon className="h-4 w-4" />
+                </div>
+                <span className="text-foreground">{item.text}</span>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
 
       <div className="text-center">
-        <Link
-          href="/screening/intake/step-1"
-          onClick={handleStart}
-          className="inline-block bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px]"
-        >
-          Start Screening
-        </Link>
+        <Button size="lg" className="text-base px-8" asChild>
+          <Link href="/screening/intake/step-1" onClick={handleStart}>
+            Start Screening
+            <ArrowRight className="h-4 w-4 ml-1" />
+          </Link>
+        </Button>
       </div>
 
-      <div className="mt-12 text-center text-sm text-gray-500">
-        <p>
-          We currently support families in Kentucky. More states coming soon.
-        </p>
+      <div className="mt-section text-center">
+        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+          <Shield className="h-4 w-4" />
+          <span>Currently serving families in Kentucky. More states coming soon.</span>
+        </div>
       </div>
     </div>
   );

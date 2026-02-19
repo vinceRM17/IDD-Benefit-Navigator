@@ -13,12 +13,9 @@ import {
   AccessibleSelect,
 } from '@/components/forms';
 import { shouldShowAge, shouldShowInsuranceType } from '@/lib/screening/conditional-logic';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-/**
- * Step 3: Diagnosis & Insurance
- * Collects disability diagnosis, age, and insurance information
- * Conditionally shows insurance type field based on hasInsurance answer
- */
 export default function Step3Page() {
   const router = useRouter();
   const { formData, setStepData } = useScreeningStore();
@@ -72,7 +69,6 @@ export default function Step3Page() {
           value={hasDisabilityDiagnosisValue?.toString() || 'false'}
           onChange={(value) => {
             setValue('hasDisabilityDiagnosis', value === 'true');
-            // Clear age if changing to no diagnosis
             if (value === 'false') {
               setValue('age', undefined);
             }
@@ -107,7 +103,6 @@ export default function Step3Page() {
           value={hasInsuranceValue?.toString() || 'false'}
           onChange={(value) => {
             setValue('hasInsurance', value === 'true');
-            // Clear insurance type if changing to no insurance
             if (value === 'false') {
               setValue('insuranceType', undefined);
             }
@@ -135,19 +130,14 @@ export default function Step3Page() {
         )}
 
         <div className="flex justify-between mt-8">
-          <button
-            type="button"
-            onClick={handlePrevious}
-            className="bg-gray-200 text-gray-800 font-semibold px-6 py-2 rounded-lg hover:bg-gray-300 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors min-h-[44px]"
-          >
+          <Button type="button" variant="secondary" onClick={handlePrevious}>
+            <ArrowLeft className="h-4 w-4 mr-1" />
             Previous
-          </button>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors min-h-[44px]"
-          >
+          </Button>
+          <Button type="submit">
             Next
-          </button>
+            <ArrowRight className="h-4 w-4 ml-1" />
+          </Button>
         </div>
       </form>
     </QuestionCard>

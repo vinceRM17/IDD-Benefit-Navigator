@@ -2,11 +2,15 @@ import { getCurrentUser } from '@/lib/auth/session';
 import { getUserReferrals } from '@/lib/db/queries';
 import { partnerOrganizations } from '@/content/resources/partners';
 import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Send, Plus, ArrowRight } from 'lucide-react';
 
 export default async function ReferralsPage() {
   const user = await getCurrentUser();
 
-  // Auth is enforced by dashboard layout, but defensive check
   if (!user) {
     return null;
   }
@@ -16,37 +20,40 @@ export default async function ReferralsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">My Referrals</h1>
-        <Link
-          href="/referral"
-          className="bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          New Referral
-        </Link>
+        <h1 className="text-3xl font-heading font-bold text-foreground">My Referrals</h1>
+        <Button size="sm" asChild>
+          <Link href="/referral">
+            <Plus className="h-4 w-4 mr-1" />
+            New Referral
+          </Link>
+        </Button>
       </div>
 
       {referrals.length === 0 ? (
-        <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-          <p className="text-gray-600 mb-4">
-            You haven't submitted any referrals yet.
-          </p>
-          <Link
-            href="/referral"
-            className="inline-block bg-blue-700 text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-blue-800"
-          >
-            Submit Your First Referral
-          </Link>
-        </div>
+        <Card className="text-center">
+          <CardContent className="p-8">
+            <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Send className="h-6 w-6 text-primary" />
+            </div>
+            <p className="text-muted-foreground mb-4">
+              You haven&apos;t submitted any referrals yet.
+            </p>
+            <Button asChild>
+              <Link href="/referral">
+                Submit Your First Referral
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
       ) : (
         <div className="space-y-4">
           {referrals.map((referral) => {
-            // Look up partner organization name
             const partner = partnerOrganizations.find(
               (org) => org.id === referral.partnerOrgId
             );
             const partnerName = partner?.name ?? 'Unknown Partner';
 
-            // Format dates
             const sentDate = new Date(referral.sentAt).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
@@ -62,52 +69,46 @@ export default async function ReferralsPage() {
               : null;
 
             return (
-              <div
-                key={referral.id}
-                className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm"
-              >
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <h2 className="text-lg font-semibold text-gray-900">
-                      {partnerName}
-                    </h2>
-                    <p className="text-sm text-gray-600">
-                      Sent on {sentDate}
-                    </p>
+              <Card key={referral.id}>
+                <CardContent className="p-card-padding">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <h2 className="text-lg font-heading font-semibold text-foreground">
+                        {partnerName}
+                      </h2>
+                      <p className="text-sm text-muted-foreground">
+                        Sent on {sentDate}
+                      </p>
+                    </div>
+                    <div className="shrink-0">
+                      {referral.status === 'viewed' ? (
+                        <Badge variant="success">Viewed</Badge>
+                      ) : (
+                        <Badge variant="warm">Sent</Badge>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex-shrink-0">
-                    {referral.status === 'viewed' ? (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
-                        Viewed
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                        Sent
-                      </span>
-                    )}
-                  </div>
-                </div>
 
-                {viewedDate && (
-                  <p className="text-sm text-gray-600">
-                    Opened on {viewedDate}
-                  </p>
-                )}
-              </div>
+                  {viewedDate && (
+                    <p className="text-sm text-muted-foreground">
+                      Opened on {viewedDate}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
             );
           })}
         </div>
       )}
 
-      <div className="mt-8 pt-6 border-t border-gray-200">
-        <p className="text-sm text-gray-600">
-          Questions about your referrals?{' '}
-          <Link href="/contact" className="text-blue-600 hover:underline">
-            Contact us
-          </Link>
-          .
-        </p>
-      </div>
+      <Separator className="mt-8" />
+      <p className="text-sm text-muted-foreground">
+        Questions about your referrals?{' '}
+        <Link href="/contact" className="text-primary hover:text-primary/80">
+          Contact us
+        </Link>
+        .
+      </p>
     </div>
   );
 }

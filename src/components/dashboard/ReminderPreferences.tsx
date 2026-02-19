@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { getProgramDisplayName } from '@/content/programs/recertification';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { CheckCircle2, Loader2, Save } from 'lucide-react';
 
 interface ReminderPref {
   id: number;
@@ -62,12 +65,17 @@ export function ReminderPreferences() {
   }
 
   if (loading) {
-    return <p className="text-gray-500 text-sm">Loading reminder settings...</p>;
+    return (
+      <p className="text-muted-foreground text-sm flex items-center gap-2">
+        <Loader2 className="h-4 w-4 animate-spin" />
+        Loading reminder settings...
+      </p>
+    );
   }
 
   if (preferences.length === 0) {
     return (
-      <p className="text-gray-500 text-sm">
+      <p className="text-muted-foreground text-sm">
         Complete a screening to set up recertification reminders for your eligible programs.
       </p>
     );
@@ -76,7 +84,8 @@ export function ReminderPreferences() {
   return (
     <div className="space-y-4">
       {message && (
-        <div role="status" className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-800 text-sm">
+        <div role="status" className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm flex items-center gap-2">
+          <CheckCircle2 className="h-4 w-4 shrink-0" />
           {message}
         </div>
       )}
@@ -93,103 +102,105 @@ export function ReminderPreferences() {
           : 'Not set';
 
         return (
-          <div
-            key={pref.programId}
-            className="border border-gray-200 rounded-lg p-5 bg-white"
-          >
-            <h3 className="font-semibold text-gray-900 mb-1">
-              {getProgramDisplayName(pref.programId)}
-            </h3>
+          <Card key={pref.programId}>
+            <CardContent className="p-card-padding">
+              <h3 className="font-heading font-semibold text-foreground mb-1">
+                {getProgramDisplayName(pref.programId)}
+              </h3>
 
-            {/* Recert date display */}
-            <p className="text-sm text-gray-600 mb-3">
-              Recertification date: <strong>{formattedDate}</strong>{' '}
-              <span className="text-gray-400">
-                {isUserDate ? '(Your date)' : '(Estimated)'}
-              </span>
-            </p>
-            {!isUserDate && (
-              <p className="text-xs text-gray-400 mb-3">
-                Based on typical {getProgramDisplayName(pref.programId)} recertification cycle
+              <p className="text-sm text-muted-foreground mb-3">
+                Recertification date: <strong className="text-foreground">{formattedDate}</strong>{' '}
+                <span className="text-muted-foreground">
+                  {isUserDate ? '(Your date)' : '(Estimated)'}
+                </span>
               </p>
-            )}
+              {!isUserDate && (
+                <p className="text-xs text-muted-foreground mb-3">
+                  Based on typical {getProgramDisplayName(pref.programId)} recertification cycle
+                </p>
+              )}
 
-            {/* Date override */}
-            <div className="mb-4">
-              <label
-                htmlFor={`recert-date-${pref.programId}`}
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Set your actual recertification date
-              </label>
-              <input
-                id={`recert-date-${pref.programId}`}
-                type="date"
-                value={
-                  pref.recertificationDate
-                    ? new Date(pref.recertificationDate).toISOString().split('T')[0]
-                    : ''
-                }
-                onChange={(e) =>
-                  updatePref(pref.programId, {
-                    recertificationDate: e.target.value || null,
-                  })
-                }
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
-
-            {/* Reminder toggles */}
-            <fieldset className="mb-4">
-              <legend className="text-sm font-medium text-gray-700 mb-2">
-                Send reminders
-              </legend>
-              <div className="flex flex-wrap gap-4">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={pref.reminderEnabled60}
-                    onChange={(e) =>
-                      updatePref(pref.programId, { reminderEnabled60: e.target.checked })
-                    }
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  60 days before
+              {/* Date override */}
+              <div className="mb-4">
+                <label
+                  htmlFor={`recert-date-${pref.programId}`}
+                  className="block text-sm font-medium text-foreground mb-1"
+                >
+                  Set your actual recertification date
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={pref.reminderEnabled30}
-                    onChange={(e) =>
-                      updatePref(pref.programId, { reminderEnabled30: e.target.checked })
-                    }
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  30 days before
-                </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
-                  <input
-                    type="checkbox"
-                    checked={pref.reminderEnabled7}
-                    onChange={(e) =>
-                      updatePref(pref.programId, { reminderEnabled7: e.target.checked })
-                    }
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  7 days before
-                </label>
+                <input
+                  id={`recert-date-${pref.programId}`}
+                  type="date"
+                  value={
+                    pref.recertificationDate
+                      ? new Date(pref.recertificationDate).toISOString().split('T')[0]
+                      : ''
+                  }
+                  onChange={(e) =>
+                    updatePref(pref.programId, {
+                      recertificationDate: e.target.value || null,
+                    })
+                  }
+                  className="px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:outline-none bg-background"
+                />
               </div>
-            </fieldset>
 
-            {/* Save button */}
-            <button
-              onClick={() => handleSave(pref)}
-              disabled={saving === pref.programId}
-              className="bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-800 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 min-h-[36px]"
-            >
-              {saving === pref.programId ? 'Saving...' : 'Save Preferences'}
-            </button>
-          </div>
+              {/* Reminder toggles */}
+              <fieldset className="mb-4">
+                <legend className="text-sm font-medium text-foreground mb-2">
+                  Send reminders
+                </legend>
+                <div className="flex flex-wrap gap-4">
+                  <label className="flex items-center gap-2 text-sm text-foreground/80">
+                    <input
+                      type="checkbox"
+                      checked={pref.reminderEnabled60}
+                      onChange={(e) =>
+                        updatePref(pref.programId, { reminderEnabled60: e.target.checked })
+                      }
+                      className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
+                    />
+                    60 days before
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-foreground/80">
+                    <input
+                      type="checkbox"
+                      checked={pref.reminderEnabled30}
+                      onChange={(e) =>
+                        updatePref(pref.programId, { reminderEnabled30: e.target.checked })
+                      }
+                      className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
+                    />
+                    30 days before
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-foreground/80">
+                    <input
+                      type="checkbox"
+                      checked={pref.reminderEnabled7}
+                      onChange={(e) =>
+                        updatePref(pref.programId, { reminderEnabled7: e.target.checked })
+                      }
+                      className="w-4 h-4 border-input rounded focus:ring-ring accent-primary"
+                    />
+                    7 days before
+                  </label>
+                </div>
+              </fieldset>
+
+              <Button
+                size="sm"
+                onClick={() => handleSave(pref)}
+                disabled={saving === pref.programId}
+              >
+                {saving === pref.programId ? (
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4 mr-1" />
+                )}
+                {saving === pref.programId ? 'Saving...' : 'Save Preferences'}
+              </Button>
+            </CardContent>
+          </Card>
         );
       })}
     </div>

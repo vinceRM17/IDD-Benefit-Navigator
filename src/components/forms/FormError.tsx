@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { AlertCircle } from 'lucide-react';
 
 interface FormErrorProps {
   id: string;
@@ -15,8 +16,9 @@ export function FormError({ id, message }: FormErrorProps) {
       id={id}
       role="alert"
       aria-live="polite"
-      className="text-red-700 text-sm mt-1 font-medium"
+      className="flex items-center gap-1.5 text-destructive text-sm mt-1 font-medium"
     >
+      <AlertCircle className="h-3.5 w-3.5 shrink-0" />
       {message}
     </div>
   );

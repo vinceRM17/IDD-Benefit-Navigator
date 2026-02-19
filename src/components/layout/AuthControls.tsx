@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { LogIn, LayoutDashboard, LogOut } from 'lucide-react';
 
 interface AuthControlsProps {
   email: string | null;
@@ -25,31 +27,34 @@ export function AuthControls({ email }: AuthControlsProps) {
 
   if (!email) {
     return (
-      <Link
-        href="/auth/login"
-        className="text-white hover:text-blue-100 font-medium text-sm px-3 py-2 rounded-md hover:bg-white/10"
-      >
-        Sign In
-      </Link>
+      <Button variant="ghost" size="sm" asChild className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10">
+        <Link href="/auth/login">
+          <LogIn className="h-4 w-4" />
+          <span className="hidden sm:inline">Sign In</span>
+        </Link>
+      </Button>
     );
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-blue-100 hidden sm:inline">{email}</span>
-      <Link
-        href="/dashboard"
-        className="text-white hover:text-blue-100 text-sm font-medium px-2 py-1"
-      >
-        Dashboard
-      </Link>
-      <button
+    <div className="flex items-center gap-1">
+      <span className="text-sm text-primary-foreground/70 hidden lg:inline mr-1">{email}</span>
+      <Button variant="ghost" size="sm" asChild className="text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10">
+        <Link href="/dashboard">
+          <LayoutDashboard className="h-4 w-4" />
+          <span className="hidden sm:inline">Dashboard</span>
+        </Link>
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={handleSignOut}
         disabled={signingOut}
-        className="text-sm text-blue-200 hover:text-white px-2 py-1"
+        className="text-primary-foreground/60 hover:text-primary-foreground hover:bg-white/10"
       >
-        {signingOut ? 'Signing out...' : 'Sign Out'}
-      </button>
+        <LogOut className="h-4 w-4" />
+        <span className="hidden sm:inline">{signingOut ? 'Signing out...' : 'Sign Out'}</span>
+      </Button>
     </div>
   );
 }

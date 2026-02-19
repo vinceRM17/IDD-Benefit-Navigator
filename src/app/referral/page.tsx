@@ -8,8 +8,17 @@ import { z } from 'zod';
 import { partnerOrganizations } from '@/content/resources/partners';
 import { useScreeningStore } from '@/lib/screening/store';
 import type { ReferralResult } from '@/lib/referrals/types';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import {
+  Send,
+  Loader2,
+  AlertCircle,
+  Shield,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 
-// Zod schema for referral form validation
 const referralFormSchema = z.object({
   familyName: z.string().min(1, 'Name is required'),
   familyEmail: z.string().email('Valid email is required'),
@@ -34,16 +43,13 @@ function ReferralFormContent() {
   const [userEmail, setUserEmail] = useState('');
   const [showDataPreview, setShowDataPreview] = useState(false);
 
-  // Filter partners to only show those with email addresses
   const availablePartners = partnerOrganizations.filter((partner) => partner.email);
 
-  // Get eligible programs from screening results
   const eligiblePrograms =
     results?.programs
       .filter((p) => p.eligible && (p.confidence === 'likely' || p.confidence === 'possible'))
       .map((p) => p.programId) || [];
 
-  // Setup form with react-hook-form + Zod
   const {
     register,
     handleSubmit,
@@ -65,7 +71,6 @@ function ReferralFormContent() {
   const watchedNote = watch('familyNote') || '';
   const watchedPartners = watch('selectedPartners') || [];
 
-  // Check authentication and pre-fill email on mount
   useEffect(() => {
     fetch('/api/screenings')
       .then((res) => {
@@ -87,7 +92,6 @@ function ReferralFormContent() {
       });
   }, [setValue]);
 
-  // Pre-select partner from URL param
   useEffect(() => {
     const partnerParam = searchParams.get('partner');
     if (partnerParam && availablePartners.some((p) => p.id === partnerParam)) {
@@ -95,7 +99,6 @@ function ReferralFormContent() {
     }
   }, [searchParams, setValue, availablePartners]);
 
-  // Handle form submission
   const onSubmit = async (data: ReferralFormData) => {
     setIsSubmitting(true);
     setErrorMessage('');
@@ -117,11 +120,9 @@ function ReferralFormContent() {
 
       const { results } = await response.json() as { results: ReferralResult[] };
 
-      // Store results in sessionStorage for confirmation page
       sessionStorage.setItem('referralResults', JSON.stringify(results));
       sessionStorage.setItem('familyEmail', data.familyEmail);
 
-      // Redirect to confirmation page
       router.push('/referral/confirmation');
     } catch (error) {
       setErrorMessage(
@@ -132,7 +133,6 @@ function ReferralFormContent() {
     }
   };
 
-  // Map program IDs to readable names
   const getProgramName = (programId: string): string => {
     const programNames: Record<string, string> = {
       'ky-medicaid': 'Kentucky Medicaid',
@@ -147,242 +147,267 @@ function ReferralFormContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-section">
+      <div className="max-w-2xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
             Request a Referral
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Connect with partner organizations who can help you apply for benefits and navigate the system.
           </p>
         </header>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          {/* Partner Selection Section */}
-          <section className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Select Organizations
-            </h2>
-            <p className="text-sm text-gray-600 mb-4">
-              Choose one or more organizations to connect with. Each will receive your referral separately.
-            </p>
-
-            <div className="space-y-3">
+          {/* Partner Selection */}
+          <Card>
+            <CardHeader>
+              <h2 className="text-xl font-heading font-semibold text-foreground">
+                Select Organizations
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Choose one or more organizations to connect with. Each will receive your referral separately.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-3">
               {availablePartners.map((partner) => (
                 <label
                   key={partner.id}
-                  className="flex items-start space-x-3 p-3 rounded-lg border border-gray-200 hover:border-blue-500 hover:bg-blue-50 cursor-pointer transition-colors"
+                  className="flex items-start space-x-3 p-3 rounded-lg border border-border hover:border-primary/40 hover:bg-primary/5 cursor-pointer transition-colors"
                 >
                   <input
                     type="checkbox"
                     value={partner.id}
                     {...register('selectedPartners')}
-                    className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    className="mt-1 h-4 w-4 border-input rounded focus:ring-ring accent-primary"
                   />
                   <div className="flex-1">
-                    <div className="font-medium text-gray-900">{partner.name}</div>
-                    <div className="text-sm text-gray-600">{partner.description}</div>
+                    <div className="font-medium text-foreground">{partner.name}</div>
+                    <div className="text-sm text-muted-foreground">{partner.description}</div>
                   </div>
                 </label>
               ))}
-            </div>
 
-            {errors.selectedPartners && (
-              <p className="mt-2 text-sm text-red-600">{errors.selectedPartners.message}</p>
-            )}
-          </section>
+              {errors.selectedPartners && (
+                <p className="mt-2 text-sm text-destructive flex items-center gap-1.5">
+                  <AlertCircle className="h-3.5 w-3.5" />
+                  {errors.selectedPartners.message}
+                </p>
+              )}
+            </CardContent>
+          </Card>
 
-          {/* Contact Information Section */}
-          <section className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Your Contact Information
-            </h2>
-
-            <div className="space-y-4">
-              {/* Family Name */}
+          {/* Contact Information */}
+          <Card>
+            <CardHeader>
+              <h2 className="text-xl font-heading font-semibold text-foreground">
+                Your Contact Information
+              </h2>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div>
-                <label htmlFor="familyName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Name <span className="text-red-500">*</span>
+                <label htmlFor="familyName" className="block text-sm font-medium text-foreground mb-1">
+                  Your Name <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="text"
                   id="familyName"
                   {...register('familyName')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
                   placeholder="Jane Smith"
                 />
                 {errors.familyName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.familyName.message}</p>
+                  <p className="mt-1 text-sm text-destructive flex items-center gap-1.5">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    {errors.familyName.message}
+                  </p>
                 )}
               </div>
 
-              {/* Family Email */}
               <div>
-                <label htmlFor="familyEmail" className="block text-sm font-medium text-gray-700 mb-1">
-                  Your Email <span className="text-red-500">*</span>
+                <label htmlFor="familyEmail" className="block text-sm font-medium text-foreground mb-1">
+                  Your Email <span className="text-destructive">*</span>
                 </label>
                 <input
                   type="email"
                   id="familyEmail"
                   {...register('familyEmail')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
                   placeholder="jane@example.com"
                 />
                 {errors.familyEmail && (
-                  <p className="mt-1 text-sm text-red-600">{errors.familyEmail.message}</p>
+                  <p className="mt-1 text-sm text-destructive flex items-center gap-1.5">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    {errors.familyEmail.message}
+                  </p>
                 )}
               </div>
 
-              {/* Family Phone */}
               <div>
-                <label htmlFor="familyPhone" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="familyPhone" className="block text-sm font-medium text-foreground mb-1">
                   Your Phone Number (optional)
                 </label>
                 <input
                   type="tel"
                   id="familyPhone"
                   {...register('familyPhone')}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
                   placeholder="(555) 123-4567"
                 />
               </div>
 
-              {/* Family Note */}
               <div>
-                <label htmlFor="familyNote" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="familyNote" className="block text-sm font-medium text-foreground mb-1">
                   Note to Organization (optional)
                 </label>
                 <textarea
                   id="familyNote"
                   {...register('familyNote')}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-background text-foreground"
                   placeholder="Share any additional information or questions for the organization..."
                   maxLength={500}
                 />
                 <div className="mt-1 flex justify-between items-center">
                   <div>
                     {errors.familyNote && (
-                      <p className="text-sm text-red-600">{errors.familyNote.message}</p>
+                      <p className="text-sm text-destructive">{errors.familyNote.message}</p>
                     )}
                   </div>
-                  <p className="text-sm text-gray-500">{watchedNote.length}/500</p>
+                  <p className="text-sm text-muted-foreground">{watchedNote.length}/500</p>
                 </div>
               </div>
-            </div>
-          </section>
+            </CardContent>
+          </Card>
 
-          {/* Eligible Programs Display */}
-          <section className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Programs You May Be Eligible For
-            </h2>
-
-            {eligiblePrograms.length > 0 ? (
-              <>
-                <p className="text-sm text-gray-600 mb-3">
-                  Based on your screening, this information will be shared with the organizations you select:
-                </p>
-                <ul className="list-disc list-inside space-y-1 text-gray-700">
-                  {eligiblePrograms.map((programId) => (
-                    <li key={programId}>{getProgramName(programId)}</li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <div className="text-sm text-gray-600">
-                <p className="mb-2">
-                  Complete a screening first to include your eligibility results in the referral.
-                </p>
-                <a
-                  href="/screening"
-                  className="text-blue-600 hover:text-blue-800 underline"
-                >
-                  Start a screening
-                </a>
-              </div>
-            )}
-          </section>
-
-          {/* Consent Section */}
-          <section className="bg-gray-50 rounded-lg border-2 border-gray-200 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Privacy & Consent
-            </h2>
-
-            {/* Consent Checkbox */}
-            <div className="mb-4">
-              <label className="flex items-start space-x-3">
-                <input
-                  type="checkbox"
-                  {...register('consent')}
-                  className="mt-1 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <span className="text-gray-700">
-                  I agree to share my screening summary and contact information with the selected organization(s).
-                </span>
-              </label>
-              {errors.consent && (
-                <p className="mt-2 text-sm text-red-600">{errors.consent.message}</p>
+          {/* Eligible Programs */}
+          <Card>
+            <CardHeader>
+              <h2 className="text-xl font-heading font-semibold text-foreground">
+                Programs You May Be Eligible For
+              </h2>
+            </CardHeader>
+            <CardContent>
+              {eligiblePrograms.length > 0 ? (
+                <>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Based on your screening, this information will be shared with the organizations you select:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 text-foreground/80">
+                    {eligiblePrograms.map((programId) => (
+                      <li key={programId}>{getProgramName(programId)}</li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <div className="text-sm text-muted-foreground">
+                  <p className="mb-2">
+                    Complete a screening first to include your eligibility results in the referral.
+                  </p>
+                  <a
+                    href="/screening"
+                    className="text-primary hover:text-primary/80 underline"
+                  >
+                    Start a screening
+                  </a>
+                </div>
               )}
-            </div>
+            </CardContent>
+          </Card>
 
-            {/* Data Preview Collapsible */}
-            <button
-              type="button"
-              onClick={() => setShowDataPreview(!showDataPreview)}
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm mb-3 underline"
-            >
-              What gets shared?
-            </button>
+          {/* Consent */}
+          <Card className="bg-secondary border-2 border-border">
+            <CardHeader>
+              <h2 className="text-xl font-heading font-semibold text-foreground flex items-center gap-2">
+                <Shield className="h-5 w-5 text-primary" />
+                Privacy & Consent
+              </h2>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <label className="flex items-start space-x-3">
+                  <input
+                    type="checkbox"
+                    {...register('consent')}
+                    className="mt-1 h-4 w-4 border-input rounded focus:ring-ring accent-primary"
+                  />
+                  <span className="text-foreground/80">
+                    I agree to share my screening summary and contact information with the selected organization(s).
+                  </span>
+                </label>
+                {errors.consent && (
+                  <p className="mt-2 text-sm text-destructive flex items-center gap-1.5">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    {errors.consent.message}
+                  </p>
+                )}
+              </div>
 
-            {showDataPreview && (
-              <div className="bg-white rounded-md border border-gray-200 p-4 mb-4 text-sm">
-                <p className="font-medium text-gray-900 mb-2">Information that will be shared:</p>
-                <ul className="list-disc list-inside space-y-1 text-gray-700 mb-3">
-                  <li>Your name and contact information</li>
-                  {eligiblePrograms.length > 0 && (
-                    <li>
-                      Programs you may be eligible for:{' '}
-                      {eligiblePrograms.map(getProgramName).join(', ')}
-                    </li>
-                  )}
-                  {watchedNote && <li>Your optional note to the organization</li>}
-                </ul>
-                <p className="text-gray-600 italic">
-                  We do NOT share raw income, diagnosis details, or other sensitive information.
+              <button
+                type="button"
+                onClick={() => setShowDataPreview(!showDataPreview)}
+                className="text-primary hover:text-primary/80 font-medium text-sm inline-flex items-center gap-1"
+              >
+                What gets shared?
+                {showDataPreview ? (
+                  <ChevronUp className="h-4 w-4" />
+                ) : (
+                  <ChevronDown className="h-4 w-4" />
+                )}
+              </button>
+
+              {showDataPreview && (
+                <div className="bg-card rounded-md border border-border p-4 text-sm">
+                  <p className="font-medium text-foreground mb-2">Information that will be shared:</p>
+                  <ul className="list-disc list-inside space-y-1 text-foreground/80 mb-3">
+                    <li>Your name and contact information</li>
+                    {eligiblePrograms.length > 0 && (
+                      <li>
+                        Programs you may be eligible for:{' '}
+                        {eligiblePrograms.map(getProgramName).join(', ')}
+                      </li>
+                    )}
+                    {watchedNote && <li>Your optional note to the organization</li>}
+                  </ul>
+                  <p className="text-muted-foreground italic">
+                    We do NOT share raw income, diagnosis details, or other sensitive information.
+                  </p>
+                </div>
+              )}
+
+              <div className="text-sm text-muted-foreground space-y-2">
+                <p>
+                  This is an informational referral and not an application. Each organization has their own privacy practices.
+                </p>
+                <p>
+                  If you change your mind after submission, contact the organization directly to ask them not to use your information.
                 </p>
               </div>
-            )}
+            </CardContent>
+          </Card>
 
-            {/* Disclaimer */}
-            <div className="text-sm text-gray-600 space-y-2">
-              <p>
-                This is an informational referral and not an application. Each organization has their own privacy practices.
-              </p>
-              <p>
-                If you change your mind after submission, contact the organization directly to ask them not to use your information.
-              </p>
-            </div>
-          </section>
-
-          {/* Error Message */}
+          {/* Error */}
           {errorMessage && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
-              <p className="text-sm text-red-800">{errorMessage}</p>
+            <div className="bg-destructive/10 border border-destructive/20 rounded-md p-4 flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 text-destructive shrink-0" />
+              <p className="text-sm text-destructive">{errorMessage}</p>
             </div>
           )}
 
-          {/* Submit Button */}
+          {/* Submit */}
           <div className="flex justify-end">
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              size="lg"
             >
+              {isSubmitting ? (
+                <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4 mr-1.5" />
+              )}
               {isSubmitting ? 'Sending...' : 'Send Referral'}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
@@ -393,8 +418,11 @@ function ReferralFormContent() {
 export default function ReferralPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Loading...</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-muted-foreground flex items-center gap-2">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading...
+        </p>
       </div>
     }>
       <ReferralFormContent />
