@@ -27,8 +27,40 @@ interface ProgramCardProps {
 }
 
 export function ProgramCard({ result }: ProgramCardProps) {
-  const { content, confidence } = result;
+  const { content, confidence, programId } = result;
   const t = useTranslations('results');
+  const pt = useTranslations('programs');
+
+  // Helper to get translated string field, falling back to English content
+  // next-intl returns namespace-qualified key (e.g. "programs.ky-snap.waitlistInfo") for missing keys
+  const getField = (field: string): string => {
+    try {
+      const key = `${programId}.${field}`;
+      const val = pt.raw(key);
+      if (typeof val === 'string' && val !== key && !val.startsWith('programs.')) return val;
+    } catch { /* fall through */ }
+    return (content as unknown as Record<string, unknown>)[field] as string || '';
+  };
+
+  // Helper to get translated array field
+  const getArrayField = (field: string): string[] => {
+    try {
+      const val = pt.raw(`${programId}.${field}`);
+      if (Array.isArray(val)) return val;
+    } catch { /* fall through */ }
+    return (content as unknown as Record<string, unknown>)[field] as string[] || [];
+  };
+
+  const translatedName = getField('name') || content.name;
+  const translatedDescription = getField('description');
+  const translatedWhatItCovers = getArrayField('whatItCovers');
+  const translatedNextSteps = getArrayField('nextSteps');
+  const translatedWaitlistInfo = getField('waitlistInfo');
+  const translatedEncouragement = getField('encouragement');
+  const translatedCommonMisconceptions = getArrayField('commonMisconceptions');
+  const translatedWhileYouWait = getArrayField('whileYouWait');
+  const translatedInsuranceCoordination = getField('insuranceCoordination');
+  const translatedRequiredDocuments = getArrayField('requiredDocuments');
 
   const getBadge = () => {
     if (confidence === 'likely') {
@@ -48,43 +80,43 @@ export function ProgramCard({ result }: ProgramCardProps) {
       <CardContent className="p-card-padding">
         {/* Program name and confidence badge */}
         <div className="flex items-start justify-between gap-4 mb-4">
-          <h3 className="text-xl font-heading font-semibold text-foreground">{content.name}</h3>
+          <h3 className="text-xl font-heading font-semibold text-foreground">{translatedName}</h3>
           <Badge variant={badge.variant}>{badge.text}</Badge>
         </div>
 
         {/* Waitlist info callout */}
-        {content.waitlistInfo && (
+        {translatedWaitlistInfo && (
           <div className="mb-4 p-4 bg-primary/5 border border-primary/20 rounded-lg flex gap-3">
             <Clock className="h-5 w-5 text-primary shrink-0 mt-0.5" />
             <p className="text-sm text-foreground">
-              <strong>{t('programCard.important')}</strong> {content.waitlistInfo}
+              <strong>{t('programCard.important')}</strong> {translatedWaitlistInfo}
             </p>
           </div>
         )}
 
         {/* Encouragement callout */}
-        {content.encouragement && (
+        {translatedEncouragement && (
           <div className="mb-4 p-4 bg-primary/5 border border-primary/20 rounded-lg flex gap-3">
             <Heart className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-            <p className="text-sm text-foreground">{content.encouragement}</p>
+            <p className="text-sm text-foreground">{translatedEncouragement}</p>
           </div>
         )}
 
         {/* Program description */}
-        <p className="text-foreground/80 mb-4">{content.description}</p>
+        <p className="text-foreground/80 mb-4">{translatedDescription}</p>
 
         {/* What it covers */}
         <div className="mb-4">
           <h4 className="font-heading font-semibold text-foreground mb-2">{t('programCard.whatItCovers')}</h4>
           <ul className="list-disc list-inside space-y-1 text-foreground/80">
-            {content.whatItCovers.map((item, index) => (
+            {translatedWhatItCovers.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
         </div>
 
         {/* While You Wait */}
-        {content.whileYouWait && content.whileYouWait.length > 0 && (
+        {translatedWhileYouWait.length > 0 && (
           <div className="mb-4 p-4 bg-secondary rounded-lg border border-border">
             <div className="flex gap-3">
               <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
@@ -93,7 +125,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
                   {t('programCard.whileYouWait')}
                 </h4>
                 <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
-                  {content.whileYouWait.map((item, index) => (
+                  {translatedWhileYouWait.map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -103,7 +135,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
         )}
 
         {/* Common Misconceptions */}
-        {content.commonMisconceptions && content.commonMisconceptions.length > 0 && (
+        {translatedCommonMisconceptions.length > 0 && (
           <div className="mb-4 p-4 bg-muted rounded-lg border border-border">
             <div className="flex gap-3">
               <HelpCircle className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5" />
@@ -112,7 +144,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
                   {t('programCard.thingsFamiliesWonder')}
                 </h4>
                 <ul className="space-y-2">
-                  {content.commonMisconceptions.map((item, index) => (
+                  {translatedCommonMisconceptions.map((item, index) => (
                     <li key={index} className="text-sm text-foreground/80 flex gap-2">
                       <span className="text-muted-foreground shrink-0" aria-hidden="true">&bull;</span>
                       <span>{item}</span>
@@ -153,7 +185,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
         </div>
 
         {/* Insurance coordination */}
-        {content.insuranceCoordination && (
+        {translatedInsuranceCoordination && (
           <div className="mt-4 p-4 bg-accent/10 border border-accent/30 rounded-lg flex gap-3">
             <Shield className="h-5 w-5 text-accent-foreground shrink-0 mt-0.5" />
             <div>
@@ -161,7 +193,7 @@ export function ProgramCard({ result }: ProgramCardProps) {
                 {t('programCard.aboutYourInsurance')}
               </h4>
               <p className="text-sm text-foreground/80">
-                {content.insuranceCoordination}
+                {translatedInsuranceCoordination}
               </p>
             </div>
           </div>

@@ -11,7 +11,7 @@ export const defaultLocale: Locale = 'en';
  * Load all messages for a given locale
  */
 export async function getMessages(locale: Locale) {
-  const [common, screening, results, resources, auth, dashboard, referral, pages] = await Promise.all([
+  const [common, screening, results, resources, auth, dashboard, referral, pages, programs] = await Promise.all([
     import(`./messages/${locale}/common.json`),
     import(`./messages/${locale}/screening.json`),
     import(`./messages/${locale}/results.json`),
@@ -20,6 +20,7 @@ export async function getMessages(locale: Locale) {
     import(`./messages/${locale}/dashboard.json`),
     import(`./messages/${locale}/referral.json`),
     import(`./messages/${locale}/pages.json`),
+    import(`./messages/${locale}/programs.json`),
   ]);
 
   return {
@@ -31,6 +32,7 @@ export async function getMessages(locale: Locale) {
     dashboard: dashboard.default,
     referral: referral.default,
     pages: pages.default,
+    programs: programs.default,
   };
 }
 
@@ -54,6 +56,8 @@ export function getMessagesSync(locale: Locale) {
   const referral = require(`./messages/${locale}/referral.json`);
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const pages = require(`./messages/${locale}/pages.json`);
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const programs = require(`./messages/${locale}/programs.json`);
 
-  return { common, screening, results, resources, auth, dashboard, referral, pages };
+  return { common, screening, results, resources, auth, dashboard, referral, pages, programs };
 }

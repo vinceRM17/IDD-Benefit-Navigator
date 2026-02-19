@@ -1,0 +1,446 @@
+{
+  "ky-medicaid": {
+    "name": "Medicaid",
+    "description": "Medicaid helps pay for health care. It covers doctor visits and medicines. Many families with children with disabilities can get it. It is free.",
+    "whatItCovers": [
+      "Doctor and specialist visits",
+      "Hospital stays",
+      "Prescription medicines",
+      "Therapy services (physical, occupational, speech)",
+      "Mental health services",
+      "Medical equipment and supplies"
+    ],
+    "nextSteps": [
+      "Gather the papers listed below",
+      "Go to kynect.ky.gov or call 1-855-459-6328",
+      "Fill out the form online or by phone",
+      "Send in your papers",
+      "Do a phone interview if asked",
+      "You should hear back in 45 days"
+    ],
+    "requiredDocuments": [
+      "Proof of income (pay stubs or tax return)",
+      "Proof of identity (birth certificate or ID)",
+      "Social Security numbers for household members",
+      "Proof of Kentucky residency (utility bill or lease)",
+      "Disability diagnosis documentation"
+    ],
+    "encouragement": "Medicaid is a big system and it can be hard to figure out — that is not your fault. Many families feel lost in the process. You are not the only one, and you do not have to do it alone.",
+    "commonMisconceptions": [
+      "A denial is not the end. If you were told no due to income, that can help you get waiver services for people with disabilities.",
+      "You can have both private insurance and Medicaid. You do not have to pick one.",
+      "It takes work to apply. But you can call for help and they will walk you through it."
+    ],
+    "insuranceCoordination": "If your family member has private insurance AND qualifies for Medicaid, both can work together. Your private insurance pays first (it is the \"primary\" plan). Then Medicaid helps cover what is left over — like copays, deductibles, or services private insurance does not cover. This is called \"coordination of benefits.\" You do not have to choose one or the other. Having both means less out-of-pocket cost for your family."
+  },
+  "ky-snap": {
+    "name": "SNAP (Food Assistance)",
+    "description": "SNAP helps families buy food. You get a card that works like a debit card at grocery stores. The amount you receive depends on your household size and income. Many families with children with disabilities can get SNAP.",
+    "whatItCovers": [
+      "Groceries and food at most stores",
+      "Fruits and vegetables",
+      "Meat, bread, and dairy products",
+      "Seeds and plants that grow food"
+    ],
+    "nextSteps": [
+      "Gather the papers listed below",
+      "Go to kynect.ky.gov or call 1-855-459-6328",
+      "Fill out the form",
+      "Send in your papers",
+      "Do a phone call",
+      "You should hear back in 30 days"
+    ],
+    "requiredDocuments": [
+      "Proof of income (pay stubs, tax return, or benefit letters)",
+      "Proof of identity for household members",
+      "Proof of Kentucky residency (utility bill or lease)",
+      "Information about household expenses (rent, utilities)"
+    ]
+  },
+  "ky-ssi": {
+    "name": "SSI (Supplemental Security Income)",
+    "description": "SSI gives monthly cash to people with disabilities. You must have low income to qualify. Children and adults can both get SSI. The money helps pay for food, clothing, and housing.",
+    "whatItCovers": [
+      "Monthly cash payments",
+      "Help with basic needs (food, clothing, shelter)",
+      "Automatic Medicaid eligibility in Kentucky"
+    ],
+    "nextSteps": [
+      "Call 1-800-772-1213",
+      "Or go to ssa.gov online",
+      "Get your papers ready",
+      "Send them in",
+      "They will decide in 3-5 months"
+    ],
+    "requiredDocuments": [
+      "Medical records and disability diagnosis",
+      "Birth certificate or proof of age",
+      "Information about income and assets (bank statements, pay stubs)",
+      "Social Security numbers for household members",
+      "Proof of living expenses (rent, utilities)"
+    ]
+  },
+  "ky-ssdi": {
+    "name": "SSDI (Social Security Disability Insurance)",
+    "description": "SSDI gives monthly cash to people with disabilities who worked. Adult children with disabilities can get it based on a parent's work. After 2 years on SSDI, you get Medicare.",
+    "whatItCovers": [
+      "Monthly cash benefits",
+      "Medicare after 24 months",
+      "Benefits for eligible family members"
+    ],
+    "nextSteps": [
+      "Call 1-800-772-1213",
+      "Or go to ssa.gov online",
+      "Get your work and medical papers ready",
+      "Send them in",
+      "They will decide in 3-5 months",
+      "You can appeal if they say no"
+    ],
+    "requiredDocuments": [
+      "Medical records showing your disability",
+      "Work history (jobs, dates, duties)",
+      "Birth certificate",
+      "Social Security number",
+      "Information about income and assets"
+    ]
+  },
+  "ky-michelle-p-waiver": {
+    "name": "Michelle P Waiver",
+    "description": "This waiver helps people with disabilities get services at home. It adds extra help on top of Medicaid. You need Medicaid first to use this waiver.",
+    "whatItCovers": [
+      "Respite care (breaks for caregivers)",
+      "Personal care services",
+      "Adult day services",
+      "Supported employment",
+      "Residential support",
+      "Case management"
+    ],
+    "nextSteps": [
+      "Get Medicaid first",
+      "Call 1-800-635-2570 for the waiver form",
+      "Fill it out with help if you need it",
+      "Do the needs check they ask for",
+      "Get on the waitlist",
+      "Wait for your turn"
+    ],
+    "requiredDocuments": [
+      "Proof of Medicaid eligibility",
+      "Diagnosis of intellectual or developmental disability",
+      "Kentucky residency verification"
+    ],
+    "waitlistInfo": "This program has a long waitlist — often around 10 years. Getting on the list as early as possible is important. You can use other programs while you wait. Once your name comes up, services can start quickly.",
+    "encouragement": "Navigating this waiver is hard, and the long wait can feel overwhelming. You are not the only family going through this. Take it one step at a time — you do not have to figure it all out today.",
+    "whileYouWait": [
+      "Apply for the HCB waiver — it can help with care and support while you wait",
+      "Get on the SCL list too — you can be on more than one list at a time",
+      "Try local programs like swim classes, sports, or play groups in your area",
+      "Ask for a case manager to help you track your place on the list"
+    ],
+    "commonMisconceptions": [
+      "You do not have to use every service you get. You pick what works for your family.",
+      "The waitlist does not mean no help. You can use other programs like HCB while you wait."
+    ]
+  },
+  "ky-hcb-waiver": {
+    "name": "HCB Waiver (Home and Community Based)",
+    "description": "This waiver helps adults with disabilities stay at home. It adds more services on top of Medicaid. You need Medicaid first.",
+    "whatItCovers": [
+      "Personal care services",
+      "Respite care for caregivers",
+      "Day services and programs",
+      "Supported employment",
+      "Residential support",
+      "Transportation"
+    ],
+    "nextSteps": [
+      "Get Medicaid first",
+      "Call 1-800-635-2570 for the waiver form",
+      "Fill it out with help if you need it",
+      "Do the needs check they ask for",
+      "Get on the waitlist (this can take years)",
+      "Wait for your turn"
+    ],
+    "requiredDocuments": [
+      "Proof of Medicaid eligibility",
+      "Documentation of disability or medical condition",
+      "Level of care assessment showing need for services",
+      "Proof of age (must be 18 or older)"
+    ],
+    "waitlistInfo": "This program often has a long waitlist. Apply as early as possible. You can be on more than one waiver waitlist at a time.",
+    "encouragement": "This waiver can help right away while you wait for other programs. Many families start here — you are not alone in working through this process.",
+    "whileYouWait": [
+      "The HCB wait is often shorter than other waivers, so hang in there",
+      "A case manager can help you track your other lists and forms",
+      "Try local groups like sports, clubs, or respite care in your area"
+    ],
+    "commonMisconceptions": [
+      "You do not have to find helpers on your own. The agency can find them for you. Or you can pick your own with help from a broker.",
+      "You can be on this list and other waiver lists at the same time. You do not have to pick just one."
+    ]
+  },
+  "ky-scl-waiver": {
+    "name": "SCL Waiver (Supports for Community Living)",
+    "description": "This waiver helps adults with disabilities who need a lot of daily help. It provides more services than the HCB waiver. It covers housing support, day programs, and nursing care. You need Medicaid first.",
+    "whatItCovers": [
+      "Residential services and housing support",
+      "Day programs and activities",
+      "Supported employment",
+      "Nursing services",
+      "Behavioral support services",
+      "Personal care",
+      "Transportation"
+    ],
+    "nextSteps": [
+      "Get Medicaid first",
+      "Call 1-800-635-2570 for the waiver form",
+      "Fill it out with help if you need it",
+      "Do the needs check they ask for",
+      "Get on the waitlist",
+      "Wait for your turn"
+    ],
+    "requiredDocuments": [
+      "Proof of Medicaid eligibility",
+      "Diagnosis of intellectual or developmental disability",
+      "Level of care assessment showing need for comprehensive supports",
+      "Proof of age (must be 18 or older)",
+      "Kentucky residency verification"
+    ],
+    "waitlistInfo": "This program has a waitlist. Getting on the list as early as possible is important. The wait can be several years, but being on the list means you are in line for services.",
+    "encouragement": "Getting on this list early matters, even if it feels far away. Many families plan ahead for the future while using other supports today. You are not alone in this.",
+    "whileYouWait": [
+      "If you have the Michelle P waiver, use it — it can help with care and respite now",
+      "Try local programs like sports, day groups, or social clubs in your area",
+      "Start planning for adult services early — a case manager can help you get ready",
+      "You can be on both the SCL and HCB lists at the same time"
+    ],
+    "commonMisconceptions": [
+      "SCL is not just more of Michelle P. SCL has housing support that Michelle P does not.",
+      "Michelle P can have more hours for some services. One is not always better than the other."
+    ]
+  },
+  "federal-ssi": {
+    "name": "SSI (Supplemental Security Income)",
+    "description": "SSI gives monthly cash to people with disabilities who have limited income and resources. Children and adults can both get SSI. The money helps pay for food, clothing, and housing.",
+    "whatItCovers": [
+      "Monthly cash payments",
+      "Help with basic needs (food, clothing, shelter)",
+      "May qualify you for Medicaid in most states"
+    ],
+    "nextSteps": [
+      "Call 1-800-772-1213 (Social Security Administration)",
+      "Or apply online at ssa.gov",
+      "Gather your medical records and financial documents",
+      "Submit your application",
+      "SSA will review and decide in 3-5 months"
+    ],
+    "requiredDocuments": [
+      "Medical records and disability diagnosis",
+      "Birth certificate or proof of age",
+      "Information about income and assets (bank statements, pay stubs)",
+      "Social Security numbers for household members",
+      "Proof of living expenses (rent, utilities)"
+    ]
+  },
+  "federal-ssdi": {
+    "name": "SSDI (Social Security Disability Insurance)",
+    "description": "SSDI provides monthly income to people with disabilities who have worked and paid Social Security taxes. The amount depends on your work history. After 24 months on SSDI, you automatically get Medicare.",
+    "whatItCovers": [
+      "Monthly disability income payments",
+      "Automatic Medicare coverage after 24 months",
+      "Payments to dependents in some cases"
+    ],
+    "nextSteps": [
+      "Call 1-800-772-1213 (Social Security Administration)",
+      "Or apply online at ssa.gov",
+      "Gather your medical records and work history",
+      "Submit your application",
+      "SSA will review and decide in 3-5 months"
+    ],
+    "requiredDocuments": [
+      "Medical records and disability diagnosis",
+      "Work history and employment records",
+      "Social Security statement",
+      "Proof of income",
+      "Birth certificate or proof of age"
+    ]
+  },
+  "federal-snap": {
+    "name": "SNAP (Food Assistance)",
+    "description": "SNAP helps families buy food. You get a card that works like a debit card at grocery stores. The amount depends on your household size and income. SNAP is available nationwide.",
+    "whatItCovers": [
+      "Groceries and food at most stores",
+      "Fruits and vegetables",
+      "Meat, bread, and dairy products",
+      "Seeds and plants that grow food"
+    ],
+    "nextSteps": [
+      "Contact your state's SNAP office or Department of Social Services",
+      "Gather the documents listed below",
+      "Fill out the application form",
+      "Submit your documents",
+      "Complete an interview if required",
+      "You should hear back in 30 days"
+    ],
+    "requiredDocuments": [
+      "Proof of income (pay stubs, tax return, or benefit letters)",
+      "Proof of identity for household members",
+      "Proof of residency (utility bill or lease)",
+      "Information about household expenses (rent, utilities)"
+    ]
+  },
+  "federal-housing-choice-voucher": {
+    "name": "Housing Choice Voucher (Section 8)",
+    "description": "Housing Choice Vouchers help families with low income pay for safe housing. The program pays part of your rent directly to your landlord. People with disabilities get priority on many waiting lists.",
+    "whatItCovers": [
+      "Part of monthly rent payment",
+      "Can be used for apartments, houses, or townhomes",
+      "You choose where you want to live",
+      "Moves with you if you change homes"
+    ],
+    "nextSteps": [
+      "Contact your local Public Housing Authority (PHA)",
+      "Ask to be placed on the waiting list",
+      "Mention disability status for possible priority",
+      "Gather income and household documents",
+      "PHA will determine your eligibility and voucher amount"
+    ],
+    "requiredDocuments": [
+      "Proof of income for all household members",
+      "Proof of disability (if requesting priority)",
+      "Social Security numbers for all household members",
+      "Birth certificates or proof of age",
+      "Photo ID",
+      "Proof of citizenship or eligible immigration status"
+    ]
+  },
+  "federal-vocational-rehab": {
+    "name": "Vocational Rehabilitation (VR)",
+    "description": "Vocational Rehabilitation helps people with disabilities prepare for, find, and keep jobs. Services are free and based on what you need to work. Each state has a VR agency ready to help.",
+    "whatItCovers": [
+      "Job training and skill building",
+      "Help finding and keeping a job",
+      "Job coaching and workplace support",
+      "Assistive technology for work",
+      "Resume writing and interview practice",
+      "Transportation help for work"
+    ],
+    "nextSteps": [
+      "Contact your state VR agency",
+      "Apply for VR services",
+      "Meet with a VR counselor to discuss your goals",
+      "Work together to create an Individualized Plan for Employment (IPE)",
+      "Begin receiving services"
+    ],
+    "requiredDocuments": [
+      "Medical records documenting disability",
+      "Work history (if any)",
+      "School records (if applicable)",
+      "Any current treatment plans",
+      "Proof of identity"
+    ]
+  },
+  "federal-able-account": {
+    "name": "ABLE Account",
+    "description": "ABLE Accounts let people with disabilities save money without losing SSI, Medicaid, or other benefits. You can save up to $100,000 and still keep your benefits. The disability must have started before age 26.",
+    "whatItCovers": [
+      "Tax-free savings account for disability-related expenses",
+      "Housing costs",
+      "Education and job training",
+      "Health and wellness expenses",
+      "Assistive technology",
+      "Transportation",
+      "Basic living expenses"
+    ],
+    "nextSteps": [
+      "Check if your state has an ABLE program (most do)",
+      "Visit ablenrc.org to compare state programs",
+      "Open an account online",
+      "Start saving — you can contribute up to $18,000 per year",
+      "Use funds for qualified disability expenses"
+    ],
+    "requiredDocuments": [
+      "Proof of disability diagnosis",
+      "Proof that disability began before age 26",
+      "Social Security number",
+      "Proof of identity",
+      "Bank account for initial deposit (optional)"
+    ]
+  },
+  "federal-supported-employment": {
+    "name": "Supported Employment",
+    "description": "Supported Employment helps people with significant disabilities work in regular jobs in their community. A job coach provides ongoing support to help you succeed at work. Services are often available through Medicaid waiver programs.",
+    "whatItCovers": [
+      "One-on-one job coaching",
+      "Help learning job tasks",
+      "Workplace support and advocacy",
+      "Communication with employers",
+      "Ongoing support as long as needed",
+      "Help with workplace social skills"
+    ],
+    "nextSteps": [
+      "Contact your state Vocational Rehabilitation agency",
+      "Ask about Supported Employment services",
+      "If on a Medicaid waiver, ask your case manager about employment supports",
+      "Work with your team to find the right job match",
+      "Receive job coaching to help you succeed"
+    ],
+    "requiredDocuments": [
+      "Documentation of disability",
+      "Vocational Rehabilitation eligibility (if applying through VR)",
+      "Medicaid waiver enrollment (if applicable)",
+      "Interest in working in the community"
+    ]
+  },
+  "federal-childcare-assistance": {
+    "name": "Childcare Assistance (CCDF)",
+    "description": "The Child Care and Development Fund helps families with low income pay for childcare. It covers childcare for children up to age 13, or up to age 19 for children with disabilities. Each state runs its own program.",
+    "whatItCovers": [
+      "Childcare center costs",
+      "Family childcare home costs",
+      "Before and after school care",
+      "Summer care programs",
+      "Care for children with special needs (may include higher payment rates)"
+    ],
+    "nextSteps": [
+      "Contact your state childcare assistance office",
+      "Apply through your state benefits portal",
+      "Provide income and household information",
+      "Choose a licensed childcare provider",
+      "Your state will pay the provider directly or reimburse you"
+    ],
+    "requiredDocuments": [
+      "Proof of income",
+      "Proof of need for childcare (work, school, or training)",
+      "Birth certificates for children",
+      "Proof of residency",
+      "Childcare provider information"
+    ]
+  },
+  "federal-idea-services": {
+    "name": "Special Education (IDEA)",
+    "description": "The Individuals with Disabilities Education Act (IDEA) ensures children with disabilities receive free, appropriate education. Schools must provide special education services through an IEP (Individualized Education Program). Services are available from birth through age 21.",
+    "whatItCovers": [
+      "Individualized Education Program (IEP)",
+      "Special education instruction",
+      "Speech and language therapy",
+      "Occupational and physical therapy",
+      "Behavioral support",
+      "Transition planning for life after school (starting at age 16)",
+      "Early intervention services (birth to age 3)"
+    ],
+    "nextSteps": [
+      "Talk to your child's school about your concerns",
+      "Request an evaluation in writing",
+      "The school must evaluate within 60 days",
+      "If eligible, the team will create an IEP",
+      "For children under 3, contact your state early intervention program"
+    ],
+    "requiredDocuments": [
+      "Written request for evaluation",
+      "Medical records and diagnoses",
+      "Previous school records",
+      "Any outside evaluations or assessments",
+      "Parent observations and concerns"
+    ]
+  }
+}

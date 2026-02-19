@@ -100,6 +100,53 @@
     "clearMyData": "Clear My Data",
     "disclaimer": "This screening is for informational purposes only. Final eligibility is determined by the program administrators."
   },
+  "actionPlanSteps": {
+    "medicaid": "Apply for Medicaid first. Many other programs require Medicaid, and it unlocks waiver services.",
+    "ssi": "Apply for SSI (Supplemental Security Income). In Kentucky, SSI often comes with automatic Medicaid.",
+    "ssiSsdiCombined": "Apply for both SSI and SSDI through Social Security. They are different programs and you may qualify for both.",
+    "ssdi": "Apply for SSDI (Social Security Disability Insurance). After 24 months, you will automatically get Medicare.",
+    "waivers": "Get on the waiver waitlist(s). These programs often have long waits, so apply as early as possible. You can be on multiple lists.",
+    "snap": "Apply for SNAP (food assistance) at kynect.ky.gov or by calling 1-855-459-6328.",
+    "snapWithMedicaid": "Apply for SNAP (food assistance). You can apply for SNAP and Medicaid together at kynect.ky.gov."
+  },
+  "interactionDescriptions": {
+    "insuranceMedicaid": {
+      "description": "Your private insurance and Medicaid can work together.",
+      "recommendation": "Keep your private insurance. Medicaid will work alongside it to reduce your out-of-pocket costs. Tell both your insurance company and Medicaid that you have dual coverage."
+    },
+    "medicaidSsi": {
+      "description": "Getting SSI in Kentucky usually means you automatically qualify for Medicaid.",
+      "recommendation": "Apply for SSI first — Medicaid may follow automatically without a separate application."
+    },
+    "medicaidSsdi": {
+      "description": "After receiving SSDI for 24 months, you automatically qualify for Medicare. If you also qualify for Medicaid, you can have both.",
+      "recommendation": "Apply for both Medicaid and SSDI. After 2 years on SSDI, Medicare will be added automatically."
+    },
+    "medicaidMichelleP": {
+      "description": "You need Medicaid to use the Michelle P Waiver. The waiver adds extra services on top of what Medicaid covers.",
+      "recommendation": "Apply for Medicaid first, then apply for the Michelle P Waiver. Get on the waitlist as early as possible."
+    },
+    "medicaidHcb": {
+      "description": "You need Medicaid to use the HCB Waiver. The waiver provides services in your home and community.",
+      "recommendation": "Apply for Medicaid first, then get on the HCB Waiver waitlist. The wait can be long, so apply early."
+    },
+    "medicaidScl": {
+      "description": "You need Medicaid to use the SCL Waiver. SCL provides comprehensive community living supports.",
+      "recommendation": "Apply for Medicaid first, then get on the SCL Waiver waitlist. You can be on multiple waiver waitlists."
+    },
+    "ssiSsdi": {
+      "description": "SSI and SSDI are different programs. You may qualify for one or both depending on work history and income.",
+      "recommendation": "Apply for both programs. They serve different purposes and can stack."
+    },
+    "medicaidSnap": {
+      "description": "You can apply for both Medicaid and SNAP at the same time through kynect.",
+      "recommendation": "One application at kynect.ky.gov can start both programs. This saves time."
+    },
+    "ssiSnap": {
+      "description": "SSI income counts toward SNAP eligibility. You may still qualify for SNAP.",
+      "recommendation": "Apply for SNAP even if you receive SSI. Your SSI income will be counted, but you may still qualify."
+    }
+  },
   "whatIf": {
     "title": "What If My Income Changes?",
     "subtitle": "Use the slider to explore how changes in your household income might affect which programs you qualify for.",

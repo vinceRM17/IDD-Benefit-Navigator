@@ -1,0 +1,446 @@
+{
+  "ky-medicaid": {
+    "name": "Medicaid",
+    "description": "Medicaid ayuda a pagar la atenci\u00f3n m\u00e9dica. Cubre visitas al m\u00e9dico y medicinas. Muchas familias con hijos con discapacidades pueden obtenerlo. Es gratis.",
+    "whatItCovers": [
+      "Visitas al m\u00e9dico y especialistas",
+      "Estancias en el hospital",
+      "Medicinas recetadas",
+      "Servicios de terapia (f\u00edsica, ocupacional, del habla)",
+      "Servicios de salud mental",
+      "Equipo y suministros m\u00e9dicos"
+    ],
+    "nextSteps": [
+      "Re\u00fana los documentos listados abajo",
+      "Vaya a kynect.ky.gov o llame al 1-855-459-6328",
+      "Llene el formulario en l\u00ednea o por tel\u00e9fono",
+      "Env\u00ede sus documentos",
+      "Haga una entrevista por tel\u00e9fono si se lo piden",
+      "Deber\u00eda recibir respuesta en 45 d\u00edas"
+    ],
+    "requiredDocuments": [
+      "Prueba de ingresos (talones de pago o declaraci\u00f3n de impuestos)",
+      "Prueba de identidad (certificado de nacimiento o identificaci\u00f3n)",
+      "N\u00fameros de Seguro Social de los miembros del hogar",
+      "Prueba de residencia en Kentucky (factura de servicios o contrato de alquiler)",
+      "Documentaci\u00f3n del diagn\u00f3stico de discapacidad"
+    ],
+    "encouragement": "Medicaid es un sistema grande y puede ser dif\u00edcil de entender \u2014 eso no es su culpa. Muchas familias se sienten perdidas en el proceso. No es la \u00fanica familia pasando por esto, y no tiene que hacerlo sola.",
+    "commonMisconceptions": [
+      "Un rechazo no es el final. Si le dijeron que no por sus ingresos, eso puede ayudarle a obtener servicios de exenci\u00f3n para personas con discapacidades.",
+      "Puede tener seguro privado y Medicaid al mismo tiempo. No tiene que elegir uno.",
+      "Toma trabajo aplicar. Pero puede llamar para pedir ayuda y le guiar\u00e1n paso a paso."
+    ],
+    "insuranceCoordination": "Si su familiar tiene seguro privado Y califica para Medicaid, ambos pueden trabajar juntos. Su seguro privado paga primero (es el plan \"principal\"). Luego Medicaid ayuda a cubrir lo que queda \u2014 como copagos, deducibles o servicios que el seguro privado no cubre. Esto se llama \"coordinaci\u00f3n de beneficios.\" No tiene que elegir uno u otro. Tener ambos significa menos gastos de su bolsillo para su familia."
+  },
+  "ky-snap": {
+    "name": "SNAP (Asistencia Alimentaria)",
+    "description": "SNAP ayuda a las familias a comprar alimentos. Recibe una tarjeta que funciona como una tarjeta de d\u00e9bito en las tiendas de comestibles. La cantidad que recibe depende del tama\u00f1o de su hogar y sus ingresos. Muchas familias con hijos con discapacidades pueden obtener SNAP.",
+    "whatItCovers": [
+      "Comestibles y alimentos en la mayor\u00eda de las tiendas",
+      "Frutas y verduras",
+      "Carne, pan y productos l\u00e1cteos",
+      "Semillas y plantas que producen alimentos"
+    ],
+    "nextSteps": [
+      "Re\u00fana los documentos listados abajo",
+      "Vaya a kynect.ky.gov o llame al 1-855-459-6328",
+      "Llene el formulario",
+      "Env\u00ede sus documentos",
+      "Haga una llamada telef\u00f3nica",
+      "Deber\u00eda recibir respuesta en 30 d\u00edas"
+    ],
+    "requiredDocuments": [
+      "Prueba de ingresos (talones de pago, declaraci\u00f3n de impuestos o cartas de beneficios)",
+      "Prueba de identidad de los miembros del hogar",
+      "Prueba de residencia en Kentucky (factura de servicios o contrato de alquiler)",
+      "Informaci\u00f3n sobre gastos del hogar (alquiler, servicios p\u00fablicos)"
+    ]
+  },
+  "ky-ssi": {
+    "name": "SSI (Ingreso de Seguridad Suplementario)",
+    "description": "SSI da dinero mensual a personas con discapacidades. Debe tener ingresos bajos para calificar. Tanto ni\u00f1os como adultos pueden recibir SSI. El dinero ayuda a pagar comida, ropa y vivienda.",
+    "whatItCovers": [
+      "Pagos mensuales en efectivo",
+      "Ayuda con necesidades b\u00e1sicas (comida, ropa, vivienda)",
+      "Elegibilidad autom\u00e1tica para Medicaid en Kentucky"
+    ],
+    "nextSteps": [
+      "Llame al 1-800-772-1213",
+      "O vaya a ssa.gov en l\u00ednea",
+      "Prepare sus documentos",
+      "Env\u00edelos",
+      "Decidir\u00e1n en 3 a 5 meses"
+    ],
+    "requiredDocuments": [
+      "Registros m\u00e9dicos y diagn\u00f3stico de discapacidad",
+      "Certificado de nacimiento o prueba de edad",
+      "Informaci\u00f3n sobre ingresos y bienes (estados de cuenta bancarios, talones de pago)",
+      "N\u00fameros de Seguro Social de los miembros del hogar",
+      "Prueba de gastos de vivienda (alquiler, servicios p\u00fablicos)"
+    ]
+  },
+  "ky-ssdi": {
+    "name": "SSDI (Seguro por Discapacidad del Seguro Social)",
+    "description": "SSDI da dinero mensual a personas con discapacidades que han trabajado. Los hijos adultos con discapacidades pueden recibirlo basado en el trabajo de un padre. Despu\u00e9s de 2 a\u00f1os con SSDI, obtiene Medicare.",
+    "whatItCovers": [
+      "Beneficios mensuales en efectivo",
+      "Medicare despu\u00e9s de 24 meses",
+      "Beneficios para familiares elegibles"
+    ],
+    "nextSteps": [
+      "Llame al 1-800-772-1213",
+      "O vaya a ssa.gov en l\u00ednea",
+      "Prepare sus documentos de trabajo y m\u00e9dicos",
+      "Env\u00edelos",
+      "Decidir\u00e1n en 3 a 5 meses",
+      "Puede apelar si dicen que no"
+    ],
+    "requiredDocuments": [
+      "Registros m\u00e9dicos que muestren su discapacidad",
+      "Historial laboral (trabajos, fechas, funciones)",
+      "Certificado de nacimiento",
+      "N\u00famero de Seguro Social",
+      "Informaci\u00f3n sobre ingresos y bienes"
+    ]
+  },
+  "ky-michelle-p-waiver": {
+    "name": "Exenci\u00f3n Michelle P",
+    "description": "Esta exenci\u00f3n ayuda a personas con discapacidades a recibir servicios en casa. Agrega ayuda adicional sobre Medicaid. Necesita Medicaid primero para usar esta exenci\u00f3n.",
+    "whatItCovers": [
+      "Cuidado de respiro (descansos para cuidadores)",
+      "Servicios de cuidado personal",
+      "Servicios de d\u00eda para adultos",
+      "Empleo con apoyo",
+      "Apoyo residencial",
+      "Administraci\u00f3n de casos"
+    ],
+    "nextSteps": [
+      "Obtenga Medicaid primero",
+      "Llame al 1-800-635-2570 para el formulario de exenci\u00f3n",
+      "Ll\u00e9nelo con ayuda si la necesita",
+      "Haga la evaluaci\u00f3n de necesidades que le pidan",
+      "P\u00f3ngase en la lista de espera",
+      "Espere su turno"
+    ],
+    "requiredDocuments": [
+      "Prueba de elegibilidad para Medicaid",
+      "Diagn\u00f3stico de discapacidad intelectual o del desarrollo",
+      "Verificaci\u00f3n de residencia en Kentucky"
+    ],
+    "waitlistInfo": "Este programa tiene una lista de espera larga \u2014 a menudo alrededor de 10 a\u00f1os. Ponerse en la lista lo antes posible es importante. Puede usar otros programas mientras espera. Una vez que llegue su turno, los servicios pueden comenzar r\u00e1pidamente.",
+    "encouragement": "Navegar esta exenci\u00f3n es dif\u00edcil, y la larga espera puede sentirse abrumadora. No es la \u00fanica familia pasando por esto. T\u00f3melo un paso a la vez \u2014 no tiene que resolverlo todo hoy.",
+    "whileYouWait": [
+      "Solicite la exenci\u00f3n HCB \u2014 puede ayudar con cuidado y apoyo mientras espera",
+      "P\u00f3ngase en la lista SCL tambi\u00e9n \u2014 puede estar en m\u00e1s de una lista a la vez",
+      "Pruebe programas locales como clases de nataci\u00f3n, deportes o grupos de juego en su \u00e1rea",
+      "Pida un administrador de casos para ayudarle a seguir su lugar en la lista"
+    ],
+    "commonMisconceptions": [
+      "No tiene que usar todos los servicios que recibe. Usted elige lo que funciona para su familia.",
+      "La lista de espera no significa que no hay ayuda. Puede usar otros programas como HCB mientras espera."
+    ]
+  },
+  "ky-hcb-waiver": {
+    "name": "Exenci\u00f3n HCB (Hogar y Comunidad)",
+    "description": "Esta exenci\u00f3n ayuda a adultos con discapacidades a quedarse en casa. Agrega m\u00e1s servicios sobre Medicaid. Necesita Medicaid primero.",
+    "whatItCovers": [
+      "Servicios de cuidado personal",
+      "Cuidado de respiro para cuidadores",
+      "Servicios y programas de d\u00eda",
+      "Empleo con apoyo",
+      "Apoyo residencial",
+      "Transporte"
+    ],
+    "nextSteps": [
+      "Obtenga Medicaid primero",
+      "Llame al 1-800-635-2570 para el formulario de exenci\u00f3n",
+      "Ll\u00e9nelo con ayuda si la necesita",
+      "Haga la evaluaci\u00f3n de necesidades que le pidan",
+      "P\u00f3ngase en la lista de espera (esto puede tomar a\u00f1os)",
+      "Espere su turno"
+    ],
+    "requiredDocuments": [
+      "Prueba de elegibilidad para Medicaid",
+      "Documentaci\u00f3n de discapacidad o condici\u00f3n m\u00e9dica",
+      "Evaluaci\u00f3n del nivel de cuidado que muestre necesidad de servicios",
+      "Prueba de edad (debe tener 18 a\u00f1os o m\u00e1s)"
+    ],
+    "waitlistInfo": "Este programa a menudo tiene una lista de espera larga. Solicite lo antes posible. Puede estar en m\u00e1s de una lista de espera de exenci\u00f3n a la vez.",
+    "encouragement": "Esta exenci\u00f3n puede ayudar de inmediato mientras espera otros programas. Muchas familias comienzan aqu\u00ed \u2014 no est\u00e1 solo en este proceso.",
+    "whileYouWait": [
+      "La espera para HCB a menudo es m\u00e1s corta que otras exenciones, as\u00ed que tenga paciencia",
+      "Un administrador de casos puede ayudarle a seguir sus otras listas y formularios",
+      "Pruebe grupos locales como deportes, clubes o cuidado de respiro en su \u00e1rea"
+    ],
+    "commonMisconceptions": [
+      "No tiene que encontrar ayudantes por su cuenta. La agencia puede encontrarlos por usted. O puede elegir los suyos con ayuda de un coordinador.",
+      "Puede estar en esta lista y en otras listas de exenci\u00f3n al mismo tiempo. No tiene que elegir solo una."
+    ]
+  },
+  "ky-scl-waiver": {
+    "name": "Exenci\u00f3n SCL (Apoyos para la Vida en Comunidad)",
+    "description": "Esta exenci\u00f3n ayuda a adultos con discapacidades que necesitan mucha ayuda diaria. Proporciona m\u00e1s servicios que la exenci\u00f3n HCB. Cubre apoyo de vivienda, programas de d\u00eda y cuidado de enfermer\u00eda. Necesita Medicaid primero.",
+    "whatItCovers": [
+      "Servicios residenciales y apoyo de vivienda",
+      "Programas y actividades de d\u00eda",
+      "Empleo con apoyo",
+      "Servicios de enfermer\u00eda",
+      "Servicios de apoyo conductual",
+      "Cuidado personal",
+      "Transporte"
+    ],
+    "nextSteps": [
+      "Obtenga Medicaid primero",
+      "Llame al 1-800-635-2570 para el formulario de exenci\u00f3n",
+      "Ll\u00e9nelo con ayuda si la necesita",
+      "Haga la evaluaci\u00f3n de necesidades que le pidan",
+      "P\u00f3ngase en la lista de espera",
+      "Espere su turno"
+    ],
+    "requiredDocuments": [
+      "Prueba de elegibilidad para Medicaid",
+      "Diagn\u00f3stico de discapacidad intelectual o del desarrollo",
+      "Evaluaci\u00f3n del nivel de cuidado que muestre necesidad de apoyos integrales",
+      "Prueba de edad (debe tener 18 a\u00f1os o m\u00e1s)",
+      "Verificaci\u00f3n de residencia en Kentucky"
+    ],
+    "waitlistInfo": "Este programa tiene una lista de espera. Ponerse en la lista lo antes posible es importante. La espera puede ser de varios a\u00f1os, pero estar en la lista significa que est\u00e1 en fila para los servicios.",
+    "encouragement": "Ponerse en esta lista temprano es importante, aunque se sienta lejano. Muchas familias planifican para el futuro mientras usan otros apoyos hoy. No est\u00e1 solo en esto.",
+    "whileYouWait": [
+      "Si tiene la exenci\u00f3n Michelle P, \u00fasela \u2014 puede ayudar con cuidado y respiro ahora",
+      "Pruebe programas locales como deportes, grupos de d\u00eda o clubes sociales en su \u00e1rea",
+      "Comience a planificar los servicios para adultos temprano \u2014 un administrador de casos puede ayudarle a prepararse",
+      "Puede estar en las listas de SCL y HCB al mismo tiempo"
+    ],
+    "commonMisconceptions": [
+      "SCL no es simplemente m\u00e1s de Michelle P. SCL tiene apoyo de vivienda que Michelle P no tiene.",
+      "Michelle P puede tener m\u00e1s horas para algunos servicios. Uno no siempre es mejor que el otro."
+    ]
+  },
+  "federal-ssi": {
+    "name": "SSI (Ingreso de Seguridad Suplementario)",
+    "description": "SSI da dinero mensual a personas con discapacidades que tienen ingresos y recursos limitados. Tanto ni\u00f1os como adultos pueden recibir SSI. El dinero ayuda a pagar comida, ropa y vivienda.",
+    "whatItCovers": [
+      "Pagos mensuales en efectivo",
+      "Ayuda con necesidades b\u00e1sicas (comida, ropa, vivienda)",
+      "Puede calificarle para Medicaid en la mayor\u00eda de los estados"
+    ],
+    "nextSteps": [
+      "Llame al 1-800-772-1213 (Administraci\u00f3n del Seguro Social)",
+      "O solicite en l\u00ednea en ssa.gov",
+      "Re\u00fana sus registros m\u00e9dicos y documentos financieros",
+      "Env\u00ede su solicitud",
+      "El SSA revisar\u00e1 y decidir\u00e1 en 3 a 5 meses"
+    ],
+    "requiredDocuments": [
+      "Registros m\u00e9dicos y diagn\u00f3stico de discapacidad",
+      "Certificado de nacimiento o prueba de edad",
+      "Informaci\u00f3n sobre ingresos y bienes (estados de cuenta bancarios, talones de pago)",
+      "N\u00fameros de Seguro Social de los miembros del hogar",
+      "Prueba de gastos de vivienda (alquiler, servicios p\u00fablicos)"
+    ]
+  },
+  "federal-ssdi": {
+    "name": "SSDI (Seguro por Discapacidad del Seguro Social)",
+    "description": "SSDI proporciona ingresos mensuales a personas con discapacidades que han trabajado y pagado impuestos del Seguro Social. La cantidad depende de su historial laboral. Despu\u00e9s de 24 meses con SSDI, obtiene Medicare autom\u00e1ticamente.",
+    "whatItCovers": [
+      "Pagos mensuales de ingresos por discapacidad",
+      "Cobertura autom\u00e1tica de Medicare despu\u00e9s de 24 meses",
+      "Pagos a dependientes en algunos casos"
+    ],
+    "nextSteps": [
+      "Llame al 1-800-772-1213 (Administraci\u00f3n del Seguro Social)",
+      "O solicite en l\u00ednea en ssa.gov",
+      "Re\u00fana sus registros m\u00e9dicos e historial laboral",
+      "Env\u00ede su solicitud",
+      "El SSA revisar\u00e1 y decidir\u00e1 en 3 a 5 meses"
+    ],
+    "requiredDocuments": [
+      "Registros m\u00e9dicos y diagn\u00f3stico de discapacidad",
+      "Historial laboral y registros de empleo",
+      "Estado de cuenta del Seguro Social",
+      "Prueba de ingresos",
+      "Certificado de nacimiento o prueba de edad"
+    ]
+  },
+  "federal-snap": {
+    "name": "SNAP (Asistencia Alimentaria)",
+    "description": "SNAP ayuda a las familias a comprar alimentos. Recibe una tarjeta que funciona como una tarjeta de d\u00e9bito en las tiendas de comestibles. La cantidad depende del tama\u00f1o de su hogar y sus ingresos. SNAP est\u00e1 disponible en todo el pa\u00eds.",
+    "whatItCovers": [
+      "Comestibles y alimentos en la mayor\u00eda de las tiendas",
+      "Frutas y verduras",
+      "Carne, pan y productos l\u00e1cteos",
+      "Semillas y plantas que producen alimentos"
+    ],
+    "nextSteps": [
+      "Contacte la oficina de SNAP de su estado o el Departamento de Servicios Sociales",
+      "Re\u00fana los documentos listados abajo",
+      "Llene el formulario de solicitud",
+      "Env\u00ede sus documentos",
+      "Complete una entrevista si es necesario",
+      "Deber\u00eda recibir respuesta en 30 d\u00edas"
+    ],
+    "requiredDocuments": [
+      "Prueba de ingresos (talones de pago, declaraci\u00f3n de impuestos o cartas de beneficios)",
+      "Prueba de identidad de los miembros del hogar",
+      "Prueba de residencia (factura de servicios o contrato de alquiler)",
+      "Informaci\u00f3n sobre gastos del hogar (alquiler, servicios p\u00fablicos)"
+    ]
+  },
+  "federal-housing-choice-voucher": {
+    "name": "Voucher de Elecci\u00f3n de Vivienda (Secci\u00f3n 8)",
+    "description": "Los Vouchers de Elecci\u00f3n de Vivienda ayudan a familias con bajos ingresos a pagar una vivienda segura. El programa paga parte de su alquiler directamente a su arrendador. Las personas con discapacidades tienen prioridad en muchas listas de espera.",
+    "whatItCovers": [
+      "Parte del pago mensual del alquiler",
+      "Se puede usar para apartamentos, casas o casas adosadas",
+      "Usted elige d\u00f3nde quiere vivir",
+      "Se mueve con usted si cambia de vivienda"
+    ],
+    "nextSteps": [
+      "Contacte su Autoridad de Vivienda P\u00fablica (PHA) local",
+      "Pida que lo pongan en la lista de espera",
+      "Mencione su estado de discapacidad para posible prioridad",
+      "Re\u00fana documentos de ingresos y del hogar",
+      "La PHA determinar\u00e1 su elegibilidad y monto del voucher"
+    ],
+    "requiredDocuments": [
+      "Prueba de ingresos de todos los miembros del hogar",
+      "Prueba de discapacidad (si solicita prioridad)",
+      "N\u00fameros de Seguro Social de todos los miembros del hogar",
+      "Certificados de nacimiento o prueba de edad",
+      "Identificaci\u00f3n con foto",
+      "Prueba de ciudadan\u00eda o estado migratorio elegible"
+    ]
+  },
+  "federal-vocational-rehab": {
+    "name": "Rehabilitaci\u00f3n Vocacional (VR)",
+    "description": "La Rehabilitaci\u00f3n Vocacional ayuda a personas con discapacidades a prepararse para encontrar y mantener empleos. Los servicios son gratuitos y se basan en lo que necesita para trabajar. Cada estado tiene una agencia de VR lista para ayudar.",
+    "whatItCovers": [
+      "Capacitaci\u00f3n laboral y desarrollo de habilidades",
+      "Ayuda para encontrar y mantener un trabajo",
+      "Coaching laboral y apoyo en el lugar de trabajo",
+      "Tecnolog\u00eda de asistencia para el trabajo",
+      "Escritura de curr\u00edculum y pr\u00e1ctica de entrevistas",
+      "Ayuda con transporte para el trabajo"
+    ],
+    "nextSteps": [
+      "Contacte la agencia de VR de su estado",
+      "Solicite los servicios de VR",
+      "Re\u00fanase con un consejero de VR para hablar de sus metas",
+      "Trabajen juntos para crear un Plan Individual de Empleo (IPE)",
+      "Comience a recibir servicios"
+    ],
+    "requiredDocuments": [
+      "Registros m\u00e9dicos que documenten la discapacidad",
+      "Historial laboral (si lo tiene)",
+      "Registros escolares (si aplica)",
+      "Planes de tratamiento actuales",
+      "Prueba de identidad"
+    ]
+  },
+  "federal-able-account": {
+    "name": "Cuenta ABLE",
+    "description": "Las Cuentas ABLE permiten a personas con discapacidades ahorrar dinero sin perder SSI, Medicaid u otros beneficios. Puede ahorrar hasta $100,000 y mantener sus beneficios. La discapacidad debe haber comenzado antes de los 26 a\u00f1os.",
+    "whatItCovers": [
+      "Cuenta de ahorro libre de impuestos para gastos relacionados con la discapacidad",
+      "Costos de vivienda",
+      "Educaci\u00f3n y capacitaci\u00f3n laboral",
+      "Gastos de salud y bienestar",
+      "Tecnolog\u00eda de asistencia",
+      "Transporte",
+      "Gastos b\u00e1sicos de vida"
+    ],
+    "nextSteps": [
+      "Verifique si su estado tiene un programa ABLE (la mayor\u00eda lo tiene)",
+      "Visite ablenrc.org para comparar programas estatales",
+      "Abra una cuenta en l\u00ednea",
+      "Comience a ahorrar \u2014 puede contribuir hasta $18,000 por a\u00f1o",
+      "Use los fondos para gastos calificados de discapacidad"
+    ],
+    "requiredDocuments": [
+      "Prueba de diagn\u00f3stico de discapacidad",
+      "Prueba de que la discapacidad comenz\u00f3 antes de los 26 a\u00f1os",
+      "N\u00famero de Seguro Social",
+      "Prueba de identidad",
+      "Cuenta bancaria para dep\u00f3sito inicial (opcional)"
+    ]
+  },
+  "federal-supported-employment": {
+    "name": "Empleo con Apoyo",
+    "description": "El Empleo con Apoyo ayuda a personas con discapacidades significativas a trabajar en empleos regulares en su comunidad. Un coach laboral proporciona apoyo continuo para ayudarle a tener \u00e9xito en el trabajo. Los servicios a menudo est\u00e1n disponibles a trav\u00e9s de programas de exenci\u00f3n de Medicaid.",
+    "whatItCovers": [
+      "Coaching laboral individual",
+      "Ayuda para aprender tareas del trabajo",
+      "Apoyo y defensa en el lugar de trabajo",
+      "Comunicaci\u00f3n con empleadores",
+      "Apoyo continuo mientras sea necesario",
+      "Ayuda con habilidades sociales en el trabajo"
+    ],
+    "nextSteps": [
+      "Contacte la agencia de Rehabilitaci\u00f3n Vocacional de su estado",
+      "Pregunte sobre los servicios de Empleo con Apoyo",
+      "Si est\u00e1 en una exenci\u00f3n de Medicaid, pregunte a su administrador de casos sobre apoyos de empleo",
+      "Trabaje con su equipo para encontrar el trabajo adecuado",
+      "Reciba coaching laboral para ayudarle a tener \u00e9xito"
+    ],
+    "requiredDocuments": [
+      "Documentaci\u00f3n de discapacidad",
+      "Elegibilidad de Rehabilitaci\u00f3n Vocacional (si solicita a trav\u00e9s de VR)",
+      "Inscripci\u00f3n en exenci\u00f3n de Medicaid (si aplica)",
+      "Inter\u00e9s en trabajar en la comunidad"
+    ]
+  },
+  "federal-childcare-assistance": {
+    "name": "Asistencia para el Cuidado Infantil (CCDF)",
+    "description": "El Fondo de Cuidado y Desarrollo Infantil ayuda a familias con bajos ingresos a pagar el cuidado de ni\u00f1os. Cubre el cuidado infantil para ni\u00f1os hasta los 13 a\u00f1os, o hasta los 19 a\u00f1os para ni\u00f1os con discapacidades. Cada estado administra su propio programa.",
+    "whatItCovers": [
+      "Costos de centros de cuidado infantil",
+      "Costos de cuidado infantil en hogares familiares",
+      "Cuidado antes y despu\u00e9s de la escuela",
+      "Programas de cuidado de verano",
+      "Cuidado para ni\u00f1os con necesidades especiales (puede incluir tarifas de pago m\u00e1s altas)"
+    ],
+    "nextSteps": [
+      "Contacte la oficina de asistencia para cuidado infantil de su estado",
+      "Solicite a trav\u00e9s del portal de beneficios de su estado",
+      "Proporcione informaci\u00f3n de ingresos y del hogar",
+      "Elija un proveedor de cuidado infantil con licencia",
+      "Su estado pagar\u00e1 al proveedor directamente o le reembolsar\u00e1"
+    ],
+    "requiredDocuments": [
+      "Prueba de ingresos",
+      "Prueba de necesidad de cuidado infantil (trabajo, escuela o capacitaci\u00f3n)",
+      "Certificados de nacimiento de los ni\u00f1os",
+      "Prueba de residencia",
+      "Informaci\u00f3n del proveedor de cuidado infantil"
+    ]
+  },
+  "federal-idea-services": {
+    "name": "Educaci\u00f3n Especial (IDEA)",
+    "description": "La Ley de Educaci\u00f3n para Personas con Discapacidades (IDEA) asegura que los ni\u00f1os con discapacidades reciban educaci\u00f3n gratuita y apropiada. Las escuelas deben proporcionar servicios de educaci\u00f3n especial a trav\u00e9s de un IEP (Programa de Educaci\u00f3n Individualizado). Los servicios est\u00e1n disponibles desde el nacimiento hasta los 21 a\u00f1os.",
+    "whatItCovers": [
+      "Programa de Educaci\u00f3n Individualizado (IEP)",
+      "Instrucci\u00f3n de educaci\u00f3n especial",
+      "Terapia del habla y lenguaje",
+      "Terapia ocupacional y f\u00edsica",
+      "Apoyo conductual",
+      "Planificaci\u00f3n de transici\u00f3n para la vida despu\u00e9s de la escuela (comenzando a los 16 a\u00f1os)",
+      "Servicios de intervenci\u00f3n temprana (desde el nacimiento hasta los 3 a\u00f1os)"
+    ],
+    "nextSteps": [
+      "Hable con la escuela de su hijo sobre sus preocupaciones",
+      "Solicite una evaluaci\u00f3n por escrito",
+      "La escuela debe evaluar dentro de 60 d\u00edas",
+      "Si es elegible, el equipo crear\u00e1 un IEP",
+      "Para ni\u00f1os menores de 3 a\u00f1os, contacte el programa de intervenci\u00f3n temprana de su estado"
+    ],
+    "requiredDocuments": [
+      "Solicitud escrita de evaluaci\u00f3n",
+      "Registros m\u00e9dicos y diagn\u00f3sticos",
+      "Registros escolares anteriores",
+      "Evaluaciones o pruebas externas",
+      "Observaciones y preocupaciones de los padres"
+    ]
+  }
+}

@@ -100,6 +100,53 @@
     "clearMyData": "Borrar Mis Datos",
     "disclaimer": "Esta evaluación es solo para fines informativos. La elegibilidad final es determinada por los administradores de cada programa."
   },
+  "actionPlanSteps": {
+    "medicaid": "Solicite Medicaid primero. Muchos otros programas requieren Medicaid y desbloquea servicios de exención.",
+    "ssi": "Solicite SSI (Ingreso de Seguridad Suplementario). En Kentucky, SSI a menudo viene con Medicaid automático.",
+    "ssiSsdiCombined": "Solicite tanto SSI como SSDI a través del Seguro Social. Son programas diferentes y puede calificar para ambos.",
+    "ssdi": "Solicite SSDI (Seguro por Discapacidad del Seguro Social). Después de 24 meses, obtendrá Medicare automáticamente.",
+    "waivers": "Póngase en la(s) lista(s) de espera de exenciones. Estos programas a menudo tienen largas esperas, así que solicite lo antes posible. Puede estar en múltiples listas.",
+    "snap": "Solicite SNAP (asistencia alimentaria) en kynect.ky.gov o llamando al 1-855-459-6328.",
+    "snapWithMedicaid": "Solicite SNAP (asistencia alimentaria). Puede solicitar SNAP y Medicaid juntos en kynect.ky.gov."
+  },
+  "interactionDescriptions": {
+    "insuranceMedicaid": {
+      "description": "Su seguro privado y Medicaid pueden trabajar juntos.",
+      "recommendation": "Mantenga su seguro privado. Medicaid trabajará junto a él para reducir sus gastos de bolsillo. Informe tanto a su compañía de seguros como a Medicaid que tiene cobertura doble."
+    },
+    "medicaidSsi": {
+      "description": "Recibir SSI en Kentucky generalmente significa que califica automáticamente para Medicaid.",
+      "recommendation": "Solicite SSI primero — Medicaid puede seguir automáticamente sin una solicitud separada."
+    },
+    "medicaidSsdi": {
+      "description": "Después de recibir SSDI por 24 meses, califica automáticamente para Medicare. Si también califica para Medicaid, puede tener ambos.",
+      "recommendation": "Solicite tanto Medicaid como SSDI. Después de 2 años con SSDI, Medicare se agregará automáticamente."
+    },
+    "medicaidMichelleP": {
+      "description": "Necesita Medicaid para usar la Exención Michelle P. La exención agrega servicios adicionales sobre lo que Medicaid cubre.",
+      "recommendation": "Solicite Medicaid primero, luego solicite la Exención Michelle P. Póngase en la lista de espera lo antes posible."
+    },
+    "medicaidHcb": {
+      "description": "Necesita Medicaid para usar la Exención HCB. La exención proporciona servicios en su hogar y comunidad.",
+      "recommendation": "Solicite Medicaid primero, luego póngase en la lista de espera de la Exención HCB. La espera puede ser larga, así que solicite temprano."
+    },
+    "medicaidScl": {
+      "description": "Necesita Medicaid para usar la Exención SCL. SCL proporciona apoyos integrales para la vida en comunidad.",
+      "recommendation": "Solicite Medicaid primero, luego póngase en la lista de espera de la Exención SCL. Puede estar en múltiples listas de espera de exenciones."
+    },
+    "ssiSsdi": {
+      "description": "SSI y SSDI son programas diferentes. Puede calificar para uno o ambos dependiendo de su historial laboral e ingresos.",
+      "recommendation": "Solicite ambos programas. Sirven para propósitos diferentes y pueden combinarse."
+    },
+    "medicaidSnap": {
+      "description": "Puede solicitar tanto Medicaid como SNAP al mismo tiempo a través de kynect.",
+      "recommendation": "Una solicitud en kynect.ky.gov puede iniciar ambos programas. Esto ahorra tiempo."
+    },
+    "ssiSnap": {
+      "description": "Los ingresos de SSI cuentan para la elegibilidad de SNAP. Aún puede calificar para SNAP.",
+      "recommendation": "Solicite SNAP aunque reciba SSI. Sus ingresos de SSI serán contados, pero aún puede calificar."
+    }
+  },
   "whatIf": {
     "title": "¿Qué Pasa Si Cambian Mis Ingresos?",
     "subtitle": "Use el control deslizante para explorar cómo los cambios en el ingreso de su hogar podrían afectar los programas para los que califica.",

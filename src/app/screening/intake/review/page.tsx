@@ -9,7 +9,7 @@ import { formDataToHouseholdFacts, generateSessionId } from '@/lib/screening/uti
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Sparkles, Pencil, AlertCircle, Loader2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function ReviewPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const t = useTranslations('screening');
+  const locale = useLocale();
 
   const handleGetResults = async () => {
     setValidationErrors([]);
@@ -41,7 +42,7 @@ export default function ReviewPage() {
       const response = await fetch('/api/screening/evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(householdFacts),
+        body: JSON.stringify({ ...householdFacts, locale }),
       });
 
       if (!response.ok) {
@@ -75,6 +76,31 @@ export default function ReviewPage() {
   };
 
   const yesNo = (val: boolean | undefined) => val ? t('review.yes') : t('review.no');
+
+  const workStatusLabels: Record<string, string> = {
+    'employed': t('step4.employed'),
+    'unemployed': t('step4.unemployed'),
+    'unable-to-work': t('step4.unableToWork'),
+    'student': t('step4.student'),
+  };
+
+  const diagnosisLabels: Record<string, string> = {
+    'autism': t('step4.autism'),
+    'cerebral-palsy': t('step4.cerebralPalsy'),
+    'down-syndrome': t('step4.downSyndrome'),
+    'epilepsy': t('step4.epilepsy'),
+    'mental-health': t('step4.mentalHealth'),
+    'other': t('step4.otherDiagnosis'),
+  };
+
+  const limitationLabels: Record<string, string> = {
+    'daily-living': t('step4.dailyLiving'),
+    'communication': t('step4.communication'),
+    'mobility': t('step4.mobility'),
+    'self-care': t('step4.selfCare'),
+    'learning': t('step4.learning'),
+    'social': t('step4.social'),
+  };
 
   return (
     <QuestionCard
@@ -225,8 +251,8 @@ export default function ReviewPage() {
                 {formData.workStatus && (
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">{t('review.workStatus')}</dt>
-                    <dd className="text-foreground font-medium capitalize">
-                      {formData.workStatus.replace(/-/g, ' ')}
+                    <dd className="text-foreground font-medium">
+                      {workStatusLabels[formData.workStatus] || formData.workStatus}
                     </dd>
                   </div>
                 )}
@@ -241,16 +267,16 @@ export default function ReviewPage() {
                 {formData.coOccurringDiagnoses && formData.coOccurringDiagnoses.length > 0 && (
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">{t('review.coOccurring')}</dt>
-                    <dd className="text-foreground font-medium capitalize">
-                      {formData.coOccurringDiagnoses.map(d => d.replace(/-/g, ' ')).join(', ')}
+                    <dd className="text-foreground font-medium">
+                      {formData.coOccurringDiagnoses.map(d => diagnosisLabels[d] || d).join(', ')}
                     </dd>
                   </div>
                 )}
                 {formData.functionalLimitations && formData.functionalLimitations.length > 0 && (
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">{t('review.areasNeedingHelp')}</dt>
-                    <dd className="text-foreground font-medium capitalize">
-                      {formData.functionalLimitations.map(l => l.replace(/-/g, ' ')).join(', ')}
+                    <dd className="text-foreground font-medium">
+                      {formData.functionalLimitations.map(l => limitationLabels[l] || l).join(', ')}
                     </dd>
                   </div>
                 )}

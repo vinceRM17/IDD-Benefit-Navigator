@@ -50,6 +50,9 @@ async function evaluateHandler(request: NextRequest): Promise<NextResponse> {
     );
   }
 
+  // Extract locale before casting to HouseholdFacts
+  const locale = (body as Record<string, unknown>).locale as string || 'en';
+  delete (body as Record<string, unknown>).locale;
   const facts = body as HouseholdFacts;
 
   try {
@@ -68,11 +71,12 @@ async function evaluateHandler(request: NextRequest): Promise<NextResponse> {
       eligibleProgramIds,
       facts.hasInsurance,
       config,
-      facts.state
+      facts.state,
+      locale
     );
 
     // Generate action plan using config-driven rules
-    const actionPlan = generateActionPlan(enriched, config, facts.state);
+    const actionPlan = generateActionPlan(enriched, config, facts.state, locale);
 
     // Generate unique session ID for results
     const sessionId = randomUUID();
