@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
 import { evaluateEligibility } from '@/lib/rules/engine';
+import { loadStateOrFederalConfig } from '@/lib/rules/loader';
 import { HouseholdFacts } from '@/lib/rules/types';
-import { enrichResults, getBenefitInteractions } from '@/lib/results/action-plan';
+import { enrichResults, getBenefitInteractions, generateActionPlan } from '@/lib/results/action-plan';
 import { ScreeningResults } from '@/lib/results/types';
 import { withAuditLog } from '@/lib/audit/middleware';
 import { createSession, updateSession } from '@/lib/security/session';
@@ -52,18 +53,26 @@ async function evaluateHandler(request: NextRequest): Promise<NextResponse> {
   const facts = body as HouseholdFacts;
 
   try {
+    // Load state config with federal fallback for enrichment data
+    const config = await loadStateOrFederalConfig(facts.state);
+
     // Evaluate eligibility using rules engine
     const rawResults = await evaluateEligibility(facts.state, facts);
 
     // Enrich results with program content and ranking
-    const enriched = enrichResults(rawResults, facts.state);
+    const enriched = enrichResults(rawResults, facts.state, config);
 
     // Get benefit interactions (including ELIG-06 insurance coordination)
     const eligibleProgramIds = enriched.map((r) => r.programId);
     const benefitInteractions = getBenefitInteractions(
       eligibleProgramIds,
-      facts.hasInsurance
+      facts.hasInsurance,
+      config,
+      facts.state
     );
+
+    // Generate action plan using config-driven rules
+    const actionPlan = generateActionPlan(enriched, config, facts.state);
 
     // Generate unique session ID for results
     const sessionId = randomUUID();
@@ -73,8 +82,10 @@ async function evaluateHandler(request: NextRequest): Promise<NextResponse> {
       sessionId,
       evaluatedAt: new Date().toISOString(),
       state: facts.state,
+      coverageLevel: config.coverageLevel,
       programs: enriched,
       benefitInteractions,
+      actionPlan,
     };
 
     // Store results in session for later PDF generation

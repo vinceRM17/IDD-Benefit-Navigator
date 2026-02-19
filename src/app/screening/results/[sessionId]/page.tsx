@@ -20,7 +20,9 @@ import {
 } from '@/components/results';
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
-import { generateActionPlan } from '@/lib/results/action-plan';
+import { StateCoverageBanner } from '@/components/results/StateCoverageBanner';
+import { getStateName } from '@/lib/data/states';
+// Action plan is now pre-generated server-side and included in results
 import { useEffect, useState, useCallback } from 'react';
 import type { Tab } from '@/components/results/TabNav';
 import { Button } from '@/components/ui/button';
@@ -77,9 +79,7 @@ export default function ResultsPage() {
     .filter((p) => p.eligible && (p.confidence === 'likely' || p.confidence === 'possible'))
     .map((p) => p.programId);
 
-  const actionSteps = generateActionPlan(
-    results.programs.filter((p) => p.confidence === 'likely' || p.confidence === 'possible')
-  );
+  const actionSteps = results.actionPlan || [];
 
   const familyContext = {
     householdSize: formData.householdSize || 1,
@@ -90,7 +90,7 @@ export default function ResultsPage() {
     insuranceType: formData.insuranceType,
     receivesSSI: formData.receivesSSI,
     receivesSNAP: formData.receivesSNAP,
-    state: formData.state || results.state || 'KY',
+    state: formData.state || results.state,
   };
 
   const handleStartOver = () => {
@@ -264,6 +264,7 @@ export default function ResultsPage() {
       <ResourceDirectory
         eligibleProgramIds={eligibleProgramIds}
         familyContext={familyContext}
+        stateCode={results.state}
       />
       {!isAuthenticated && (
         <div className="mt-8">
@@ -287,6 +288,15 @@ export default function ResultsPage() {
         <h1 className="text-3xl font-heading font-bold text-foreground mb-6">
           Your Personalized Results
         </h1>
+
+        {/* Partial coverage banner for federal-only states */}
+        {results.coverageLevel === 'federal-only' && (
+          <StateCoverageBanner
+            stateCode={results.state}
+            stateName={getStateName(results.state)}
+            coverageLevel="federal-only"
+          />
+        )}
 
         {/* Tabbed content */}
         <TabNav

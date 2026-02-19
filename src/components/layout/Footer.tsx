@@ -50,7 +50,7 @@ export function Footer() {
           <Separator />
 
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} IDD Benefits Navigator. Built with care for Kentucky families.
+            &copy; {currentYear} IDD Benefits Navigator. Built with care for families.
           </p>
         </div>
       </div>

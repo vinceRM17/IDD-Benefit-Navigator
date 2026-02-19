@@ -1,12 +1,24 @@
 import { ApplicationPortal } from './types';
 
 /**
- * Official application portals for Kentucky benefit programs
- *
- * These are the primary online portals where families can apply
- * for benefits and manage their applications.
+ * National application portals available in all states
  */
-export const applicationPortals: ApplicationPortal[] = [
+const nationalPortals: ApplicationPortal[] = [
+  {
+    id: 'ssa-online',
+    name: 'Social Security Online Application',
+    description:
+      'Apply for SSI or SSDI benefits directly through the Social Security Administration\'s website.',
+    url: 'https://www.ssa.gov/benefits/disability/apply.html',
+    programIds: ['federal-ssi', 'federal-ssdi'],
+    notes: 'You can also call 1-800-772-1213 to apply by phone or schedule an appointment at a local office.',
+  },
+];
+
+/**
+ * Kentucky-specific portals
+ */
+const kentuckyPortals: ApplicationPortal[] = [
   {
     id: 'kynect',
     name: 'kynect',
@@ -17,7 +29,7 @@ export const applicationPortals: ApplicationPortal[] = [
     notes: 'You\'ll need to create an account to apply. Have your documents ready before starting.',
   },
   {
-    id: 'ssa-online',
+    id: 'ssa-online-ky',
     name: 'Social Security Online Application',
     description:
       'Apply for SSI or SSDI benefits directly through the Social Security Administration\'s website.',
@@ -35,3 +47,34 @@ export const applicationPortals: ApplicationPortal[] = [
     notes: 'Waiver applications require a DCBS case manager. Contact DCBS at 1-855-306-8959 to start the process.',
   },
 ];
+
+/**
+ * Portals organized by state code
+ */
+const portalsByState: Record<string, ApplicationPortal[]> = {
+  KY: kentuckyPortals,
+};
+
+/**
+ * Get application portals for a specific state
+ * Returns state-specific portals, or national portals for federal-only states
+ */
+export function getPortalsByState(stateCode: string): ApplicationPortal[] {
+  const statePortals = portalsByState[stateCode];
+  if (statePortals) return statePortals;
+
+  // Adapt national portal programIds to use state prefix
+  return nationalPortals.map(portal => ({
+    ...portal,
+    programIds: portal.programIds.map(id =>
+      id.startsWith('federal-')
+        ? id.replace('federal-', `${stateCode.toLowerCase()}-`)
+        : id
+    ),
+  }));
+}
+
+/**
+ * @deprecated Use getPortalsByState() instead
+ */
+export const applicationPortals = kentuckyPortals;

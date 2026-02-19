@@ -68,7 +68,7 @@ export default function ScreeningPage() {
       <div className="mt-section text-center">
         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
           <Shield className="h-4 w-4" />
-          <span>Currently serving families in Kentucky. More states coming soon.</span>
+          <span>Available nationwide. Select your state during screening.</span>
         </div>
       </div>
     </div>

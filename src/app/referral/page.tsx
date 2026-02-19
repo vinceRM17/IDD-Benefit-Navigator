@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { partnerOrganizations } from '@/content/resources/partners';
+import { getPartnersByState } from '@/content/resources/partners';
 import { useScreeningStore } from '@/lib/screening/store';
 import type { ReferralResult } from '@/lib/referrals/types';
+import { getProgramContent } from '@/content/programs';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -43,7 +44,9 @@ function ReferralFormContent() {
   const [userEmail, setUserEmail] = useState('');
   const [showDataPreview, setShowDataPreview] = useState(false);
 
-  const availablePartners = partnerOrganizations.filter((partner) => partner.email);
+  const stateCode = formData?.state || results?.state || 'KY';
+  const allPartners = getPartnersByState(stateCode);
+  const availablePartners = allPartners.filter((partner) => partner.email);
 
   const eligiblePrograms =
     results?.programs
@@ -134,16 +137,8 @@ function ReferralFormContent() {
   };
 
   const getProgramName = (programId: string): string => {
-    const programNames: Record<string, string> = {
-      'ky-medicaid': 'Kentucky Medicaid',
-      'ky-michelle-p-waiver': 'Michelle P. Waiver',
-      'ky-hcb-waiver': 'Home and Community Based Waiver',
-      'ky-scl-waiver': 'Supports for Community Living Waiver',
-      'ky-ssi': 'Supplemental Security Income (SSI)',
-      'ky-ssdi': 'Social Security Disability Insurance (SSDI)',
-      'ky-snap': 'SNAP (Food Assistance)',
-    };
-    return programNames[programId] || programId;
+    const content = getProgramContent(programId);
+    return content?.name || programId;
   };
 
   return (

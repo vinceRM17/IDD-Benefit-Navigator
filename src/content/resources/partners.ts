@@ -1,12 +1,35 @@
 import { PartnerOrganization } from './types';
 
 /**
- * Partner organizations in Kentucky that assist with IDD benefit applications
- *
- * These organizations provide free assistance with navigating benefits,
- * completing applications, and understanding eligibility.
+ * National partner organizations available in all states
  */
-export const partnerOrganizations: PartnerOrganization[] = [
+const nationalPartners: PartnerOrganization[] = [
+  {
+    id: 'ssa',
+    name: 'Social Security Administration',
+    description:
+      'The Social Security Administration processes SSI and SSDI applications. You can apply online or visit a local office for help.',
+    extendedDescription:
+      'The Social Security Administration (SSA) is the federal agency that administers Supplemental Security Income (SSI) and Social Security Disability Insurance (SSDI) programs. These programs provide monthly cash benefits to people with disabilities who meet specific eligibility criteria. SSI is for people with limited income and resources, while SSDI is based on work history and Social Security contributions.\n\nYou can apply for SSI or SSDI online at ssa.gov, by phone, or by visiting your local Social Security office. The application process involves providing medical records, work history, and financial information. SSA will review your application and determine whether you meet the disability criteria.',
+    services: [
+      'SSI and SSDI application processing',
+      'Disability determination',
+      'Benefit verification letters',
+      'Medicare enrollment',
+    ],
+    phone: '1-800-772-1213',
+    website: 'https://www.ssa.gov',
+    servesArea: 'Nationwide',
+    hours: 'Monday-Friday 9:00 AM - 4:00 PM local time',
+    relevantPrograms: ['federal-ssi', 'federal-ssdi'],
+    servicesOffered: ['application-assistance', 'disability-determination'],
+  },
+];
+
+/**
+ * Kentucky-specific partner organizations
+ */
+const kentuckyPartners: PartnerOrganization[] = [
   {
     id: 'kaia',
     name: 'Kentucky Advocates for Inclusion & Accessibility (KAIA)',
@@ -141,3 +164,37 @@ export const partnerOrganizations: PartnerOrganization[] = [
     servicesOffered: ['application-assistance', 'disability-determination'],
   },
 ];
+
+/**
+ * Partners organized by state code
+ */
+const partnersByState: Record<string, PartnerOrganization[]> = {
+  KY: kentuckyPartners,
+};
+
+/**
+ * Get partner organizations for a specific state
+ * Returns state-specific partners + national partners
+ * For states without specific partners, returns national partners only
+ */
+export function getPartnersByState(stateCode: string): PartnerOrganization[] {
+  const statePartners = partnersByState[stateCode] || [];
+
+  // Adapt national partner programIds to use state prefix
+  const adaptedNational = nationalPartners.map(partner => ({
+    ...partner,
+    relevantPrograms: partner.relevantPrograms.map(id =>
+      id.startsWith('federal-')
+        ? id.replace('federal-', `${stateCode.toLowerCase()}-`)
+        : id
+    ),
+  }));
+
+  return [...statePartners, ...adaptedNational];
+}
+
+/**
+ * @deprecated Use getPartnersByState() instead
+ * Kept for backward compatibility during transition
+ */
+export const partnerOrganizations = kentuckyPartners;

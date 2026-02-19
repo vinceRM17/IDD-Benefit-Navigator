@@ -3,15 +3,15 @@
  */
 
 import { Engine } from 'json-rules-engine';
-import { loadStateConfig } from './loader';
+import { loadStateOrFederalConfig } from './loader';
 import type { HouseholdFacts, EligibilityResult, StateConfig, ProgramRule } from './types';
 
 /**
  * Eligibility evaluation engine
  *
  * Wraps json-rules-engine to evaluate household facts against state-specific
- * benefit program rules. The engine is state-agnostic - program rules are
- * loaded from JSON configuration files, not hardcoded.
+ * benefit program rules. The engine is state-agnostic - program rules and
+ * enrichment data are loaded from JSON configuration files, not hardcoded.
  *
  * @example
  * ```typescript
@@ -43,28 +43,15 @@ export class EligibilityEngine {
       });
     });
 
-    // Add custom fact for income limits based on household size and program
-    this.engine.addFact('incomeLimitMedicaid', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size) => {
-        return this.config.incomeLimits.medicaid?.[size as number] || 0;
+    // Register income limit facts — keys in config ARE the fact names
+    // (e.g., "incomeLimitMedicaid", "incomeLimitSNAP", "incomeLimitSSI")
+    for (const [factName, limits] of Object.entries(config.incomeLimits)) {
+      this.engine.addFact(factName, (params, almanac) => {
+        return almanac.factValue('householdSize').then((size) => {
+          return limits[size as number] || 0;
+        });
       });
-    });
-
-    this.engine.addFact('incomeLimitSNAP', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size) => {
-        return this.config.incomeLimits.snap?.[size as number] || 0;
-      });
-    });
-
-    this.engine.addFact('incomeLimitSSI', (params, almanac) => {
-      return this.config.incomeLimits.ssi?.[1] || 0;
-    });
-
-    this.engine.addFact('incomeLimitTestBenefitA', (params, almanac) => {
-      return almanac.factValue('householdSize').then((size) => {
-        return this.config.incomeLimits['test-benefit-a']?.[size as number] || 0;
-      });
-    });
+    }
   }
 
   /**
@@ -134,61 +121,74 @@ export class EligibilityEngine {
   }
 
   /**
-   * Build result for eligible program
+   * Build result for eligible program using config-driven enrichment
    */
   private buildEligibleResult(
     program: ProgramRule,
     facts: HouseholdFacts,
     confidence: 'likely' | 'possible' | 'unlikely'
   ): EligibilityResult {
-    const reasons: string[] = [];
-    const nextSteps: string[] = [];
-    const requiredDocuments: string[] = [];
+    const enrichment = program.enrichment;
 
-    // Generate program-specific reasons
-    if (program.programName === 'Medicaid') {
-      if (facts.receivesSSI) {
-        reasons.push('SSI recipients are categorically eligible');
-      } else {
-        const limit = this.config.incomeLimits.medicaid?.[facts.householdSize];
-        if (facts.monthlyIncome <= limit) {
-          if (facts.monthlyIncome === limit) {
-            reasons.push('Income at or below Kentucky Medicaid limit');
-          } else {
-            reasons.push('Income below Kentucky Medicaid limit');
+    // If no enrichment data, use generic reasons
+    if (!enrichment) {
+      return {
+        program: program.programName,
+        eligible: true,
+        confidence,
+        reasons: [`Meets eligibility criteria for ${program.programName}`],
+      };
+    }
+
+    const reasons: string[] = [];
+
+    // Evaluate eligible reason rules from config
+    for (const rule of enrichment.eligibleReasons) {
+      switch (rule.condition) {
+        case 'receivesSSI':
+          if (facts.receivesSSI) {
+            reasons.push(rule.reason);
           }
+          break;
+        case 'incomeAtLimit': {
+          if (!facts.receivesSSI && rule.incomeLimitKey) {
+            const limit = this.config.incomeLimits[rule.incomeLimitKey]?.[facts.householdSize];
+            if (limit !== undefined && facts.monthlyIncome === limit) {
+              reasons.push(rule.reason);
+            }
+          }
+          break;
         }
+        case 'incomeBelowLimit': {
+          if (!facts.receivesSSI && rule.incomeLimitKey) {
+            const limit = this.config.incomeLimits[rule.incomeLimitKey]?.[facts.householdSize];
+            if (limit !== undefined && facts.monthlyIncome < limit) {
+              reasons.push(rule.reason);
+            }
+          }
+          break;
+        }
+        case 'hasDisability':
+          if (facts.hasDisabilityDiagnosis) {
+            reasons.push(rule.reason);
+          }
+          break;
+        case 'highIncome':
+          if (facts.monthlyIncome > 2000) {
+            reasons.push(rule.reason);
+          }
+          break;
+        case 'meetsAgeCriteria':
+          reasons.push(rule.reason);
+          break;
+        case 'default':
+          reasons.push(rule.reason);
+          break;
       }
-      nextSteps.push('Apply through kynect.ky.gov or local DCBS office');
-      requiredDocuments.push('Proof of income', 'Proof of residency', 'Social Security cards');
-    } else if (program.programName === 'SNAP') {
-      const limit = this.config.incomeLimits.snap?.[facts.householdSize];
-      if (facts.monthlyIncome <= limit) {
-        reasons.push('Income below Kentucky SNAP limit');
-      }
-      nextSteps.push('Apply through kynect.ky.gov or local DCBS office');
-      requiredDocuments.push('Proof of income', 'Utility bills', 'Rent/mortgage statements');
-    } else if (program.programName === 'SSI') {
-      reasons.push('Disability diagnosis may qualify for SSI');
-      if (facts.monthlyIncome > 2000) {
-        reasons.push('High income may reduce SSI benefit amount');
-      }
-      nextSteps.push('Apply through Social Security Administration');
-      requiredDocuments.push('Medical records', 'Proof of income', 'Work history');
-    } else if (program.programName === 'Michelle P Waiver') {
-      reasons.push('IDD diagnosis qualifies for waiver services');
-      nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
-      requiredDocuments.push('IDD diagnosis documentation', 'Proof of Kentucky residency');
-    } else if (program.programName === 'HCB Waiver') {
-      reasons.push('IDD diagnosis and age 18+ qualifies for HCB waiver');
-      nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
-      requiredDocuments.push('Documentation of disability or medical condition', 'Proof of Medicaid eligibility', 'Proof of age (must be 18 or older)');
-    } else if (program.programName === 'SCL Waiver') {
-      reasons.push('IDD diagnosis and age 3+ qualifies for SCL waiver');
-      nextSteps.push('Contact Kentucky Department for Aging and Independent Living');
-      requiredDocuments.push('IDD diagnosis documentation', 'Proof of Medicaid eligibility', 'Proof of Kentucky residency');
-    } else {
-      // Generic for TEST state or other programs
+    }
+
+    // If no specific reasons matched, add a generic one
+    if (reasons.length === 0) {
       reasons.push(`Meets eligibility criteria for ${program.programName}`);
     }
 
@@ -197,52 +197,62 @@ export class EligibilityEngine {
       eligible: true,
       confidence,
       reasons,
-      nextSteps: nextSteps.length > 0 ? nextSteps : undefined,
-      requiredDocuments: requiredDocuments.length > 0 ? requiredDocuments : undefined,
+      nextSteps: enrichment.nextSteps.length > 0 ? enrichment.nextSteps : undefined,
+      requiredDocuments: enrichment.requiredDocuments.length > 0 ? enrichment.requiredDocuments : undefined,
     };
   }
 
   /**
-   * Build result for ineligible program
+   * Build result for ineligible program using config-driven enrichment
    */
   private buildIneligibleResult(
     program: ProgramRule,
     facts: HouseholdFacts
   ): EligibilityResult {
+    const enrichment = program.enrichment;
+
+    // If no enrichment data, use generic reason
+    if (!enrichment) {
+      return {
+        program: program.programName,
+        eligible: false,
+        confidence: 'unlikely',
+        reasons: [`Does not meet eligibility criteria for ${program.programName}`],
+      };
+    }
+
     const reasons: string[] = [];
 
-    // Generate program-specific reasons for ineligibility
-    if (program.programName === 'Medicaid') {
-      const limit = this.config.incomeLimits.medicaid?.[facts.householdSize];
-      if (facts.monthlyIncome > limit) {
-        reasons.push('Income above Kentucky Medicaid limit');
+    // Evaluate ineligible reason rules from config
+    for (const rule of enrichment.ineligibleReasons) {
+      switch (rule.condition) {
+        case 'incomeAboveLimit': {
+          if (rule.incomeLimitKey) {
+            const limit = this.config.incomeLimits[rule.incomeLimitKey]?.[facts.householdSize];
+            if (limit !== undefined && facts.monthlyIncome > limit) {
+              reasons.push(rule.reason);
+            }
+          }
+          break;
+        }
+        case 'noDisability':
+          if (!facts.hasDisabilityDiagnosis) {
+            reasons.push(rule.reason);
+          }
+          break;
+        case 'ageBelow':
+          if (rule.minAge !== undefined && facts.hasDisabilityDiagnosis && facts.age < rule.minAge) {
+            reasons.push(rule.reason);
+          }
+          break;
+        case 'default':
+          reasons.push(rule.reason);
+          break;
       }
-    } else if (program.programName === 'SNAP') {
-      const limit = this.config.incomeLimits.snap?.[facts.householdSize];
-      if (facts.monthlyIncome > limit) {
-        reasons.push('Income above Kentucky SNAP limit');
-      }
-    } else if (program.programName === 'SSI') {
-      if (!facts.hasDisabilityDiagnosis) {
-        reasons.push('No disability diagnosis documented');
-      }
-    } else if (program.programName === 'Michelle P Waiver') {
-      if (!facts.hasDisabilityDiagnosis) {
-        reasons.push('No IDD diagnosis documented');
-      }
-    } else if (program.programName === 'HCB Waiver') {
-      if (!facts.hasDisabilityDiagnosis) {
-        reasons.push('No IDD diagnosis documented');
-      } else if (facts.age < 18) {
-        reasons.push('Must be 18 or older for HCB Waiver');
-      }
-    } else if (program.programName === 'SCL Waiver') {
-      if (!facts.hasDisabilityDiagnosis) {
-        reasons.push('No IDD diagnosis documented');
-      } else if (facts.age < 3) {
-        reasons.push('Must be 3 or older for SCL Waiver');
-      }
-    } else {
+    }
+
+    // If no specific reasons matched, add a generic one
+    if (reasons.length === 0) {
       reasons.push(`Does not meet eligibility criteria for ${program.programName}`);
     }
 
@@ -286,7 +296,7 @@ export async function evaluateEligibility(
   stateCode: string,
   facts: HouseholdFacts
 ): Promise<EligibilityResult[]> {
-  const config = await loadStateConfig(stateCode);
+  const config = await loadStateOrFederalConfig(stateCode);
   const engine = new EligibilityEngine(config);
   return engine.evaluate(facts);
 }

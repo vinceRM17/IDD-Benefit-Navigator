@@ -31,11 +31,17 @@ export interface ScreeningResults {
   /** State code used for evaluation */
   state: string;
 
+  /** Coverage level of the state */
+  coverageLevel?: 'full' | 'federal-only';
+
   /** Ranked and enriched program results */
   programs: EnrichedResult[];
 
   /** Benefit interaction guidance */
   benefitInteractions: BenefitInteraction[];
+
+  /** Pre-generated action plan steps */
+  actionPlan?: string[];
 }
 
 /**

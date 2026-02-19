@@ -21,10 +21,10 @@ describe('State Configuration Loader', () => {
     expect(programNames).toContain('SSI');
     expect(programNames).toContain('Michelle P Waiver');
 
-    // Should have income limits
+    // Should have income limits (keys are fact names)
     expect(config.incomeLimits).toBeDefined();
-    expect(config.incomeLimits.medicaid).toBeDefined();
-    expect(config.incomeLimits.snap).toBeDefined();
+    expect(config.incomeLimits.incomeLimitMedicaid).toBeDefined();
+    expect(config.incomeLimits.incomeLimitSNAP).toBeDefined();
 
     // Should have metadata
     expect(config.metadata).toBeDefined();

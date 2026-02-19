@@ -46,7 +46,7 @@
     }
   ],
   "incomeLimits": {
-    "test-benefit-a": {
+    "incomeLimitTestBenefitA": {
       "1": 2000,
       "2": 3000,
       "3": 4000,

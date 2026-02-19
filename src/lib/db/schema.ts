@@ -27,6 +27,7 @@ export const screenings = pgTable('screenings', {
   userId: integer('user_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
+  stateCode: text('state_code').notNull().default('KY'), // tracks which state was screened
   screeningData: jsonb('screening_data').notNull(), // stores FullScreeningData
   results: jsonb('results').notNull(), // stores ScreeningResults
   completedAt: timestamp('completed_at').notNull().defaultNow(),
@@ -85,6 +86,19 @@ export const referrals = pgTable('referrals', {
   postmarkMessageId: text('postmark_message_id'),
 });
 
+/**
+ * State Waitlist table
+ * Collects emails from users in federal-only states who want to be
+ * notified when full state-specific coverage becomes available
+ */
+export const stateWaitlist = pgTable('state_waitlist', {
+  id: serial('id').primaryKey(),
+  email: text('email').notNull(),
+  stateCode: text('state_code').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  notifiedAt: timestamp('notified_at'), // set when state coverage launches
+});
+
 // Export types for use in application code
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -100,3 +114,6 @@ export type NewEmailLog = typeof emailLog.$inferInsert;
 
 export type Referral = typeof referrals.$inferSelect;
 export type NewReferral = typeof referrals.$inferInsert;
+
+export type StateWaitlistEntry = typeof stateWaitlist.$inferSelect;
+export type NewStateWaitlistEntry = typeof stateWaitlist.$inferInsert;

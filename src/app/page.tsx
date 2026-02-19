@@ -74,7 +74,7 @@ export default function Home() {
       <section className="bg-gradient-to-b from-primary/5 via-accent/5 to-transparent py-section">
         <div className="max-w-3xl mx-auto px-page-x text-center">
           <Badge variant="warm" className="mb-4 text-sm">
-            Free for Kentucky Families
+            Free for All Families
           </Badge>
           <h1 className="text-4xl md:text-5xl font-heading font-extrabold text-foreground mb-4 text-balance leading-tight">
             Find the Benefits Your Family Deserves
@@ -139,7 +139,7 @@ export default function Home() {
             Programs We Cover
           </h2>
           <p className="text-muted-foreground text-center mb-section max-w-xl mx-auto">
-            We screen for the major benefit programs available to Kentucky families.
+            We screen for the major benefit programs available to families nationwide.
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {programs.map((program) => (
@@ -193,7 +193,7 @@ export default function Home() {
             Ready to Get Started?
           </h2>
           <p className="text-muted-foreground mb-6">
-            Currently serving families in Kentucky. More states coming soon.
+            Now serving families in all 50 states. Select your state to get started.
           </p>
           <Button size="lg" className="text-base px-8" asChild>
             <Link href="/screening">
