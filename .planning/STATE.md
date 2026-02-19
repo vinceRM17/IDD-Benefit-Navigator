@@ -40,7 +40,17 @@ Progress: [██████████] 100% (v1.3 — all phases shipped)
 
 ### Pending Todos
 
-None.
+**Security Hardening (future milestone):**
+- Encrypt sensitive data in localStorage (income, disability status, SSI info)
+- Wire CSRF tokens into all state-changing forms + API routes
+- Add referral spam prevention (per-email rate limiting, duplicate detection)
+- Move rate limiting + sessions to Redis (in-memory won't work on Vercel serverless)
+- Reduce JWT expiration from 30 days to 7 days + add refresh tokens
+- Add account lockout after failed login attempts
+- Sanitize AI prompt inputs against injection
+- Add Postmark webhook signature verification
+- Sanitize referral note field before email rendering
+- Validate phone number format on referral form
 
 ### Blockers/Concerns
 
@@ -48,6 +58,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-02-18
-Stopped at: v1.3 milestone complete
+Last session: 2026-02-19
+Stopped at: CSP hardened, security backlog documented
 Resume file: None

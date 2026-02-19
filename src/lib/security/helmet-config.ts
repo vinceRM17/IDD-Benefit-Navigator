@@ -9,7 +9,7 @@ export function getSecurityHeaders(): Record<string, string> {
     'Content-Security-Policy': [
       "default-src 'self'",
       "style-src 'self' 'unsafe-inline'", // Tailwind requires unsafe-inline
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline'", // unsafe-eval removed — not needed in production
       "img-src 'self' data: https:",
       "font-src 'self'",
       "connect-src 'self'",
