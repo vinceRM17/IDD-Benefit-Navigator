@@ -12,14 +12,14 @@ interface StepIndicatorProps {
 export function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
   return (
     <nav aria-label="Progress" className="mb-8">
-      <ol className="flex items-center justify-center gap-4">
+      <ol className="flex items-start justify-between w-full">
         {steps.map((step) => {
           const isCompleted = step.id < currentStep;
           const isCurrent = step.id === currentStep;
           const isPending = step.id > currentStep;
 
           return (
-            <li key={step.id} className="flex items-center">
+            <li key={step.id} className="flex-1 flex items-center justify-center">
               <div className="flex flex-col items-center">
                 <div
                   className={`
