@@ -1,0 +1,66 @@
+{
+  "steps": {
+    "familySituation": "Family Situation",
+    "incomeAndBenefits": "Income & Benefits",
+    "diagnosisAndInsurance": "Diagnosis & Insurance",
+    "functionalNeeds": "Functional Needs",
+    "review": "Review"
+  },
+  "step1": {
+    "title": "Your family situation",
+    "description": "Tell us about your household so we can find the right programs.",
+    "stateLabel": "What state do you live in?",
+    "statePlaceholder": "Select your state",
+    "householdSizeLabel": "How many people live in your household?",
+    "householdSizePlaceholder": "e.g., 3"
+  },
+  "step2": {
+    "title": "Income and current benefits",
+    "description": "This helps us check income-based programs like Medicaid and SNAP.",
+    "monthlyIncomeLabel": "What is your total monthly household income?",
+    "monthlyIncomePlaceholder": "e.g., 2000",
+    "receivesSSILabel": "Does anyone in your household receive SSI?",
+    "receivesSNAPLabel": "Does anyone in your household receive SNAP (food stamps)?"
+  },
+  "step3": {
+    "title": "Diagnosis and insurance",
+    "description": "This information helps us understand your family member's needs and current coverage.",
+    "hasDisabilityLabel": "Has your family member been diagnosed with an intellectual or developmental disability?",
+    "ageLabel": "How old is your family member with a disability?",
+    "agePlaceholder": "e.g., 12",
+    "ageHelpText": "Enter their current age in years",
+    "hasInsuranceLabel": "Does your family member have private health insurance?",
+    "insuranceTypeLabel": "What type of insurance?"
+  },
+  "step4": {
+    "title": "Functional needs",
+    "description": "These optional questions help us find additional programs. Skip any you prefer not to answer.",
+    "workStatusLabel": "What is your family member's work situation?",
+    "workStatusHelp": "This helps us check for employment-related programs",
+    "guardianLabel": "Does your family member have a legal guardian?",
+    "diagnosesLabel": "Does your family member have any of these conditions?",
+    "diagnosesHelp": "This helps us identify specialized programs",
+    "limitationsLabel": "Does your family member need help with any of these areas?",
+    "limitationsHelp": "This helps match your family with the right level of support"
+  },
+  "review": {
+    "title": "Review your answers",
+    "description": "Please check that everything looks correct before we generate your results.",
+    "edit": "Edit",
+    "findingBenefits": "Finding benefits for your family...",
+    "errorMessage": "Something went wrong while finding benefits for your family. Please try again or contact us for help."
+  },
+  "validation": {
+    "selectState": "Please select your state",
+    "enterNumber": "Please enter a number",
+    "wholeNumber": "Please enter a whole number",
+    "householdSize": "Please enter your household size (1 or more)",
+    "householdSizeMax": "Please enter a household size under 15",
+    "incomeNonNegative": "Monthly income cannot be negative",
+    "incomeMax": "Please enter a valid monthly income amount",
+    "ageNonNegative": "Age cannot be negative",
+    "ageMax": "Please enter a valid age",
+    "enterAge": "Please enter the age of your family member with a disability",
+    "selectInsuranceType": "Please select your insurance type"
+  }
+}

@@ -72,7 +72,7 @@ export default function ReviewPage() {
   };
 
   const handlePrevious = () => {
-    router.push('/screening/intake/step-3');
+    router.push('/screening/intake/step-4');
   };
 
   return (
@@ -199,6 +199,61 @@ export default function ReviewPage() {
           </dl>
         </div>
 
+        {/* Functional Needs Section (optional) */}
+        {(formData.workStatus || formData.hasGuardian !== undefined || (formData.coOccurringDiagnoses && formData.coOccurringDiagnoses.length > 0) || (formData.functionalLimitations && formData.functionalLimitations.length > 0)) && (
+          <>
+            <Separator />
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-base font-heading font-semibold text-foreground">
+                  Functional Needs
+                </h3>
+                <Link
+                  href="/screening/intake/step-4"
+                  className="text-primary hover:text-primary/80 text-sm font-medium inline-flex items-center gap-1"
+                >
+                  <Pencil className="h-3 w-3" />
+                  Edit
+                </Link>
+              </div>
+              <dl className="space-y-2 text-sm">
+                {formData.workStatus && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Work status:</dt>
+                    <dd className="text-foreground font-medium capitalize">
+                      {formData.workStatus.replace(/-/g, ' ')}
+                    </dd>
+                  </div>
+                )}
+                {formData.hasGuardian !== undefined && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Has legal guardian:</dt>
+                    <dd className="text-foreground font-medium">
+                      {formData.hasGuardian ? 'Yes' : 'No'}
+                    </dd>
+                  </div>
+                )}
+                {formData.coOccurringDiagnoses && formData.coOccurringDiagnoses.length > 0 && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Co-occurring conditions:</dt>
+                    <dd className="text-foreground font-medium capitalize">
+                      {formData.coOccurringDiagnoses.map(d => d.replace(/-/g, ' ')).join(', ')}
+                    </dd>
+                  </div>
+                )}
+                {formData.functionalLimitations && formData.functionalLimitations.length > 0 && (
+                  <div className="flex justify-between">
+                    <dt className="text-muted-foreground">Areas needing help:</dt>
+                    <dd className="text-foreground font-medium capitalize">
+                      {formData.functionalLimitations.map(l => l.replace(/-/g, ' ')).join(', ')}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+          </>
+        )}
+
         {/* Loading state */}
         {isLoading && (
           <div
@@ -216,12 +271,35 @@ export default function ReviewPage() {
         {/* API Error */}
         {error && (
           <div
-            className="bg-destructive/5 border border-destructive/20 rounded-lg p-4 flex items-start gap-3"
+            className="bg-destructive/5 border border-destructive/20 rounded-lg p-4"
             role="alert"
             aria-live="assertive"
           >
-            <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
-            <p className="text-foreground">{error}</p>
+            <div className="flex items-start gap-3 mb-3">
+              <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+              <p className="text-foreground">{error}</p>
+            </div>
+            <div className="flex gap-3 ml-8">
+              <Button
+                type="button"
+                size="sm"
+                variant="secondary"
+                onClick={handleGetResults}
+              >
+                Try Again
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  useScreeningStore.getState().reset();
+                  router.push('/screening');
+                }}
+              >
+                Start Over
+              </Button>
+            </div>
           </div>
         )}
 

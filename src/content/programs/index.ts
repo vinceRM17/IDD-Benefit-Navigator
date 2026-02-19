@@ -14,6 +14,12 @@ import { sclWaiverContent } from './scl-waiver';
 import { federalSSIContent } from './federal-ssi';
 import { federalSSDIContent } from './federal-ssdi';
 import { federalSNAPContent } from './federal-snap';
+import { housingChoiceVoucherContent } from './housing-choice-voucher';
+import { vocationalRehabContent } from './vocational-rehab';
+import { ableAccountContent } from './able-account';
+import { supportedEmploymentContent } from './supported-employment';
+import { childcareAssistanceContent } from './childcare-assistance';
+import { ideaServicesContent } from './idea-services';
 
 // Re-export individual content
 export { medicaidContent } from './medicaid';
@@ -26,6 +32,12 @@ export { sclWaiverContent } from './scl-waiver';
 export { federalSSIContent } from './federal-ssi';
 export { federalSSDIContent } from './federal-ssdi';
 export { federalSNAPContent } from './federal-snap';
+export { housingChoiceVoucherContent } from './housing-choice-voucher';
+export { vocationalRehabContent } from './vocational-rehab';
+export { ableAccountContent } from './able-account';
+export { supportedEmploymentContent } from './supported-employment';
+export { childcareAssistanceContent } from './childcare-assistance';
+export { ideaServicesContent } from './idea-services';
 export type { ProgramContent } from './types';
 
 /**
@@ -44,6 +56,13 @@ export const programContentMap: Record<string, ProgramContent> = {
   'federal-ssi': federalSSIContent,
   'federal-ssdi': federalSSDIContent,
   'federal-snap': federalSNAPContent,
+  // Federal content — additional programs
+  'federal-housing-choice-voucher': housingChoiceVoucherContent,
+  'federal-vocational-rehab': vocationalRehabContent,
+  'federal-able-account': ableAccountContent,
+  'federal-supported-employment': supportedEmploymentContent,
+  'federal-childcare-assistance': childcareAssistanceContent,
+  'federal-idea-services': ideaServicesContent,
 };
 
 /**

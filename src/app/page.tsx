@@ -17,6 +17,12 @@ import {
   HandCoins,
   UtensilsCrossed,
   FileHeart,
+  Building2,
+  Briefcase,
+  PiggyBank,
+  GraduationCap,
+  Baby,
+  UserCheck,
 } from 'lucide-react';
 
 const programs = [
@@ -26,6 +32,12 @@ const programs = [
   { name: 'MPW Waiver', desc: 'Michelle P. Waiver services', icon: FileHeart },
   { name: 'SSI / SSDI', desc: 'Social Security disability benefits', icon: HandCoins },
   { name: 'SNAP', desc: 'Supplemental nutrition assistance', icon: UtensilsCrossed },
+  { name: 'Section 8 Housing', desc: 'Housing Choice Voucher program', icon: Building2 },
+  { name: 'Vocational Rehab', desc: 'Job training and employment support', icon: Briefcase },
+  { name: 'ABLE Account', desc: 'Tax-free disability savings', icon: PiggyBank },
+  { name: 'Supported Employment', desc: 'Job coaching and workplace support', icon: UserCheck },
+  { name: 'Childcare Assistance', desc: 'Help paying for childcare', icon: Baby },
+  { name: 'Special Education', desc: 'IDEA services for children', icon: GraduationCap },
 ];
 
 const steps = [
@@ -141,7 +153,7 @@ export default function Home() {
           <p className="text-muted-foreground text-center mb-section max-w-xl mx-auto">
             We screen for the major benefit programs available to families nationwide.
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
             {programs.map((program) => (
               <Card key={program.name} className="transition-shadow hover:shadow-md">
                 <CardContent className="p-4 flex items-center gap-3">

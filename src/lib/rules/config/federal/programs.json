@@ -98,10 +98,235 @@
         "requiredDocuments": ["Proof of income", "Proof of identity", "Proof of residency"],
         "priority": 3
       }
+    },
+    {
+      "programId": "federal-housing-choice-voucher",
+      "programName": "Housing Choice Voucher",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": {
+              "fact": "incomeLimitHousing"
+            }
+          }
+        ]
+      },
+      "event": {
+        "type": "housing-voucher-eligible",
+        "params": {
+          "program": "Housing Choice Voucher",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitHousing", "reason": "Income below Housing Choice Voucher limit" },
+          { "condition": "hasDisability", "reason": "Disability may qualify for priority on housing waitlist" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitHousing", "reason": "Income above Housing Choice Voucher limit" }
+        ],
+        "nextSteps": ["Contact your local Public Housing Authority"],
+        "requiredDocuments": ["Proof of income", "Proof of disability", "Social Security numbers", "Photo ID"],
+        "priority": 7
+      }
+    },
+    {
+      "programId": "federal-vocational-rehab",
+      "programName": "Vocational Rehabilitation",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "vr-eligible",
+        "params": {
+          "program": "Vocational Rehabilitation",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for vocational rehabilitation services" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Contact your state VR agency"],
+        "requiredDocuments": ["Medical records", "Work history", "Proof of identity"],
+        "priority": 5
+      }
+    },
+    {
+      "programId": "federal-able-account",
+      "programName": "ABLE Account",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "able-eligible",
+        "params": {
+          "program": "ABLE Account",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for ABLE savings account (onset must be before age 26)" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Visit ablenrc.org to find your state's ABLE program"],
+        "requiredDocuments": ["Proof of disability", "Proof disability began before age 26", "Social Security number"],
+        "priority": 8
+      }
+    },
+    {
+      "programId": "federal-supported-employment",
+      "programName": "Supported Employment",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          }
+        ]
+      },
+      "event": {
+        "type": "supported-employment-eligible",
+        "params": {
+          "program": "Supported Employment",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis may qualify for supported employment with job coaching" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" }
+        ],
+        "nextSteps": ["Contact your state Vocational Rehabilitation agency or Medicaid waiver case manager"],
+        "requiredDocuments": ["Documentation of disability", "VR eligibility or Medicaid waiver enrollment"],
+        "priority": 6
+      }
+    },
+    {
+      "programId": "federal-childcare-assistance",
+      "programName": "Childcare Assistance (CCDF)",
+      "conditions": {
+        "all": [
+          {
+            "fact": "monthlyIncome",
+            "operator": "lessThanInclusive",
+            "value": {
+              "fact": "incomeLimitChildcare"
+            }
+          },
+          {
+            "fact": "age",
+            "operator": "lessThanInclusive",
+            "value": 19
+          }
+        ]
+      },
+      "event": {
+        "type": "childcare-eligible",
+        "params": {
+          "program": "Childcare Assistance (CCDF)",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "incomeBelowLimit", "incomeLimitKey": "incomeLimitChildcare", "reason": "Income below childcare assistance limit" },
+          { "condition": "meetsAgeCriteria", "reason": "Child's age qualifies for childcare assistance (up to 19 for children with disabilities)" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "incomeAboveLimit", "incomeLimitKey": "incomeLimitChildcare", "reason": "Income above childcare assistance limit" },
+          { "condition": "ageBelow", "minAge": 0, "reason": "Age requirement not met" }
+        ],
+        "nextSteps": ["Contact your state childcare assistance office"],
+        "requiredDocuments": ["Proof of income", "Birth certificates", "Proof of need for childcare"],
+        "priority": 9
+      }
+    },
+    {
+      "programId": "federal-idea-services",
+      "programName": "Special Education (IDEA)",
+      "conditions": {
+        "all": [
+          {
+            "fact": "hasDisabilityDiagnosis",
+            "operator": "equal",
+            "value": true
+          },
+          {
+            "fact": "age",
+            "operator": "lessThanInclusive",
+            "value": 21
+          }
+        ]
+      },
+      "event": {
+        "type": "idea-eligible",
+        "params": {
+          "program": "Special Education (IDEA)",
+          "confidence": "possible"
+        }
+      },
+      "enrichment": {
+        "eligibleReasons": [
+          { "condition": "hasDisability", "reason": "Disability diagnosis qualifies for free special education services" },
+          { "condition": "meetsAgeCriteria", "reason": "Age qualifies for IDEA services (birth through 21)" }
+        ],
+        "ineligibleReasons": [
+          { "condition": "noDisability", "reason": "No disability diagnosis documented" },
+          { "condition": "ageBelow", "minAge": 0, "reason": "Age does not qualify for IDEA services" }
+        ],
+        "nextSteps": ["Contact your child's school district to request an evaluation"],
+        "requiredDocuments": ["Written request for evaluation", "Medical records", "School records"],
+        "priority": 4
+      }
     }
   ],
   "incomeLimits": {
     "incomeLimitSNAP": {
+      "1": 2610,
+      "2": 3526,
+      "3": 4442,
+      "4": 5360,
+      "5": 6276,
+      "6": 7192,
+      "7": 8110,
+      "8": 9026
+    },
+    "incomeLimitHousing": {
+      "1": 2500,
+      "2": 2858,
+      "3": 3217,
+      "4": 3571,
+      "5": 3858,
+      "6": 4146,
+      "7": 4429,
+      "8": 4717
+    },
+    "incomeLimitChildcare": {
       "1": 2610,
       "2": 3526,
       "3": 4442,
@@ -122,6 +347,16 @@
       "programs": ["SSI", "SNAP"],
       "description": "SSI income counts toward SNAP eligibility. You may still qualify for SNAP.",
       "recommendation": "Apply for SNAP even if you receive SSI. Your SSI income will be counted, but you may still qualify."
+    },
+    {
+      "programs": ["SSI", "ABLE Account"],
+      "description": "ABLE accounts do not count against SSI's resource limit up to $100,000.",
+      "recommendation": "Open an ABLE account to save money without losing SSI or Medicaid benefits."
+    },
+    {
+      "programs": ["Vocational Rehabilitation", "Supported Employment"],
+      "description": "VR services can include Supported Employment with job coaching.",
+      "recommendation": "Apply for VR first. They can refer you to Supported Employment services."
     }
   ],
   "actionPlanOrder": [
@@ -138,11 +373,35 @@
     {
       "programName": "SNAP",
       "step": "Apply for SNAP (food assistance) through your state's social services office."
+    },
+    {
+      "programName": "Special Education (IDEA)",
+      "step": "Contact your child's school district to request a special education evaluation."
+    },
+    {
+      "programName": "Vocational Rehabilitation",
+      "step": "Contact your state VR agency to apply for job training and employment support."
+    },
+    {
+      "programName": "Supported Employment",
+      "step": "Ask your VR counselor or waiver case manager about Supported Employment with job coaching."
+    },
+    {
+      "programName": "Housing Choice Voucher",
+      "step": "Contact your local Public Housing Authority to get on the Section 8 waiting list."
+    },
+    {
+      "programName": "ABLE Account",
+      "step": "Visit ablenrc.org to open a tax-free ABLE savings account."
+    },
+    {
+      "programName": "Childcare Assistance (CCDF)",
+      "step": "Contact your state childcare assistance office to apply for help paying for childcare."
     }
   ],
   "metadata": {
-    "lastUpdated": "2025-01-01",
-    "source": "Federal government programs (SSA, USDA)",
-    "effectiveDate": "2025-01-01"
+    "lastUpdated": "2026-02-18",
+    "source": "Federal government programs (SSA, USDA, HUD, ED, HHS)",
+    "effectiveDate": "2026-01-01"
   }
 }

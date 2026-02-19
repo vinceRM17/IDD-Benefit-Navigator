@@ -1,0 +1,36 @@
+{
+  "nav": {
+    "home": "Home",
+    "startScreening": "Start Screening",
+    "glossary": "Glossary",
+    "faq": "FAQ",
+    "privacy": "Privacy"
+  },
+  "buttons": {
+    "startScreening": "Start Free Screening",
+    "beginScreening": "Begin Your Free Screening",
+    "next": "Next",
+    "previous": "Previous",
+    "skip": "Skip",
+    "tryAgain": "Try Again",
+    "startOver": "Start Over",
+    "startNewScreening": "Start New Screening",
+    "clearMyData": "Clear My Data",
+    "getMyResults": "Get My Results",
+    "applyHere": "Apply here",
+    "referMe": "Refer Me",
+    "downloadPDF": "Download PDF",
+    "resetToActualIncome": "Reset to actual income"
+  },
+  "footer": {
+    "disclaimer": "This screening is for informational purposes only. Final eligibility is determined by the program administrators.",
+    "noAccountRequired": "No account required",
+    "takesFiveMinutes": "Takes about 5 minutes",
+    "freeForAllFamilies": "Free for All Families"
+  },
+  "language": {
+    "en": "English",
+    "es": "Español",
+    "switchTo": "Switch language"
+  }
+}

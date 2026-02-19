@@ -70,8 +70,20 @@ export function AIExplanation(props: AIExplanationProps) {
     fetchExplanation();
   }, [props]);
 
+  // Error fallback — show gentle message instead of hiding silently
   if (error || (!loading && !explanation)) {
-    return null;
+    return (
+      <div
+        className="mt-4 p-4 bg-secondary rounded-lg border border-border"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-sm text-muted-foreground">
+          We were not able to personalize this explanation right now. The expert
+          information above has everything you need.
+        </p>
+      </div>
+    );
   }
 
   // Loading state
@@ -79,6 +91,8 @@ export function AIExplanation(props: AIExplanationProps) {
     return (
       <div
         className="mt-4 p-4 bg-secondary rounded-lg border border-border"
+        role="status"
+        aria-live="polite"
         aria-label={`Loading personalized explanation for ${props.programName}`}
       >
         <div className="flex items-center gap-2 mb-3">
@@ -101,6 +115,7 @@ export function AIExplanation(props: AIExplanationProps) {
   return (
     <section
       className="mt-4 p-4 bg-secondary rounded-lg border border-border"
+      aria-live="polite"
       aria-label={`AI-personalized explanation for ${props.programName}`}
     >
       <div className="flex items-center gap-2 mb-3">

@@ -1,0 +1,36 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "startScreening": "Iniciar Evaluación",
+    "glossary": "Glosario",
+    "faq": "Preguntas Frecuentes",
+    "privacy": "Privacidad"
+  },
+  "buttons": {
+    "startScreening": "Iniciar Evaluación Gratuita",
+    "beginScreening": "Comenzar Su Evaluación Gratuita",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "skip": "Omitir",
+    "tryAgain": "Intentar de Nuevo",
+    "startOver": "Comenzar de Nuevo",
+    "startNewScreening": "Iniciar Nueva Evaluación",
+    "clearMyData": "Borrar Mis Datos",
+    "getMyResults": "Ver Mis Resultados",
+    "applyHere": "Solicitar aquí",
+    "referMe": "Referirme",
+    "downloadPDF": "Descargar PDF",
+    "resetToActualIncome": "Restablecer al ingreso actual"
+  },
+  "footer": {
+    "disclaimer": "Esta evaluación es solo para fines informativos. La elegibilidad final es determinada por los administradores de cada programa.",
+    "noAccountRequired": "No se necesita cuenta",
+    "takesFiveMinutes": "Toma aproximadamente 5 minutos",
+    "freeForAllFamilies": "Gratis para Todas las Familias"
+  },
+  "language": {
+    "en": "English",
+    "es": "Español",
+    "switchTo": "Cambiar idioma"
+  }
+}

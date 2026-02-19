@@ -45,7 +45,7 @@ export default function Step3Page() {
 
   const onSubmit = (data: Step3Data) => {
     setStepData(data);
-    router.push('/screening/intake/review');
+    router.push('/screening/intake/step-4');
   };
 
   const handlePrevious = () => {

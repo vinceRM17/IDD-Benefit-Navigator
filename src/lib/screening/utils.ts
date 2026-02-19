@@ -24,6 +24,10 @@ export function formDataToHouseholdFacts(
     hasInsurance: formData.hasInsurance,
     receivesSSI: formData.receivesSSI ?? false,
     receivesSNAP: formData.receivesSNAP ?? false,
+    workStatus: formData.workStatus,
+    hasGuardian: formData.hasGuardian,
+    coOccurringDiagnoses: formData.coOccurringDiagnoses,
+    functionalLimitations: formData.functionalLimitations,
   };
 }
 

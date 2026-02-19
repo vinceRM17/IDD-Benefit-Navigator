@@ -93,10 +93,30 @@ export const step3Schema = step3BaseSchema
 export type Step3Data = z.infer<typeof step3BaseSchema>;
 
 /**
+ * Step 4: Functional Needs (all optional)
+ */
+export const step4Schema = z.object({
+  workStatus: z
+    .enum(['employed', 'unemployed', 'unable-to-work', 'student'])
+    .optional(),
+  hasGuardian: z.boolean().optional(),
+  coOccurringDiagnoses: z
+    .array(z.enum(['autism', 'cerebral-palsy', 'down-syndrome', 'epilepsy', 'mental-health', 'other']))
+    .optional()
+    .default([]),
+  functionalLimitations: z
+    .array(z.enum(['daily-living', 'communication', 'mobility', 'self-care', 'learning', 'social']))
+    .optional()
+    .default([]),
+});
+
+export type Step4Data = z.infer<typeof step4Schema>;
+
+/**
  * Complete screening data (all steps merged)
  * Use base schema for merging, then add refinements
  */
-const fullBaseSchema = step1Schema.merge(step2Schema).merge(step3BaseSchema);
+const fullBaseSchema = step1Schema.merge(step2Schema).merge(step3BaseSchema).merge(step4Schema);
 
 export const fullSchema = fullBaseSchema
   .refine(

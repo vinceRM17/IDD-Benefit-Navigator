@@ -1,0 +1,66 @@
+{
+  "steps": {
+    "familySituation": "Situación Familiar",
+    "incomeAndBenefits": "Ingresos y Beneficios",
+    "diagnosisAndInsurance": "Diagnóstico y Seguro",
+    "functionalNeeds": "Necesidades Funcionales",
+    "review": "Revisar"
+  },
+  "step1": {
+    "title": "Su situación familiar",
+    "description": "Cuéntenos sobre su hogar para que podamos encontrar los programas adecuados.",
+    "stateLabel": "¿En qué estado vive?",
+    "statePlaceholder": "Seleccione su estado",
+    "householdSizeLabel": "¿Cuántas personas viven en su hogar?",
+    "householdSizePlaceholder": "ej., 3"
+  },
+  "step2": {
+    "title": "Ingresos y beneficios actuales",
+    "description": "Esto nos ayuda a verificar programas basados en ingresos como Medicaid y SNAP.",
+    "monthlyIncomeLabel": "¿Cuál es el ingreso mensual total de su hogar?",
+    "monthlyIncomePlaceholder": "ej., 2000",
+    "receivesSSILabel": "¿Alguien en su hogar recibe SSI?",
+    "receivesSNAPLabel": "¿Alguien en su hogar recibe SNAP (asistencia alimentaria)?"
+  },
+  "step3": {
+    "title": "Diagnóstico y seguro",
+    "description": "Esta información nos ayuda a entender las necesidades de su familiar y su cobertura actual.",
+    "hasDisabilityLabel": "¿Su familiar ha sido diagnosticado con una discapacidad intelectual o del desarrollo?",
+    "ageLabel": "¿Qué edad tiene su familiar con discapacidad?",
+    "agePlaceholder": "ej., 12",
+    "ageHelpText": "Ingrese su edad actual en años",
+    "hasInsuranceLabel": "¿Su familiar tiene seguro de salud privado?",
+    "insuranceTypeLabel": "¿Qué tipo de seguro?"
+  },
+  "step4": {
+    "title": "Necesidades funcionales",
+    "description": "Estas preguntas opcionales nos ayudan a encontrar programas adicionales. Omita las que prefiera no contestar.",
+    "workStatusLabel": "¿Cuál es la situación laboral de su familiar?",
+    "workStatusHelp": "Esto nos ayuda a verificar programas relacionados con el empleo",
+    "guardianLabel": "¿Su familiar tiene un tutor legal?",
+    "diagnosesLabel": "¿Su familiar tiene alguna de estas condiciones?",
+    "diagnosesHelp": "Esto nos ayuda a identificar programas especializados",
+    "limitationsLabel": "¿Su familiar necesita ayuda en alguna de estas áreas?",
+    "limitationsHelp": "Esto ayuda a encontrar el nivel adecuado de apoyo para su familia"
+  },
+  "review": {
+    "title": "Revise sus respuestas",
+    "description": "Por favor verifique que todo esté correcto antes de generar sus resultados.",
+    "edit": "Editar",
+    "findingBenefits": "Buscando beneficios para su familia...",
+    "errorMessage": "Algo salió mal al buscar beneficios para su familia. Por favor intente de nuevo o contáctenos para obtener ayuda."
+  },
+  "validation": {
+    "selectState": "Por favor seleccione su estado",
+    "enterNumber": "Por favor ingrese un número",
+    "wholeNumber": "Por favor ingrese un número entero",
+    "householdSize": "Por favor ingrese el tamaño de su hogar (1 o más)",
+    "householdSizeMax": "Por favor ingrese un tamaño de hogar menor a 15",
+    "incomeNonNegative": "El ingreso mensual no puede ser negativo",
+    "incomeMax": "Por favor ingrese un monto de ingreso mensual válido",
+    "ageNonNegative": "La edad no puede ser negativa",
+    "ageMax": "Por favor ingrese una edad válida",
+    "enterAge": "Por favor ingrese la edad de su familiar con discapacidad",
+    "selectInsuranceType": "Por favor seleccione el tipo de seguro"
+  }
+}

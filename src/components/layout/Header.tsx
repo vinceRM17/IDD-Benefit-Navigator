@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth/session';
 import { AuthControls } from './AuthControls';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { Heart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -14,6 +15,8 @@ export async function Header({ currentPath = '/' }: HeaderProps) {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/screening', label: 'Start Screening' },
+    { href: '/resources/glossary', label: 'Glossary' },
+    { href: '/resources/faq', label: 'FAQ' },
     { href: '/privacy', label: 'Privacy' },
   ];
 
@@ -51,6 +54,10 @@ export async function Header({ currentPath = '/' }: HeaderProps) {
                 ))}
               </ul>
             </nav>
+
+            <Separator orientation="vertical" className="h-6 bg-white/20 hidden md:block mx-1" />
+
+            <LanguageSwitcher />
 
             <Separator orientation="vertical" className="h-6 bg-white/20 hidden md:block mx-1" />
 

@@ -1,0 +1,49 @@
+{
+  "title": "Sus Resultados Personalizados",
+  "expired": {
+    "title": "Sus resultados han expirado",
+    "message": "Para proteger su privacidad, los resultados de la evaluación no se guardan por mucho tiempo. Iniciemos una nueva evaluación para encontrar los beneficios para los que su familia puede calificar."
+  },
+  "loading": "Cargando sus resultados...",
+  "tabs": {
+    "overview": "Resumen",
+    "programs": "Programas",
+    "documents": "Documentos",
+    "resources": "Recursos",
+    "whatIf": "¿Qué Pasa Si?"
+  },
+  "overview": {
+    "title": "Sus Recomendaciones de Beneficios",
+    "subtitle": "Según lo que compartió sobre su familia, estos son los programas que pueden ayudar.",
+    "encouragement": "Navegar estos programas es difícil — no es la única familia que pasa por esto. No tiene que resolver todo hoy, y no tiene que hacerlo solo. Comience con lo que sea más importante para su familia en este momento.",
+    "programsTitle": "Programas Para los Que Puede Calificar"
+  },
+  "programs": {
+    "likelyTitle": "Programas Para los Que Probablemente Califica",
+    "possibleTitle": "Programas Para los Que Puede Calificar",
+    "unlikelyTitle": "Otros Programas (según sus respuestas, estos pueden no aplicar)",
+    "unlikelyNote": "Su situación puede cambiar, o puede tener necesidades adicionales que lo califiquen para estos programas. Haga clic en un programa para obtener más información."
+  },
+  "documents": {
+    "title": "Documentos Que Necesitará",
+    "subtitle": "Reúna estos documentos para acelerar sus solicitudes.",
+    "none": "No hay listas de documentos disponibles."
+  },
+  "badges": {
+    "likelyEligible": "Probablemente Elegible",
+    "mayBeEligible": "Puede Ser Elegible",
+    "unlikely": "Poco Probable"
+  },
+  "whatIf": {
+    "title": "¿Qué Pasa Si Cambian Mis Ingresos?",
+    "subtitle": "Use el control deslizante para explorar cómo los cambios en el ingreso de su hogar podrían afectar los programas para los que califica.",
+    "incomeLabel": "Ingreso mensual del hogar",
+    "currentIncome": "Su ingreso actual",
+    "gained": "Programas Que Podría Obtener",
+    "lost": "Programas Que Podría Perder",
+    "unchanged": "Programas No Afectados por el Ingreso",
+    "noChange": "Con este nivel de ingresos, su elegibilidad para los programas probablemente se mantendría igual.",
+    "moveSlider": "Mueva el control deslizante para ver cómo los cambios de ingreso podrían afectar su elegibilidad.",
+    "disclaimer": "Esta es solo una estimación. La elegibilidad real depende de muchos factores además del ingreso. Contacte a cada programa para obtener detalles específicos."
+  }
+}

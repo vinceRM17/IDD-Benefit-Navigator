@@ -111,6 +111,7 @@ export function TabNav({ tabs, defaultTab, onTabChange }: TabNavProps) {
           role="tabpanel"
           id={`panel-${activePanel.id}`}
           aria-labelledby={`tab-${activePanel.id}`}
+          aria-live="polite"
           tabIndex={0}
         >
           {activePanel.content}

@@ -21,6 +21,7 @@ import {
 import { DownloadPDFButton } from '@/components/results/DownloadPDFButton';
 import { ResourceDirectory } from '@/components/results/ResourceDirectory';
 import { StateCoverageBanner } from '@/components/results/StateCoverageBanner';
+import { WhatIfPanel } from '@/components/results/WhatIfPanel';
 import { getStateName } from '@/lib/data/states';
 // Action plan is now pre-generated server-side and included in results
 import { useEffect, useState, useCallback } from 'react';
@@ -34,11 +35,13 @@ import {
   ClipboardList,
   ChevronDown,
   Info,
+  Clock,
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ResultsPage() {
   const router = useRouter();
-  const { results, formData, reset } = useScreeningStore();
+  const { results, formData, reset, areResultsExpired, clearResults } = useScreeningStore();
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
@@ -50,20 +53,49 @@ export default function ResultsPage() {
       .catch(() => setIsAuthenticated(false));
   }, []);
 
+  // Check for expired results on mount
   useEffect(() => {
-    if (mounted && !results) {
-      router.push('/screening');
+    if (mounted && results && areResultsExpired()) {
+      clearResults();
     }
-  }, [mounted, results, router]);
+  }, [mounted, results, areResultsExpired, clearResults]);
 
   const goToPrograms = useCallback(() => setActiveTab('programs'), []);
 
-  if (!mounted || !results) {
+  const handleClearData = () => {
+    reset();
+    router.push('/');
+  };
+
+  if (!mounted) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Loader2 className="h-5 w-5 animate-spin" />
           <p>Loading your results...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show expiration message instead of flash-redirect
+  if (!results) {
+    return (
+      <div className="py-section">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="mb-6">
+            <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h1 className="text-2xl font-heading font-bold text-foreground mb-3">
+              Your results have expired
+            </h1>
+            <p className="text-muted-foreground mb-6">
+              For your privacy, screening results are not kept for long. Let&apos;s
+              start a new screening to find the benefits your family may qualify for.
+            </p>
+          </div>
+          <Button asChild>
+            <Link href="/screening">Start New Screening</Link>
+          </Button>
         </div>
       </div>
     );
@@ -274,11 +306,19 @@ export default function ResultsPage() {
     </div>
   );
 
+  const whatIfContent = (
+    <WhatIfPanel
+      programs={results.programs}
+      currentIncome={formData.monthlyIncome || 0}
+    />
+  );
+
   const tabs: Tab[] = [
     { id: 'overview', label: 'Overview', content: overviewContent },
     { id: 'programs', label: 'Programs', content: programsContent },
     { id: 'documents', label: 'Documents', content: documentsContent },
     { id: 'resources', label: 'Resources', content: resourcesContent },
+    { id: 'what-if', label: 'What If?', content: whatIfContent },
   ];
 
   return (
@@ -325,6 +365,18 @@ export default function ResultsPage() {
             This screening is for informational purposes only. Final eligibility
             is determined by the program administrators.
           </p>
+        </div>
+
+        {/* Clear data */}
+        <div className="mt-4 text-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-destructive"
+            onClick={handleClearData}
+          >
+            Clear My Data
+          </Button>
         </div>
       </div>
     </div>

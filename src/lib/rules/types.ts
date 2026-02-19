@@ -12,6 +12,10 @@ export interface HouseholdFacts {
   insuranceType?: 'employer' | 'marketplace' | 'none';
   receivesSSI?: boolean;
   receivesSNAP?: boolean;
+  workStatus?: 'employed' | 'unemployed' | 'unable-to-work' | 'student';
+  hasGuardian?: boolean;
+  coOccurringDiagnoses?: string[];
+  functionalLimitations?: string[];
 }
 
 export interface EligibilityResult {

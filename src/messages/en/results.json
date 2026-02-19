@@ -1,0 +1,49 @@
+{
+  "title": "Your Personalized Results",
+  "expired": {
+    "title": "Your results have expired",
+    "message": "For your privacy, screening results are not kept for long. Let's start a new screening to find the benefits your family may qualify for."
+  },
+  "loading": "Loading your results...",
+  "tabs": {
+    "overview": "Overview",
+    "programs": "Programs",
+    "documents": "Documents",
+    "resources": "Resources",
+    "whatIf": "What If?"
+  },
+  "overview": {
+    "title": "Your Benefit Recommendations",
+    "subtitle": "Based on what you shared about your family, here are the programs that may help.",
+    "encouragement": "Navigating these programs is hard — you are not the only family working through this. You do not have to figure everything out today, and you do not have to do it alone. Start with what feels most important to your family right now.",
+    "programsTitle": "Programs You May Qualify For"
+  },
+  "programs": {
+    "likelyTitle": "Programs You Likely Qualify For",
+    "possibleTitle": "Programs You May Qualify For",
+    "unlikelyTitle": "Other Programs (based on your answers, these may not apply)",
+    "unlikelyNote": "Your situation may change, or you might have additional needs that qualify you for these programs. Click a program to learn more."
+  },
+  "documents": {
+    "title": "Documents You'll Need",
+    "subtitle": "Gather these documents to speed up your applications.",
+    "none": "No document checklists available."
+  },
+  "badges": {
+    "likelyEligible": "Likely Eligible",
+    "mayBeEligible": "May Be Eligible",
+    "unlikely": "Unlikely"
+  },
+  "whatIf": {
+    "title": "What If My Income Changes?",
+    "subtitle": "Use the slider to explore how changes in your household income might affect which programs you qualify for.",
+    "incomeLabel": "Monthly household income",
+    "currentIncome": "Your current income",
+    "gained": "Programs You Might Gain",
+    "lost": "Programs You Might Lose",
+    "unchanged": "Programs Not Affected by Income",
+    "noChange": "At this income level, your program eligibility would likely stay the same.",
+    "moveSlider": "Move the slider to see how income changes could affect your eligibility.",
+    "disclaimer": "This is an estimate only. Actual eligibility depends on many factors beyond income. Contact each program for specific details."
+  }
+}
