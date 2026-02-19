@@ -1,8 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { useTranslations } from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('common');
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,7 +28,7 @@ export function Footer() {
                     href="/screening"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Start Screening
+                    {t('nav.startScreening')}
                   </Link>
                 </li>
                 <li>
@@ -32,7 +36,7 @@ export function Footer() {
                     href="/privacy"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Privacy Policy
+                    {t('nav.privacyPolicy')}
                   </Link>
                 </li>
                 <li>
@@ -40,7 +44,7 @@ export function Footer() {
                     href="/accessibility"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    Accessibility
+                    {t('nav.accessibility')}
                   </Link>
                 </li>
               </ul>
@@ -50,7 +54,7 @@ export function Footer() {
           <Separator />
 
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} IDD Benefits Navigator. Built with care for families.
+            {t('footer.copyright', { year: currentYear })}
           </p>
         </div>
       </div>

@@ -2,13 +2,15 @@
 
 import React from 'react';
 import { useLocale } from '@/components/providers/LocaleProvider';
+import { useTranslations } from 'next-intl';
 import { Globe } from 'lucide-react';
 
 export function LanguageSwitcher() {
   const { locale, setLocale } = useLocale();
+  const t = useTranslations('common.language');
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="Language selection">
+    <div className="flex items-center gap-1" role="group" aria-label={t('switchTo')}>
       <Globe className="h-4 w-4 text-primary-foreground/70" aria-hidden="true" />
       <button
         onClick={() => setLocale('en')}
@@ -18,7 +20,7 @@ export function LanguageSwitcher() {
             : 'text-primary-foreground/60 hover:text-primary-foreground'
         }`}
         aria-current={locale === 'en' ? 'true' : undefined}
-        aria-label="English"
+        aria-label={t('en')}
       >
         EN
       </button>
@@ -31,7 +33,7 @@ export function LanguageSwitcher() {
             : 'text-primary-foreground/60 hover:text-primary-foreground'
         }`}
         aria-current={locale === 'es' ? 'true' : undefined}
-        aria-label="Español"
+        aria-label={t('es')}
       >
         ES
       </button>

@@ -2,17 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/screening', label: 'Start Screening' },
-  { href: '/resources/glossary', label: 'Glossary' },
-  { href: '/resources/faq', label: 'FAQ' },
-  { href: '/privacy', label: 'Privacy' },
-];
+  { href: '/', labelKey: 'home' },
+  { href: '/screening', labelKey: 'startScreening' },
+  { href: '/resources/glossary', labelKey: 'glossary' },
+  { href: '/resources/faq', labelKey: 'faq' },
+  { href: '/privacy', labelKey: 'privacy' },
+] as const;
 
 export function NavLinks() {
   const pathname = usePathname();
+  const t = useTranslations('common.nav');
 
   return (
     <nav aria-label="Main navigation" className="hidden md:block">
@@ -34,7 +36,7 @@ export function NavLinks() {
                 }`}
                 aria-current={isActive ? 'page' : undefined}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             </li>
           );
